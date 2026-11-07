@@ -3,7 +3,7 @@
    SPA con routing hash, Pyodide para ejecución local
    ═══════════════════════════════════════════════════ */
 
-console.info('PokéPython build: 2026-11-07-p');
+console.info('PokéPython build: 2026-11-07-p2');
 
 // ── Estado global ──────────────────────────────
 let LESSONS = [];       // flat array [lesson, ...]
@@ -373,7 +373,7 @@ async function renderLesson(id){
   // El concepto clave es prosa con markdown (`código` inline): crudo mostraba los backticks.
   if(lesson.keyConcept) theoryHTML+=`<div class="concept-box"><strong>Concepto clave:</strong> ${renderMarkdown(lesson.keyConcept,true)}</div>`;
   if(lesson.theory) theoryHTML+=`<h2>Teoría</h2>${renderMarkdown(lesson.theory)}`;
-  if(lesson.example) theoryHTML+=`<h2>Ejemplo Pokémon</h2><pre>${escapeHtml(lesson.example)}</pre>`;
+  if(lesson.example) theoryHTML+=`<h2>Ejemplo Pokémon</h2><pre class="ejemplo">${escapeHtml(lesson.example)}</pre>`;
   if(lesson.extraTheory) theoryHTML+=`<h2>Profundizando</h2>${renderMarkdown(lesson.extraTheory)}`;
   $('#theoryPanel').innerHTML=theoryHTML;
   
@@ -780,7 +780,7 @@ async function initCodeMirror(){
   const host=$('#editorHost');
   if(!ta||!host) return;
   try{
-    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-07-p');
+    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-07-p2');
     cmAPI=cm;
     cmExtensions=buildCMExtensions(cm);
     ta.addEventListener('input',syncTextareaToEditor);

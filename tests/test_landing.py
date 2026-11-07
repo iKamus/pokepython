@@ -396,3 +396,35 @@ def test_teoria_usa_parrafos_en_vez_de_br(static_site, page):
     assert distancia <= 20, f"distancia h3->p = {distancia}px (>20)"
     html = page.locator("#theoryPanel").inner_html()
     assert "<br><br>" not in html, "el panel contiene <br><br>"
+
+
+def test_tipografia_legible_y_ejemplo_destacado(static_site, page):
+    """La teoría se lee cómoda y el bloque de ejemplo se distingue del código suelto.
+
+    El ejemplo es la pieza didáctica central: mismo lenguaje plano (bordes de 1px,
+    un solo acento), pero con fondo levantado y regla ámbar a la izquierda para que
+    no se confunda con un bloque de código ilustrativo.
+    """
+    page.goto(static_site)
+    page.wait_for_selector(".module-card")
+    page.evaluate("window.location.hash = '#/lesson/3'")
+    page.wait_for_selector("#theoryPanel pre.ejemplo", timeout=15000)
+    m = page.evaluate(
+        """() => {
+          const px = el => parseFloat(getComputedStyle(el).fontSize);
+          const prosa = document.querySelector('#theoryPanel p');
+          const codigo = document.querySelector('#theoryPanel pre:not(.ejemplo)');
+          const ejemplo = document.querySelector('#theoryPanel pre.ejemplo');
+          const ce = getComputedStyle(ejemplo), cc = getComputedStyle(codigo);
+          return {
+            prosa: px(prosa), codigo: px(codigo), ejemplo: px(ejemplo),
+            ejemploFondo: ce.backgroundColor, codigoFondo: cc.backgroundColor,
+            ejemploRegla: ce.borderLeftWidth, codigoRegla: cc.borderLeftWidth,
+          };
+        }"""
+    )
+    assert m["prosa"] >= 16, f"la prosa de la teoría mide {m['prosa']}px"
+    assert m["codigo"] >= 15, f"el código de la teoría mide {m['codigo']}px"
+    assert m["ejemplo"] >= 15, f"el ejemplo mide {m['ejemplo']}px"
+    assert m["ejemploFondo"] != m["codigoFondo"], "el ejemplo tiene el mismo fondo que el código suelto"
+    assert m["ejemploRegla"] != m["codigoRegla"], "el ejemplo no tiene la regla de acento"
