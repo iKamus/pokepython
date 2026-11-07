@@ -297,3 +297,78 @@ def test_mobile_sin_recortes(page, static_site):
     assert not metrics["overflowX"], "la página scrollea horizontalmente en mobile"
     assert not metrics["toggleScrolls"], "el filtro de niveles scrollea en lugar de envolver"
     assert metrics["clipped"] == [], f"botones fuera de pantalla: {metrics['clipped']}"
+
+
+def test_teoria_renderiza_bloques_de_codigo(static_site, page):
+    """Los fences ```python de la teoría son <pre> reales con sus saltos de línea.
+
+    Antes los comía el regex de código inline: el bloque entero terminaba dentro de
+    un <code> con acento y el fence dejaba un backtick huérfano al final. Eso es el
+    "cortado" de las tarjetitas de énfasis en la teoría.
+    """
+    page.goto(static_site)
+    page.wait_for_selector(".module-card")
+    page.evaluate("window.location.hash = '#/lesson/1'")
+    page.wait_for_selector("#theoryPanel pre code", timeout=15000)
+    bloque = page.locator("#theoryPanel pre").first
+    codigo = bloque.locator("code").inner_text()
+    assert "# En Python todo empieza con print()" in codigo, (
+        f"el bloque de código no conserva el comentario: {codigo!r}"
+    )
+    assert 'print("¡Hola, Entrenador!")' in codigo, (
+        f"el bloque de código no conserva el print: {codigo!r}"
+    )
+    assert "\n" in codigo, "el bloque perdió sus saltos de línea (¿se volvió código inline?)"
+    assert "<br>" not in bloque.inner_html(), "el bloque usa <br> en lugar de saltos reales"
+    texto = page.locator("#theoryPanel").inner_text()
+    assert "```" not in texto, "el fence quedó visible en la teoría"
+    assert "`" not in texto, "quedó un backtick huérfano del fence en la teoría"
+
+
+def test_teoria_renderiza_listas_y_tablas(static_site, page):
+    """Listas y tablas de la teoría son HTML real, no guiones ni barras literales."""
+    page.goto(static_site)
+    page.wait_for_selector(".module-card")
+
+    # Lista con viñetas (lección 1) + numerada (lección 23)
+    page.evaluate("window.location.hash = '#/lesson/1'")
+    page.wait_for_selector("#theoryPanel ul li", timeout=15000)
+    items = page.locator("#theoryPanel ul li").all_inner_texts()
+    assert any("Ciencia de datos" in t for t in items), f"viñetas crudas: {items}"
+    page.evaluate("window.location.hash = '#/lesson/23'")
+    page.wait_for_selector("#theoryPanel ol li", timeout=15000)
+    pasos = page.locator("#theoryPanel ol li").all_inner_texts()
+    assert len(pasos) == 2, f"la lista numerada tiene {len(pasos)} items: {pasos}"
+    assert any("Caso base" in t for t in pasos), pasos
+
+    # Tabla (lección 3)
+    page.evaluate("window.location.hash = '#/lesson/3'")
+    page.wait_for_selector("#theoryPanel table", timeout=15000)
+    cabeceras = page.locator("#theoryPanel table th").all_inner_texts()
+    assert "Método" in " ".join(cabeceras), f"cabeceras: {cabeceras}"
+    assert page.locator("#theoryPanel table tr").count() >= 3, "la tabla quedó sin filas de datos"
+
+    for lid, texto in ((1, None), (3, None), (23, None)):
+        page.evaluate(f"window.location.hash = '#/lesson/{lid}'")
+        page.wait_for_timeout(150)
+        cuerpo = page.locator("#theoryPanel").inner_text()
+        assert "**" not in cuerpo, f"lección {lid}: negrita sin renderizar"
+        assert not any(line.startswith("- ") for line in cuerpo.splitlines()), (
+            f"lección {lid}: viñetas crudas en el texto"
+        )
+        assert "|" not in cuerpo, f"lección {lid}: tabla cruda (barras literales)"
+
+
+def test_teoria_renderiza_encabezados_hondos_y_concepto(static_site, page):
+    """`####` también es un encabezado, y el concepto clave lleva su código inline."""
+    page.goto(static_site)
+    page.wait_for_selector(".module-card")
+    page.evaluate("window.location.hash = '#/lesson/3'")
+    page.wait_for_selector("#theoryPanel .concept-box", timeout=15000)
+    concepto = page.locator("#theoryPanel .concept-box").first.inner_text()
+    assert "`" not in concepto, f"el concepto clave muestra backticks crudos: {concepto!r}"
+    assert page.locator("#theoryPanel .concept-box code").count() >= 1, (
+        "el concepto clave no convirtió su código inline"
+    )
+    cuerpo = page.locator("#theoryPanel").inner_text()
+    assert "####" not in cuerpo, "quedó un encabezado markdown crudo (#### …) en la teoría"

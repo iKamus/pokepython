@@ -3,7 +3,7 @@
    SPA con routing hash, Pyodide para ejecución local
    ═══════════════════════════════════════════════════ */
 
-console.info('PokéPython build: 2026-11-06-local');
+console.info('PokéPython build: 2026-11-07-md');
 
 // ── Estado global ──────────────────────────────
 let LESSONS = [];       // flat array [lesson, ...]
@@ -38,15 +38,46 @@ function typeLabel(type){ return TYPE_LABELS[type]||capitalize(type||''); }
 function levelLabel(level){ return LEVEL_LABELS[level]||capitalize(level||''); }
 function plural(n,singular,pluralForm){ return n===1?singular:pluralForm; }
 function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+// Bloques primero: fences, tablas y listas. Si las reglas inline corren antes, el
+// fence ```python se lo come el regex de `código` (quedaba un <code> gigante y un
+// backtick huérfano) y las tablas y listas salían con barras y guiones literales.
 function renderMarkdown(t){
-  return t
-    .replace(/^### (.+)$/gm,'<h3>$1</h3>')
-    .replace(/^## (.+)$/gm,'<h2>$1</h2>')
-    .replace(/^# (.+)$/gm,'<h2>$1</h2>')
+  const bloques=[];
+  const guardar=html=>{bloques.push(html);return `\u0000${bloques.length-1}\u0000`; };
+  // Lo que va dentro de un bloque también lleva énfasis y código inline.
+  const inline=s=>s
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
     .replace(/\*(.+?)\*/g,'<em>$1</em>')
-    .replace(/`([^`]+)`/g,'<code>$1</code>')
-    .replace(/\n/g,'<br>');
+    .replace(/`([^`]+)`/g,'<code>$1</code>');
+  const celdas=fila=>fila.replace(/^\||\|$/g,'').split('|').map(c=>inline(c.trim()));
+  const esSeparador=fila=>/^\|[\s:|-]+\|$/.test(fila);
+  const tabla=filas=>{
+    const [cabecera,...resto]=filas;
+    const cuerpo=resto.filter(f=>!esSeparador(f));
+    const th=celdas(cabecera).map(c=>`<th>${c}</th>`).join('');
+    const tr=cuerpo.map(f=>`<tr>${celdas(f).map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+    return `<div class="md-table"><table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table></div>`;
+  };
+  const items=(bloque,prefijo)=>bloque.trim().split('\n')
+    .map(l=>`<li>${inline(l.replace(prefijo,'').trim())}</li>`).join('');
+
+  let out=String(t)
+    .replace(/```[a-z]*\n([\s\S]*?)```/g,(_,codigo)=>
+      guardar(`<pre><code>${escapeHtml(codigo.replace(/\n$/,''))}</code></pre>`))
+    .replace(/(?:^\|.*\|[ \t]*\n?){2,}/gm,bloque=>guardar(tabla(bloque.trim().split('\n'))))
+    .replace(/(?:^[ \t]*[-*] .*\n?)+/gm,bloque=>guardar(`<ul>${items(bloque,/^[ \t]*[-*] /)}</ul>`))
+    .replace(/(?:^\d+\. .*\n?)+/gm,bloque=>guardar(`<ol>${items(bloque,/^\d+\. /)}</ol>`));
+
+  out=out
+    .replace(/^(#{1,6}) (.+)$/gm,(_,nivel,titulo)=>`<${nivel.length<=2?'h2':'h3'}>${titulo}</${nivel.length<=2?'h2':'h3'}>`);
+  out=inline(out).replace(/\n/g,'<br>');
+
+  // Los <br> de alrededor eran los saltos que el texto tenía antes del bloque.
+  const B='(?:pre|ul|ol|table|div)';
+  return out
+    .replace(/\u0000(\d+)\u0000/g,(_,i)=>bloques[Number(i)])
+    .replace(new RegExp(`(?:<br>\\s*)+(</?${B}[^>]*>)`,'g'),'$1')
+    .replace(new RegExp(`(</?${B}[^>]*>)\\s*(?:<br>)+`,'g'),'$1');
 }
 
 // Orden de módulos explícito. JavaScript emite primero las claves que parecen
@@ -310,7 +341,8 @@ async function renderLesson(id){
   
   // Theory panel
   let theoryHTML=`<h2>Objetivo de la lección</h2><p>${lesson.objective||''}</p>`;
-  if(lesson.keyConcept) theoryHTML+=`<div class="concept-box"><strong>Concepto clave:</strong> ${lesson.keyConcept}</div>`;
+  // El concepto clave es prosa con markdown (`código` inline): crudo mostraba los backticks.
+  if(lesson.keyConcept) theoryHTML+=`<div class="concept-box"><strong>Concepto clave:</strong> ${renderMarkdown(lesson.keyConcept)}</div>`;
   if(lesson.theory) theoryHTML+=`<h2>Teoría</h2>${renderMarkdown(lesson.theory)}`;
   if(lesson.example) theoryHTML+=`<h2>Ejemplo Pokémon</h2><pre>${escapeHtml(lesson.example)}</pre>`;
   if(lesson.extraTheory) theoryHTML+=`<h2>Profundizando</h2>${renderMarkdown(lesson.extraTheory)}`;
@@ -719,7 +751,7 @@ async function initCodeMirror(){
   const host=$('#editorHost');
   if(!ta||!host) return;
   try{
-    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-06-local');
+    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-07-md');
     cmAPI=cm;
     cmExtensions=buildCMExtensions(cm);
     ta.addEventListener('input',syncTextareaToEditor);
