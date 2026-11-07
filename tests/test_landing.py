@@ -296,7 +296,7 @@ def test_mobile_sin_recortes(page, static_site):
     assert metrics["cards"] == 13
     assert not metrics["overflowX"], "la página scrollea horizontalmente en mobile"
     assert not metrics["toggleScrolls"], "el filtro de niveles scrollea en lugar de envolver"
-    assert metrics["clipped"] == [], f"botones fuera de pantalla: {metrics['clipped']}"
+    assert not metrics["clipped"], f"botones fuera de pantalla: {metrics['clipped']}"
 
 
 def test_teoria_renderiza_bloques_de_codigo(static_site, page):
@@ -370,5 +370,29 @@ def test_teoria_renderiza_encabezados_hondos_y_concepto(static_site, page):
     assert page.locator("#theoryPanel .concept-box code").count() >= 1, (
         "el concepto clave no convirtió su código inline"
     )
+    assert page.locator("#theoryPanel .concept-box p").count() == 0, (
+        "el concepto clave se partió en un párrafo: 'Concepto clave:' quedó en su propia línea"
+    )
     cuerpo = page.locator("#theoryPanel").inner_text()
     assert "####" not in cuerpo, "quedó un encabezado markdown crudo (#### …) en la teoría"
+
+
+def test_teoria_usa_parrafos_en_vez_de_br(static_site, page):
+    """Párrafos reales en vez de <br><br> entre bloques (S14)."""
+    page.goto(static_site)
+    page.wait_for_selector(".module-card")
+    page.evaluate("window.location.hash = '#/lesson/3'")
+    page.wait_for_selector("#theoryPanel h3", timeout=15000)
+    distancia = page.evaluate("""() => {
+        const h3 = document.querySelector('#theoryPanel h3');
+        let p = h3.nextElementSibling;
+        while (p && p.tagName !== 'P') p = p.nextElementSibling;
+        if (!p) return null;
+        const r1 = h3.getBoundingClientRect();
+        const r2 = p.getBoundingClientRect();
+        return r2.top - r1.bottom;
+    }""")
+    assert distancia is not None, "no hay párrafo después del primer h3"
+    assert distancia <= 20, f"distancia h3->p = {distancia}px (>20)"
+    html = page.locator("#theoryPanel").inner_html()
+    assert "<br><br>" not in html, "el panel contiene <br><br>"

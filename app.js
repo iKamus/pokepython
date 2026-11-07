@@ -3,7 +3,7 @@
    SPA con routing hash, Pyodide para ejecución local
    ═══════════════════════════════════════════════════ */
 
-console.info('PokéPython build: 2026-11-07-md');
+console.info('PokéPython build: 2026-11-07-p');
 
 // ── Estado global ──────────────────────────────
 let LESSONS = [];       // flat array [lesson, ...]
@@ -41,7 +41,7 @@ function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').repla
 // Bloques primero: fences, tablas y listas. Si las reglas inline corren antes, el
 // fence ```python se lo come el regex de `código` (quedaba un <code> gigante y un
 // backtick huérfano) y las tablas y listas salían con barras y guiones literales.
-function renderMarkdown(t){
+function renderMarkdown(t,enLinea=false){
   const bloques=[];
   const guardar=html=>{bloques.push(html);return `\u0000${bloques.length-1}\u0000`; };
   // Lo que va dentro de un bloque también lleva énfasis y código inline.
@@ -70,14 +70,43 @@ function renderMarkdown(t){
 
   out=out
     .replace(/^(#{1,6}) (.+)$/gm,(_,nivel,titulo)=>`<${nivel.length<=2?'h2':'h3'}>${titulo}</${nivel.length<=2?'h2':'h3'}>`);
-  out=inline(out).replace(/\n/g,'<br>');
 
-  // Los <br> de alrededor eran los saltos que el texto tenía antes del bloque.
-  const B='(?:pre|ul|ol|table|div)';
-  return out
+  // Énfasis inline (también para párrafos, items y celdas: los bloques ya lo
+  // aplicaron por su cuenta; aquí cubre el texto suelto y los encabezados).
+  out=inline(out);
+
+  // Párrafos reales: el texto suelto se parte en líneas vacías. Un salto
+  // simple dentro de un párrafo sigue siendo <br>; una línea vacía corta el
+  // párrafo. Los encabezados y los placeholders de bloque son bloques propios:
+  // nunca se envuelven en <p> y no llevan <br> pegado.
+  // En modo en línea (concepto clave: va dentro de un <div> que ya tiene texto)
+  // no corresponde <p>, porque partiría el rótulo "Concepto clave:" de su contenido.
+  if(enLinea) return out
     .replace(/\u0000(\d+)\u0000/g,(_,i)=>bloques[Number(i)])
-    .replace(new RegExp(`(?:<br>\\s*)+(</?${B}[^>]*>)`,'g'),'$1')
-    .replace(new RegExp(`(</?${B}[^>]*>)\\s*(?:<br>)+`,'g'),'$1');
+    .replace(/\n/g,'<br>').trim();
+
+  const lineas=out.split('\n');
+  const bloquesFinales=[];
+  let parrafo=[];
+  const vaciarParrafo=()=>{
+    if(parrafo.length){
+      const texto=parrafo.join('\n').trim();
+      if(texto) bloquesFinales.push(`<p>${texto.replace(/\n/g,'<br>')}</p>`);
+      parrafo=[];
+    }
+  };
+  const esBloque=t=>/^<h[23]>/.test(t)||/^\u0000\d+\u0000$/.test(t);
+  for(const linea of lineas){
+    const t=linea.trim();
+    if(t===''){ vaciarParrafo(); continue; }
+    if(esBloque(t)){ vaciarParrafo(); bloquesFinales.push(t); }
+    else parrafo.push(linea);
+  }
+  vaciarParrafo();
+  out=bloquesFinales.join('\n');
+
+  // Restaurar los bloques: ya son elementos de bloque, sin <br> pegado.
+  return bloquesFinales.join('\n').replace(/\u0000(\d+)\u0000/g,(_,i)=>bloques[Number(i)]);
 }
 
 // Orden de módulos explícito. JavaScript emite primero las claves que parecen
@@ -342,7 +371,7 @@ async function renderLesson(id){
   // Theory panel
   let theoryHTML=`<h2>Objetivo de la lección</h2><p>${lesson.objective||''}</p>`;
   // El concepto clave es prosa con markdown (`código` inline): crudo mostraba los backticks.
-  if(lesson.keyConcept) theoryHTML+=`<div class="concept-box"><strong>Concepto clave:</strong> ${renderMarkdown(lesson.keyConcept)}</div>`;
+  if(lesson.keyConcept) theoryHTML+=`<div class="concept-box"><strong>Concepto clave:</strong> ${renderMarkdown(lesson.keyConcept,true)}</div>`;
   if(lesson.theory) theoryHTML+=`<h2>Teoría</h2>${renderMarkdown(lesson.theory)}`;
   if(lesson.example) theoryHTML+=`<h2>Ejemplo Pokémon</h2><pre>${escapeHtml(lesson.example)}</pre>`;
   if(lesson.extraTheory) theoryHTML+=`<h2>Profundizando</h2>${renderMarkdown(lesson.extraTheory)}`;
@@ -751,7 +780,7 @@ async function initCodeMirror(){
   const host=$('#editorHost');
   if(!ta||!host) return;
   try{
-    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-07-md');
+    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-07-p');
     cmAPI=cm;
     cmExtensions=buildCMExtensions(cm);
     ta.addEventListener('input',syncTextareaToEditor);
