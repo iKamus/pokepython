@@ -54,8 +54,8 @@ total = comparar_parejas(nombres)
 print(f"\nComparaciones totales ({len(nombres)} pokémons): {total}")  # C(3,2)=3
 
 # RETO 5 — Medir tiempo real:
-tamanios = [100, 1000, 10000]
-for tam in tamanios:
+tamanos = [100, 1000, 10000]
+for tam in tamanos:
     lista = list(range(tam))
     
     start = time.time()

@@ -9,8 +9,8 @@ nombres_mayu = [p.upper() for p in pokemons]
 print(nombres_mayu)  # ['PIKACHU', 'CHARIZARD', 'BLASTOISE', 'VENUSAUR']
 
 # RETO 2 — Filtrar Pokémons largos (más de 8 letras):
-longos = [p for p in pokemons if len(p) > 8]
-print(f"Largos: {longos}")  # ['charizard', 'blastoise']
+largos = [p for p in pokemons if len(p) > 8]
+print(f"Largos: {largos}")  # ['charizard', 'blastoise']
 
 # RETO 3 — Mapear a diccionario {nombre: nivel}
 nombres = ["pika", "char", "blasto", "venus"]

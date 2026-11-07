@@ -33,7 +33,7 @@ movimiento_especial = charizard.get("ataque_especial", "Placaje")
 print(f"\nAtaque especial: {movimiento_especial}")  # Placaje (no existe, usa default)
 
 # RETO 6 — Pokédex completa con varios Pokémon:
-pokdex = {
+pokedex = {
     25: {"nombre": "Pikachu", "tipo": "electrico"},
     6: {"nombre": "Charizard", "tipo": "fuego"},
     9: {"nombre": "Blastoise", "tipo": "agua"},
@@ -41,6 +41,6 @@ pokdex = {
 }
 
 # RETO 7 — Set de tipos únicos:
-tipos_usados = set(pokdex[num]["tipo"] for num in pokdex)
+tipos_usados = set(pokedex[num]["tipo"] for num in pokedex)
 print(f"\nTipos encontrados: {tipos_usados}")
 print(f"Cantidad de tipos distintos: {len(tipos_usados)}")

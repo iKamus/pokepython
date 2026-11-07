@@ -1,6 +1,6 @@
 """Bloque 10 · Bucles while y break/continue
 
-Controlá el flujo con while loops para simulaciones turnales.
+Controlá el flujo con while y break/continue para simulaciones por turnos.
 """
 
 # RETO 1 — while básico: contar turnos de batalla:

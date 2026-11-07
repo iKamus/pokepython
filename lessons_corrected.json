@@ -119,7 +119,7 @@
             {
               "id": "t4",
               "name": "len()",
-              "description": "Length of hidrobomba",
+              "description": "Longitud de hidrobomba",
               "expect": "10"
             },
             {
@@ -228,8 +228,8 @@
             },
             {
               "id": "t4",
-              "name": "Can attack",
-              "description": "and condition",
+              "name": "Puede atacar",
+              "description": "Condición con and",
               "expect": "True"
             },
             {
@@ -418,14 +418,14 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Tuple creada",
-              "description": "Stats base Pikachu",
+              "name": "Tupla creada",
+              "description": "Stats base de Pikachu",
               "expect": "(35,"
             },
             {
               "id": "t2",
-              "name": "Index access",
-              "description": "HP and speed",
+              "name": "Acceso por índice",
+              "description": "HP y velocidad",
               "expect": "stats["
             },
             {
@@ -436,20 +436,20 @@
             },
             {
               "id": "t4",
-              "name": "Negative index",
-              "description": "Speed with -1",
+              "name": "Índice negativo",
+              "description": "Velocidad con -1",
               "expect": "[-1]"
             },
             {
               "id": "t5",
-              "name": "Reverse tuple",
-              "description": "Full reversal",
+              "name": "Tupla invertida",
+              "description": "Inversión completa",
               "expect": "[::-1]"
             },
             {
               "id": "t6",
-              "name": "Unpack",
-              "description": "Unpacked into vars",
+              "name": "Desempaquetado",
+              "description": "Desempaquetado en variables",
               "expect": "= stats"
             },
             {
@@ -476,8 +476,8 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Count to 5",
-              "description": "While loop runs 5 times",
+              "name": "Cuenta hasta 5",
+              "description": "El while corre 5 veces",
               "expect": "while"
             },
             {
@@ -515,15 +515,15 @@
           "objective": "Crear y manipular diccionarios para representar fichas de Pokémons.",
           "keyConcept": "Diccionarios {clave: valor}. Acceder con clave, iterar keys/values/items.",
           "theory": "### Construyendo la Pokédex\n\nUn **diccionario** mapea claves a valores. Cada Pokémon es un diccionario:\n\n```python\npikachu = {\n    \"nombre\": \"Pikachu\",\n    \"tipo\": \"electrico\",\n    \"nivel\": 25,\n    \"habilidades\": [\"electricidad estática\", \"pararrayos\"]\n}\nprint(pikachu[\"nombre\"])  # Pikachu\n```\n\n#### Métodos de diccionario\n\n| Método | Qué hace |\n|--------|----------|\n| `.keys()` | Todas las claves |\n| `.values()` | Todos los valores |\n| `.items()` | Pares clave-valor |\n| `.get(key, default)` | Obtener con fallback |\n| `.update(dict2)` | Fusionar diccionarios |",
-          "example": "pokdex = {\n    25: {\"nombre\": \"Pikachu\", \"tipo\": \"electrico\"},\n    6: {\"nombre\": \"Charizard\", \"tipo\": \"fuego\"},\n    9: {\"nombre\": \"Blastoise\", \"tipo\": \"agua\"}\n}\nprint(pokdex[25][\"nombre\"])  # Pikachu\nprint(list(pokdex.keys()))     # [25, 6, 9]",
+          "example": "pokedex = {\n    25: {\"nombre\": \"Pikachu\", \"tipo\": \"electrico\"},\n    6: {\"nombre\": \"Charizard\", \"tipo\": \"fuego\"},\n    9: {\"nombre\": \"Blastoise\", \"tipo\": \"agua\"}\n}\nprint(pokedex[25][\"nombre\"])  # Pikachu\nprint(list(pokedex.keys()))     # [25, 6, 9]",
           "exercisePrompt": "Construí tu Pokédex personal con diccionarios.",
           "codeFile": "./lessons/10_diccionarios.py",
           "solutionFile": "./solutions/11.py",
           "tests": [
             {
               "id": "t1",
-              "name": "Dictionary created",
-              "description": "Charizard with data",
+              "name": "Diccionario creado",
+              "description": "Charizard con datos",
               "expect": "{\\\"nombre\\\""
             },
             {
@@ -546,14 +546,14 @@
             },
             {
               "id": "t5",
-              "name": "Get with default",
-              "description": "Returns fallback",
+              "name": "get() con valor por defecto",
+              "description": "Devuelve el valor de reemplazo",
               "expect": ".get("
             },
             {
               "id": "t6",
-              "name": "Set of types",
-              "description": "Eliminates duplicates",
+              "name": "Set de tipos",
+              "description": "Elimina duplicados",
               "expect": "set("
             }
           ]
@@ -566,8 +566,8 @@
           "shortTitle": "Comprensión",
           "objective": "Escribir comprensiones concisas para transformar listas de Pokémons.",
           "keyConcept": "List comprehension: [expresión for item in iterable if condición]. Dict comp: {k:v for ...}",
-          "theory": "### Transformar tu equipo en una línea\n\nLas **list comprehensions** crean listas nuevas elegantemente:\n\n```python\npokemons = [\"Pikachu\", \"Charmander\", \"Squirtle\", \"Bulbasaur\"]\nnombres_largos = [p.lower() for p in pokemons if len(p) > 8]\n# ['charmander', 'bulbasaur']\n```\n\n#### Dict comprehension\n\n```python\nstats = {\"hp\": 35, \"attack\": 55, \"defense\": 40}\npokdex_num = {i: name for i, name in enumerate([...], start=1)}\n```",
-          "example": "pokemons = [\"pikachu\", \"charizard\", \"blastoise\"]\nnombres_mayu = [p.upper() for p in pokemons]\nlongos = [p for p in pokemons if len(p) > 8]\nniveles = [25, 36, 42]\npor_nombre = {nom: niv for nom, niv in zip(nombres_mayu, niveles)}",
+          "theory": "### Transformar tu equipo en una línea\n\nLas **list comprehensions** crean listas nuevas elegantemente:\n\n```python\npokemons = [\"Pikachu\", \"Charmander\", \"Squirtle\", \"Bulbasaur\"]\nnombres_largos = [p.lower() for p in pokemons if len(p) > 8]\n# ['charmander', 'bulbasaur']\n```\n\n#### Dict comprehension\n\n```python\nstats = {\"hp\": 35, \"attack\": 55, \"defense\": 40}\npokedex_num = {i: name for i, name in enumerate([...], start=1)}\n```",
+          "example": "pokemons = [\"pikachu\", \"charizard\", \"blastoise\"]\nnombres_mayu = [p.upper() for p in pokemons]\nlargos = [p for p in pokemons if len(p) > 8]\nniveles = [25, 36, 42]\npor_nombre = {nom: niv for nom, niv in zip(nombres_mayu, niveles)}",
           "exercisePrompt": "Transformá colecciones con list y dict comprehensions.",
           "codeFile": "./lessons/11_comprension.py",
           "solutionFile": "./solutions/12.py",
@@ -586,26 +586,26 @@
             },
             {
               "id": "t3",
-              "name": "Dict comprehension",
-              "description": "Name -> level map",
+              "name": "Comprensión de diccionario",
+              "description": "Mapa nombre → nivel",
               "expect": "{:"
             },
             {
               "id": "t4",
-              "name": "Conditional comprehension",
-              "description": "Divisible by 5",
+              "name": "Comprensión con condición",
+              "description": "Divisible por 5",
               "expect": "% 5 == 0"
             },
             {
               "id": "t5",
-              "name": "Nested comprehension",
-              "description": "Two nested loops",
+              "name": "Comprensión anidada",
+              "description": "Dos bucles anidados",
               "expect": "for"
             },
             {
               "id": "t6",
-              "name": "Extract stats",
-              "description": "Nested dict extraction",
+              "name": "Extraer stats",
+              "description": "Extracción de un dict anidado",
               "expect": "[\"stats\"][\"attack\"]"
             }
           ]
@@ -626,26 +626,26 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Counter creates",
-              "description": "Counts frequencies",
+              "name": "Counter cuenta",
+              "description": "Cuenta frecuencias",
               "expect": "Counter("
             },
             {
               "id": "t2",
               "name": "most_common",
-              "description": "Returns sorted",
+              "description": "Devuelve ordenado",
               "expect": "most_common()"
             },
             {
               "id": "t3",
-              "name": "defaultdict groups",
-              "description": "Aggregates without KeyError",
+              "name": "defaultdict agrupa",
+              "description": "Agrupa sin KeyError",
               "expect": "defaultdict("
             },
             {
               "id": "t4",
-              "name": "Sum with defaultdict",
-              "description": "Accumulates correctly",
+              "name": "Suma con defaultdict",
+              "description": "Acumula correctamente",
               "expect": "+="
             }
           ]
@@ -666,26 +666,26 @@
           "tests": [
             {
               "id": "t1",
-              "name": "JSON serializes",
-              "description": "Converts to string",
+              "name": "JSON serializa",
+              "description": "Convierte a string",
               "expect": "json.dumps("
             },
             {
               "id": "t2",
-              "name": "Parsed back",
-              "description": "Load returns dict",
+              "name": "Vuelve a dict",
+              "description": "load() devuelve un dict",
               "expect": "json.loads("
             },
             {
               "id": "t3",
-              "name": "Write to file",
-              "description": "Dump to file",
+              "name": "Escribe a archivo",
+              "description": "dump() al archivo",
               "expect": "json.dump("
             },
             {
               "id": "t4",
-              "name": "Read from file",
-              "description": "Load from file",
+              "name": "Lee del archivo",
+              "description": "load() del archivo",
               "expect": "json.load("
             }
           ]
@@ -712,20 +712,20 @@
           "tests": [
             {
               "id": "t1",
-              "name": "ZeroDivision handled",
-              "description": "No crash with b=0",
+              "name": "ZeroDivision manejada",
+              "description": "Sin crash con b=0",
               "expect": "ZeroDivisionError"
             },
             {
               "id": "t2",
-              "name": "KeyError handled",
-              "description": "ID not found managed",
+              "name": "KeyError manejada",
+              "description": "ID inexistente controlado",
               "expect": "KeyError"
             },
             {
               "id": "t3",
-              "name": "Parse robust",
-              "description": "Handles wrong type and value",
+              "name": "Parseo robusto",
+              "description": "Aguanta tipo y valor inválidos",
               "expect": "except"
             },
             {
@@ -764,8 +764,8 @@
             },
             {
               "id": "t2",
-              "name": "Learn move",
-              "description": "Move added to list",
+              "name": "Aprender movimiento",
+              "description": "Se agrega a la lista",
               "expect": "append"
             },
             {
@@ -776,8 +776,8 @@
             },
             {
               "id": "t4",
-              "name": "Healing",
-              "description": "HP increases but does not exceed max",
+              "name": "Curación",
+              "description": "Sube el HP sin pasar el máximo",
               "expect": "min("
             }
           ]
@@ -838,8 +838,8 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Property nivel getter",
-              "description": "Returns internal _nivel",
+              "name": "Propiedad nivel (getter)",
+              "description": "Devuelve _nivel",
               "expect": "@property"
             },
             {
@@ -850,8 +850,8 @@
             },
             {
               "id": "t3",
-              "name": "Property hp setter",
-              "description": "Limits HP to max",
+              "name": "Propiedad hp (setter)",
+              "description": "Limita el HP al máximo",
               "expect": "@hp.setter"
             },
             {
@@ -878,8 +878,8 @@
           "tests": [
             {
               "id": "t1",
-              "name": "@classmethod factory",
-              "description": "Creates instance from class",
+              "name": "@classmethod fábrica",
+              "description": "Crea la instancia desde la clase",
               "expect": "@classmethod"
             },
             {
@@ -890,8 +890,8 @@
             },
             {
               "id": "t3",
-              "name": "Type effect calculates",
-              "description": "Returns correct multiplier",
+              "name": "Calcula la efectividad",
+              "description": "Devuelve el multiplicador correcto",
               "expect": "SUPER"
             },
             {
@@ -924,20 +924,20 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Electric inherits Pokemon",
-              "description": "instance is Pokemon",
+              "name": "Electrico hereda de Pokemon",
+              "description": "La instancia es un Pokemon",
               "expect": "isinstance"
             },
             {
               "id": "t2",
-              "name": "Fuego subclass",
-              "description": "Extends Pokemon with fire moves",
+              "name": "Subclase Fuego",
+              "description": "Extiende Pokemon con movimientos de fuego",
               "expect": "class Fuego"
             },
             {
               "id": "t3",
-              "name": "Agua subclass",
-              "description": "Extends Pokemon with water moves",
+              "name": "Subclase Agua",
+              "description": "Extiende Pokemon con movimientos de agua",
               "expect": "class Agua"
             },
             {
@@ -976,14 +976,14 @@
             },
             {
               "id": "t3",
-              "name": "Battle simulates",
-              "description": "Alternating turns",
+              "name": "Combate alternado",
+              "description": "Cada Pokémon ataca por turno",
               "expect": "while"
             },
             {
               "id": "t4",
-              "name": "Winner detected",
-              "description": "HP of loser equals 0",
+              "name": "Ganador detectado",
+              "description": "El HP del perdedor queda en 0",
               "expect": "ganador ="
             }
           ]
@@ -1010,14 +1010,14 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Search sequential",
-              "description": "Returns index or -1",
+              "name": "Búsqueda secuencial",
+              "description": "Devuelve el índice o -1",
               "expect": "return"
             },
             {
               "id": "t2",
-              "name": "O(1) access",
-              "description": "Directs access to first",
+              "name": "Acceso O(1)",
+              "description": "Acceso directo al primero",
               "expect": "[0]"
             },
             {
@@ -1102,26 +1102,26 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Merge sort basic",
-              "description": "Sorts list correctly",
+              "name": "Merge sort básico",
+              "description": "Ordena la lista",
               "expect": "merge_sort"
             },
             {
               "id": "t2",
-              "name": "Sort by key",
-              "description": "Sorts by specified field",
+              "name": "Ordena por clave",
+              "description": "Ordena por el campo indicado",
               "expect": "lambda"
             },
             {
               "id": "t3",
-              "name": "Stable sort",
-              "description": "Maintains relative order",
+              "name": "Orden estable",
+              "description": "Mantiene el orden relativo",
               "expect": "<="
             },
             {
               "id": "t4",
-              "name": "Empty edge case",
-              "description": "Returns [] for empty input",
+              "name": "Caso borde vacío",
+              "description": "Devuelve [] sin elementos",
               "expect": "len(arr) <= 1"
             }
           ]
@@ -1148,26 +1148,26 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Graph built",
-              "description": "Directed graph with edges",
+              "name": "Grafo construido",
+              "description": "Grafo dirigido con aristas",
               "expect": "grafo"
             },
             {
               "id": "t2",
-              "name": "Who wins",
-              "description": "Correct multiplier",
+              "name": "Quién gana",
+              "description": "Multiplicador correcto",
               "expect": "def_tipo in"
             },
             {
               "id": "t3",
-              "name": "Best options",
-              "description": "List of effective types",
+              "name": "Mejores opciones",
+              "description": "Tipos efectivos",
               "expect": "mejores"
             },
             {
               "id": "t4",
               "name": "Default normal",
-              "description": "Returns normal if none better",
+              "description": "Devuelve normal si no hay mejor",
               "expect": "[\\\"normal\\\"]"
             }
           ]
@@ -1240,20 +1240,20 @@
             },
             {
               "id": "t2",
-              "name": "Max value returned",
-              "description": "Optimal result",
+              "name": "Valor máximo",
+              "description": "Resultado óptimo",
               "expect": "dp[n][capacidad]"
             },
             {
               "id": "t3",
-              "name": "Trace items",
-              "description": "Backtrack finds correct selection",
+              "name": "Reconstruir los ítems",
+              "description": "El backtrack elige bien",
               "expect": "selected.append"
             },
             {
               "id": "t4",
-              "name": "Capacity limit",
-              "description": "Total weight <= capacity",
+              "name": "Límite de capacidad",
+              "description": "Peso total <= capacidad",
               "expect": "pesos[i - 1] <="
             }
           ]
@@ -1274,26 +1274,26 @@
           "tests": [
             {
               "id": "t1",
-              "name": "LCS length calc",
-              "description": "Correct length",
+              "name": "Longitud de la LCS",
+              "description": "Longitud correcta",
               "expect": "dp[m][n]"
             },
             {
               "id": "t2",
-              "name": "LCS sequence",
-              "description": "Subsequence reconstructed",
+              "name": "Secuencia de la LCS",
+              "description": "Subsecuencia reconstruida",
               "expect": "seq1[i-1] =="
             },
             {
               "id": "t3",
-              "name": "Empty sequences",
-              "description": "Returns 0/[] for empty inputs",
+              "name": "Secuencias vacías",
+              "description": "Devuelve 0/[] sin elementos",
               "expect": "dp = [["
             },
             {
               "id": "t4",
-              "name": "No common elements",
-              "description": "Returns 0 if no match",
+              "name": "Sin elementos en común",
+              "description": "Devuelve 0 si no hay coincidencia",
               "expect": "max("
             }
           ]
@@ -1320,26 +1320,26 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Pokemon class exists",
-              "description": "Has init, __str__, viver",
+              "name": "Existe la clase Pokemon",
+              "description": "Tiene __init__, __str__ y vivo",
               "expect": "class Pokemon"
             },
             {
               "id": "t2",
-              "name": "Types inherit",
-              "description": "Electric, Fire, Water subtypes",
+              "name": "Los tipos heredan",
+              "description": "Subtipos Electrico, Fuego, Agua",
               "expect": "class Electrico"
             },
             {
               "id": "t3",
-              "name": "Attack polymorphic",
-              "description": "Each type attacks differently",
+              "name": "Ataque polimórfico",
+              "description": "Cada tipo ataca distinto",
               "expect": "def atacar"
             },
             {
               "id": "t4",
-              "name": "Battle simulates",
-              "description": "Turn-based combat loop",
+              "name": "La batalla simula",
+              "description": "Combate por turnos",
               "expect": "while"
             },
             {

@@ -13,10 +13,10 @@ print(dividir(10, 3))     # 3.33...
 print(dividir(10, 0))     # Error message
 
 # RETO 2 — Acceso seguro a Pokédex:
-pokdex = {25: "Pikachu", 6: "Charizard", 9: "Blastoise"}
+pokedex = {25: "Pikachu", 6: "Charizard", 9: "Blastoise"}
 
 def obtener_pokemon(id_pokemon):
-    # TODO: intentá pokdex[id_pokemon] y capturá KeyError con mensaje claro
+    # TODO: intentá pokedex[id_pokemon] y capturá KeyError con mensaje claro
     return None
 
 print(obtener_pokemon(25))     # Pikachu

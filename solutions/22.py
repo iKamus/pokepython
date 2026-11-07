@@ -59,8 +59,8 @@ esperado = n * (n-1) / 2
 assert total == esperado  # C(3,2)=3 → n * (n-1) / 2 comparaciones
 
 # RETO 5 — Medir tiempo real:
-tamanios = [100, 1000, 10000]
-for tam in tamanios:
+tamanos = [100, 1000, 10000]
+for tam in tamanos:
     lista = list(range(tam))
     
     start = time.time()

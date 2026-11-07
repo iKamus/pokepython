@@ -1,6 +1,6 @@
 """Bloque 08 · Listas y bucles
 
-Trabajá con listas de Pokémons y recorrelas con for y while.
+Trabajá con listas de Pokémons y recorrerlas con for y while.
 """
 
 # RETO 1 — Lista de primeros 6 starters:
