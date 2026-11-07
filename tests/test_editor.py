@@ -219,10 +219,10 @@ def test_salida_de_python_aparece_en_la_consola_de_la_pagina(static_site, page):
     page.click("#runBtn")
 
     expected_lines = [
-        "Python es un lenguaje de propósito general",
-        "Se usa en ciencia de datos",
-        "También en desarrollo web",
-        "Y en automatización de tareas",
+        "¡Hola, Entrenador! Bienvenido a la Pokédex",
+        "Pokémon registrado: Pikachu",
+        "Tipo: Eléctrico",
+        "Nivel: 5",
     ]
     try:
         page.wait_for_function(
@@ -406,7 +406,7 @@ def test_consola_no_conserva_el_placeholder_y_marca_listo(page, static_site):
 
     salida = page.inner_text("#consoleOutput")
     assert _STARTER_TEXT not in salida, f"el placeholder sigue arriba de la salida:\n{salida}"
-    assert "Python es un lenguaje de propósito general" in salida, salida
+    assert "¡Hola, Entrenador! Bienvenido a la Pokédex" in salida, salida
     assert page.inner_text("#consoleStatus").strip() == "Listo"
 
 

@@ -3,59 +3,55 @@
 Solución completa de la lección, lista para ejecutar.
 """
 
-# RETO 1 — Función que retorna el doble de un número:
-def doble(n):
-    return n * 2
+# RETO 1 — Daño con multiplicador por defecto:
+def calcular_dano(base, multiplicador=1.5):
+    return base * multiplicador
 
-print(f"doble(21) = {doble(21)}")  # 42
-assert doble(21) == 42
+print(f"calcular_dano(40) = {calcular_dano(40)}")  # 60.0
 
-# RETO 2 — Dos parámetros con default:
-def area_rectangulo(base, altura=1):
-    return base * altura
+# RETO 2 — Curación con tope:
+def curar(hp, cantidad, tope=100):
+    return min(hp + cantidad, tope)
 
-print(f"area_rectangulo(4) = {area_rectangulo(4)}")     # 4
-print(f"area_rectangulo(4, 3) = {area_rectangulo(4, 3)}")  # 12
+print(f"curar(80, 30) = {curar(80, 30)}")  # 100
 
-# RETO 3 — Parámetro obligatorio + opcional por nombre:
-def nombre_completo(nombre, apellido=""):
-    if apellido:
-        return f"{nombre} {apellido}"
-    return nombre
+# RETO 3 — Efectividad de tipos:
+def efectividad(tipo_ataque, tipo_defensor):
+    if tipo_ataque == "agua" and tipo_defensor == "fuego":
+        return 2.0
+    if tipo_ataque == "fuego" and tipo_defensor == "agua":
+        return 0.5
+    return 1.0
 
-print(f"nombre_completo('Red') = '{nombre_completo('Red')}'")           # Red
-print(f"nombre_completo('Red', 'Blue') = '{nombre_completo('Red', 'Blue')}'")  # Red Blue
+print(f"efectividad('agua', 'fuego') = {efectividad('agua', 'fuego')}")  # 2.0
 
-print(nombre_completo("Ada", "Lovelace"))  # Ada Lovelace
-
-# RETO 4 — Sumar dos valores:
-def sumar(a, b):
+# RETO 4 — Sumar daño:
+def sumar_dano(a, b):
     return a + b
 
-print(f"sumar(7, 8) = {sumar(7, 8)}")  # 15
-assert sumar(7, 8) == 15
+print(f"sumar_dano(40, 35) = {sumar_dano(40, 35)}")  # 75
 
-# RETO 5 — Imprimir sin devolver nada (return implícito None):
-def saludar(nombre):
-    print(f"Hola, {nombre}! Bienvenido al mundo Pokémon.")
+# RETO 5 — Saludar sin devolver:
+def saludar_entrenador(nombre):
+    print(f"¡Hola, {nombre}! Preparate para la batalla.")
 
-saludar("Ash")  # Hola, Ash! Bienvenido...
+saludar_entrenador("Ash")
 
-# RETO 6 — Modificar variable global con global:
-globales_counter = 0
-def incrementar():
-    global globales_counter
-    globales_counter += 1
+# RETO 6 — Contador global de turnos:
+turnos_batalla = 0
+def incrementar_turno():
+    global turnos_batalla
+    turnos_batalla += 1
 
-incrementar()
-incrementar()
-print(f"Contador global: {globales_counter}")  # 2
+incrementar_turno()
+incrementar_turno()
+print(f"Turnos de batalla: {turnos_batalla}")  # 2
 
-# RETO 7 — Variable local no afecta global:
+# RETO 7 — Variable local:
 valor = 10
 def valor_local():
-    valor = 5  # Solo local
+    valor = 5
     return valor
 
-print(f"Valor interno: {valor_local()}")   # 5
-print(f"Valor global: {valor}")             # 10 (sin cambios)
+print(f"Valor interno: {valor_local()}")  # 5
+print(f"Valor global: {valor}")  # 10

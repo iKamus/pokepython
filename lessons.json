@@ -20,27 +20,27 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Reto 1",
-              "description": "Primera línea impresa",
-              "expect": "Python es un lenguaje de propósito general"
+              "name": "Saludo al Entrenador",
+              "description": "Primera línea de la Pokédex",
+              "expect": "¡Hola, Entrenador! Bienvenido a la Pokédex"
             },
             {
               "id": "t2",
-              "name": "Reto 2",
-              "description": "Segunda línea impresa",
-              "expect": "Se usa en ciencia de datos"
+              "name": "Pokémon registrado",
+              "description": "Segunda línea",
+              "expect": "Pokémon registrado: Pikachu"
             },
             {
               "id": "t3",
-              "name": "Reto 3",
-              "description": "Tercera línea impresa",
-              "expect": "También en desarrollo web"
+              "name": "Tipo del Pokémon",
+              "description": "Tercera línea",
+              "expect": "Tipo: Eléctrico"
             },
             {
               "id": "t4",
-              "name": "Reto 4",
-              "description": "Cuarta línea impresa",
-              "expect": "Y en automatización de tareas"
+              "name": "Nivel del Pokémon",
+              "description": "Cuarta línea",
+              "expect": "Nivel: 5"
             }
           ],
           "module": "01"
@@ -261,45 +261,45 @@
           "tests": [
             {
               "id": "t1",
-              "name": "doble(21)",
-              "description": "Retorna 42",
-              "expect": "42"
+              "name": "calcular_dano",
+              "description": "Daño con multiplicador por defecto",
+              "expect": "return base * multiplicador"
             },
             {
               "id": "t2",
-              "name": "area_rectangulo",
-              "description": "with default param",
-              "expect": "4"
+              "name": "curar",
+              "description": "Curación con tope",
+              "expect": "return min(hp + cantidad, tope)"
             },
             {
               "id": "t3",
-              "name": "nombre_completo",
-              "description": "Optional surname",
-              "expect": "Lovelace"
+              "name": "efectividad",
+              "description": "Efectividad de tipos",
+              "expect": "return 2.0"
             },
             {
               "id": "t4",
-              "name": "sumar",
-              "description": "Returns sum",
-              "expect": "15"
+              "name": "sumar_dano",
+              "description": "Sumar daño",
+              "expect": "return a + b"
             },
             {
               "id": "t5",
-              "name": "saludar prints",
-              "description": "Side effect only",
-              "expect": "Hola"
+              "name": "saludar_entrenador",
+              "description": "Saludo sin retorno",
+              "expect": "print(f\"¡Hola, {nombre}! Preparate para la batalla.\")"
             },
             {
               "id": "t6",
-              "name": "Global counter",
-              "description": "Increments",
-              "expect": "2"
+              "name": "turnos de batalla",
+              "description": "Contador global",
+              "expect": "global turnos_batalla"
             },
             {
               "id": "t7",
-              "name": "Local var",
-              "description": "Does not affect global",
-              "expect": "10"
+              "name": "variable local",
+              "description": "No afecta global",
+              "expect": "valor = 5"
             }
           ],
           "module": "01"
@@ -327,38 +327,38 @@
             {
               "id": "t1",
               "name": "Script ejecutado",
-              "description": "Primer print",
+              "description": "Confirmación de entorno",
               "expect": "Script ejecutado"
             },
             {
               "id": "t2",
-              "name": "doble(5)",
-              "description": "Debe retornar 10",
-              "expect": "10"
+              "name": "experiencia(nivel) retorna",
+              "description": "Primera función Pokémon",
+              "expect": "return nivel * 100"
             },
             {
               "id": "t3",
-              "name": "doble(21)",
-              "description": "Debe imprimir 42",
-              "expect": "42"
+              "name": "experiencia(21) con formato",
+              "description": "Segundo llamado",
+              "expect": "f\"experiencia(21) ="
             },
             {
               "id": "t4",
-              "name": "10 // 3",
-              "description": "División entera",
-              "expect": "3"
+              "name": "100 // 3",
+              "description": "Daño repartido",
+              "expect": "100 // 3"
             },
             {
               "id": "t5",
               "name": "2 ** 8",
               "description": "Potencia",
-              "expect": "256"
+              "expect": "2 ** 8"
             },
             {
               "id": "t6",
               "name": "py + thon",
               "description": "Concatenación",
-              "expect": "python"
+              "expect": "parte1 + parte2"
             }
           ],
           "module": "02"

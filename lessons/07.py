@@ -1,6 +1,6 @@
 """Bloque 07 · Instalación y ejecución
 
-Completá cada TODO: verificá tu entorno, creá doble() e imprimí los resultados.
+Completá cada TODO: verificá tu entorno, creá experiencia() e imprimí los resultados.
 Al terminar, corré ▶ Correr o Ctrl+Enter.
 """
 
@@ -13,24 +13,27 @@ print(f"Python {sys.version.split()[0]} en {sys.executable}")
 #   Script ejecutado
 print("")
 
-# RETO 2 — Creá tu primera función: doble(n) retorna el doble de n.
-#   doble(5) -> 10
-#   doble(21) -> 42
-def doble(n):
-    # TODO: retorná el doble de n
+# RETO 2 — Creá tu primera función: experiencia(nivel) retorna nivel * 100.
+#   experiencia(5) -> 500
+#   experiencia(21) -> 2100
+def experiencia(nivel):
+    # TODO: retorná nivel * 100
     pass
 
-print(doble(5))
-print(doble(21))
+# Imprimí cada resultado con el formato pedido:
+#   experiencia(5) = 500
+#   experiencia(21) = 2100
+print("")   # TODO
+print("")   # TODO
 
-# RETO 3 — Imprimí el resultado de cada operación:
-#   10 // 3 -> 3
+# RETO 3 — Daño repartido entre golpes (//) y potencia del ataque (**):
+#   100 // 3 -> 33
 #   2 ** 8 -> 256
-print("")   # TODO: imprimí 10 // 3
+print("")   # TODO: imprimí 100 // 3
 print("")   # TODO: imprimí 2 ** 8
 
-# RETO 4 — Uní las dos partes con +:
-#   "py" + "thon" -> python
-parte1 = "py"
-parte2 = "thon"
+# RETO 4 — Uní el nombre del Pokémon y su tipo con +:
+#   "Pika" + "chu" -> Pikachu
+parte1 = "Pika"
+parte2 = "chu"
 print("")   # TODO: imprimí parte1 + parte2

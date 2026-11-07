@@ -3,55 +3,56 @@
 Creá funciones reutilizables para calcular daño, curar y verificar condiciones.
 """
 
-# RETO 1 — Función que retorna el doble de un número:
-def doble(n):
-    return n * 2
+# RETO 1 — calcular_dano(base, multiplicador=1.5): retorna base * multiplicador
+def calcular_dano(base, multiplicador=1.5):
+    # TODO: retorná base * multiplicador
+    pass
 
-print(f"doble(21) = {doble(21)}")  # 42
+print(f"calcular_dano(40) = {calcular_dano(40)}")   # 60.0
 
-# RETO 2 — Dos parámetros con default:
-def area_rectangulo(base, altura=1):
-    return base * altura
+# RETO 2 — curar(hp, cantidad, tope=100): cura sin superar el tope
+def curar(hp, cantidad, tope=100):
+    # TODO: retorná el mínimo entre hp + cantidad y tope
+    pass
 
-print(f"area_rectangulo(4) = {area_rectangulo(4)}")     # 4
-print(f"area_rectangulo(4, 3) = {area_rectangulo(4, 3)}")  # 12
+print(f"curar(80, 30) = {curar(80, 30)}")  # 100
 
-# RETO 3 — Parámetro obligatorio + opcional por nombre:
-def nombre_completo(nombre, apellido=""):
-    if apellido:
-        return f"{nombre} {apellido}"
-    return nombre
+# RETO 3 — efectividad(tipo_ataque, tipo_defensor): devuelve el multiplicador
+def efectividad(tipo_ataque, tipo_defensor):
+    # TODO: devolvé 2.0 si agua vs fuego, 0.5 si fuego vs agua, 1.0 en otro caso
+    pass
 
-print(f"nombre_completo('Red') = '{nombre_completo('Red')}'")           # Red
-print(f"nombre_completo('Red', 'Blue') = '{nombre_completo('Red', 'Blue')}'")  # Red Blue
+print(f"efectividad('agua', 'fuego') = {efectividad('agua', 'fuego')}")  # 2.0
 
-# RETO 4 — Sumar dos valores:
-def sumar(a, b):
-    return a + b
+# RETO 4 — sumar_dano(a, b): retorna la suma
+def sumar_dano(a, b):
+    # TODO: retorná a + b
+    pass
 
-print(f"sumar(7, 8) = {sumar(7, 8)}")  # 15
+print(f"sumar_dano(40, 35) = {sumar_dano(40, 35)}")  # 75
 
-# RETO 5 — Imprimir sin devolver nada (return implícito None):
-def saludar(nombre):
-    print(f"Hola, {nombre}! Bienvenido al mundo Pokémon.")
+# RETO 5 — saludar_entrenador(nombre): imprime saludo, no devuelve nada
+def saludar_entrenador(nombre):
+    # TODO: imprimí el saludo de batalla
+    pass
 
-saludar("Ash")  # Hola, Ash! Bienvenido...
+saludar_entrenador("Ash")
 
-# RETO 6 — Modificar variable global con global:
-globales_counter = 0
-def incrementar():
-    global globales_counter
-    globales_counter += 1
+# RETO 6 — incrementar_turno(): suma 1 al contador global turnos_batalla
+turnos_batalla = 0
+def incrementar_turno():
+    # TODO: usá global y sumá 1
+    pass
 
-incrementar()
-incrementar()
-print(f"Contador global: {globales_counter}")  # 2
+incrementar_turno()
+incrementar_turno()
+print(f"Turnos de batalla: {turnos_batalla}")  # 2
 
-# RETO 7 — Variable local no afecta global:
+# RETO 7 — valor_local(): variable local no afecta global
 valor = 10
 def valor_local():
-    valor = 5  # Solo local
-    return valor
+    # TODO: asigná 5 a valor (solo local) y retornalo
+    pass
 
-print(f"Valor interno: {valor_local()}")   # 5
-print(f"Valor global: {valor}")             # 10 (sin cambios)
+print(f"Valor interno: {valor_local()}")  # 5
+print(f"Valor global: {valor}")  # 10
