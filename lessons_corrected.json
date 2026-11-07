@@ -1047,7 +1047,7 @@
           "title": "1. Fundamentos de Recursión",
           "shortTitle": "Recursión",
           "objective": "Entender recursión con casos base y recursive paso.",
-          "keyConcept": "Función que se llama a sí misma. Casos base previenen infinite recursion.",
+          "keyConcept": "Función que se llama a sí misma. Los casos base evitan la recursión infinita.",
           "theory": "### La regla de oro de la recursión\n\nTodo problema recursivo necesita:\n1. **Caso base**: cuándo parar\n2. **Caso recursivo**: cómo avanzar hacia el caso base\n\n```python\ndef evolution_chain(pokemon, current_level=1):\n    forms = {\"bulbasaur\": [\"ivysaur\", \"venusaur\"], \"charmander\": [\"charmeleon\", \"charizard\"]}\n    if current_level > 2 or pokemon not in forms:\n        return [pokemon]\n    next_form = forms[pokemon][current_level - 1]\n    return [pokemon] + evolution_chain(next_form, current_level + 1)\n\ncadena = evolution_chain(\"bulbasaur\")\n# ['bulbasaur', 'ivysaur', 'venusaur']\n```",
           "example": "# Poder de un Pokémon según su nivel, sin bucles: recursión\ndef poder(nivel):\n    if nivel <= 1:                 # caso base\n        return 10\n    return poder(nivel - 1) + 15   # paso recursivo\n\nprint(f\"Nivel 1: {poder(1)}\")   # 10\nprint(f\"Nivel 5: {poder(5)}\")   # 70",
           "exercisePrompt": "Resolvé problemas recursivos: factorial, fibonacci, sumas, cadenas de evolución.",
