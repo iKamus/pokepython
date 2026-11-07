@@ -33,7 +33,7 @@ class Pokemon:
 # --- Subclases con HERENCIA ---
 
 class Electrico(Pokemon):
-    MOVIMIENTOS_ELEC = ["Chispazo", "Rayo", "Thunderbolt", "ColaFerrovia", "Volt Tackle"]
+    MOVIMIENTOS_ELEC = ["Chispazo", "Rayo", "Thunderbolt", "Cola Férrea", "Volt Tackle"]
     
     def __init__(self, nombre, voltaje=100000):
         super().__init__(nombre, "electrico")
@@ -57,7 +57,7 @@ class Electrico(Pokemon):
 
 
 class Fuego(Pokemon):
-    MOVIMIENTOS_FUEGO = ["Llamarada", "Plazma Solar", "Arañazo", "GarraDragon"]
+    MOVIMIENTOS_FUEGO = ["Llamarada", "Rayo Solar", "Arañazo", "Garra Dragón"]
     
     def __init__(self, nombre, poder_llama=85):
         super().__init__(nombre, "fuego")
@@ -80,7 +80,7 @@ class Fuego(Pokemon):
 
 
 class Agua(Pokemon):
-    MOVIMIENTOS_AGUA = ["Hidrobomba", "Burbuja", "Piscada", "Maremoto"]
+    MOVIMIENTOS_AGUA = ["Hidrobomba", "Burbuja", "Acua Jet", "Surf"]
     
     def __init__(self, nombre, velocidad_nado=30):
         super().__init__(nombre, "agua")

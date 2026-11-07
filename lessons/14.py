@@ -11,7 +11,7 @@ entrenador = {
     "insignias": 8,
     "equipo": ["Pikachu", "Charizard", "Blastoise", "Venusaur", "Eevee", "Alakazam"],
     "pociones": 10,
-    "revivires": 2
+    "revivir": 2
 }
 
 # RETO 2 — Convertir a JSON string:

@@ -80,7 +80,7 @@
             {
               "id": "t4",
               "name": "F-string mensaje",
-              "description": "Contiene anios",
+              "description": "Contiene años",
               "expect": "anios"
             }
           ],
@@ -94,7 +94,7 @@
           "shortTitle": "Strings",
           "objective": "Usar métodos de strings para transformar texto de nombres de movimientos y Pokémons.",
           "keyConcept": "Los strings tienen muchos métodos útiles: `.upper()`, `.lower()`, `.replace()`, `.split()`, `.strip()`.",
-          "theory": "### Movimientos en mayúsculas\n\nCuando escribís en la Pokédex, a veces querés formatear el texto. Los **strings** (textos) tienen **métodos** que los transforman:\n\n| Método | Qué hace |\n|--------|----------|\n| `.upper()` | TODO A MAYÚSCULAS |\n| `.lower()` | todo a minúsculas |\n| `.capitalize()` / `.title()` | Primera letra mayúscula |\n| `.replace('a','b')` | Reemplaza texto |\n| `.strip()` | Quita espacios sobrantes |\n| `.split(',')` | Divide en lista |\n\n```python\nmovimiento = \"huracán eléctrico\"\nprint(movimiento.upper())       # HURACÁN ELÉCTRICO\nprint(movimiento.replace(\"é\",\"e\"))\n```\n\n#### f-strings — formato poderoso\n\nLa `f` antes de las comillas te permite insertar variables directamente:\n\n```python\npokemon = \"Gengar\"\nnivel = 50\nprint(f\"{pokemon} (Nv.{nivel})\")  # Gengar (Nv.50)\n```",
+          "theory": "### Movimientos en mayúsculas\n\nCuando escribís en la Pokédex, a veces querés formatear el texto. Los **strings** (textos) tienen **métodos** que los transforman:\n\n| Método | Qué hace |\n|--------|----------|\n| `.upper()` | TODO A MAYÚSCULAS |\n| `.lower()` | todo a minúsculas |\n| `.capitalize()` / `.title()` | Primera letra mayúscula |\n| `.replace('a','b')` | Reemplaza texto |\n| `.strip()` | Quita espacios sobrantes |\n| `.split(',')` | Divide en lista |\n\n```python\nmovimiento = \"huracán\"\nprint(movimiento.upper())       # HURACÁN\nprint(movimiento.replace(\"á\",\"a\"))\n```\n\n#### f-strings — formato poderoso\n\nLa `f` antes de las comillas te permite insertar variables directamente:\n\n```python\npokemon = \"Gengar\"\nnivel = 50\nprint(f\"{pokemon} (Nv.{nivel})\")  # Gengar (Nv.50)\n```",
           "example": "nombre = \"sQUIRTle\"\nmovimiento = \"hidrobomba\".upper()\nprint(nombre.title())     # Squirtle\nprint(movimiento)         # HIDROBOMBA\nprint(len(movimiento))    # 11",
           "exercisePrompt": "Transformá nombres de Pokémons y movimientos usando los métodos de string.",
           "codeFile": "./lessons/03.py",
@@ -168,25 +168,25 @@
             {
               "id": "t2",
               "name": "Resta daño",
-              "description": "HP despues",
+              "description": "HP después",
               "expect": "65"
             },
             {
               "id": "t3",
-              "name": "Multiplicacion ATK",
+              "name": "multiplicación ATK",
               "description": "ATK efectivo",
               "expect": "105"
             },
             {
               "id": "t4",
-              "name": "Division entera",
+              "name": "división entera",
               "description": "Por entrenador",
               "expect": "8"
             },
             {
               "id": "t5",
-              "name": "Modulo",
-              "description": "Sobran pokemons",
+              "name": "módulo",
+              "description": "Sobran pokémons",
               "expect": "1"
             },
             {
@@ -378,7 +378,7 @@
           "objective": "Trabajar con listas de Pokémons y recorrerlas con for e while.",
           "keyConcept": "Listas con []. Bucle for recorre elementos. Métodos: append, pop, remove, sort, len, insert.",
           "theory": "### Tu equipo de 6 Pokémons\n\nUna **lista** es una colección ordenada de cosas.\n\n```python\nequipo = [\"Pikachu\", \"Charmander\", \"Squirtle\", \"Bulbasaur\", \"Jigglypuff\", \"Meowth\"]\n\nfor pokemon in equipo:\n    print(f\"🔹 {pokemon}\")\n```\n\n#### Métodos de lista\n\n| Método | Qué hace |\n|--------|----------|\n| `.append(x)` | Agrega al final |\n| `.insert(i, x)` | Inserta en posición |\n| `.remove(x)` | Elimina por valor |\n| `.pop()` | Saca el último |\n| `len(lista)` | Cantidad de elementos |\n| `.sort()` | Ordena la lista |\n| `.reverse()` | Invierte el orden |\n\n#### Enumerate — índice + valor\n\n```python\nfor i, poke in enumerate(equipo):\n    print(f\"#{i+1}: {poke}\")\n```",
-          "example": "equipos_ronda = [\n    [\"Pikachu\", \"Charizard\", \"Blastoise\", \"Venusaur\", \"Snapdragon\", \"Eevee\"],\n    [\"Gengar\", \"Alakazam\", \"Golem\", \"Arcanine\", \"Pidgeot\", \"Rapidash\"]\n]\ndef contador_equipos():\n    total = 0\n    for equipo in equipos_ronda:\n        total += len(equipo)\n        print(f\"Equipo con {len(equipo)} pokémons\")\n    print(f\"Total: {total} pokémons\")\ncontador_equipos()",
+          "example": "equipos_ronda = [\n    [\"Pikachu\", \"Charizard\", \"Blastoise\", \"Venusaur\", \"Dragonair\", \"Eevee\"],\n    [\"Gengar\", \"Alakazam\", \"Golem\", \"Arcanine\", \"Pidgeot\", \"Rapidash\"]\n]\ndef contador_equipos():\n    total = 0\n    for equipo in equipos_ronda:\n        total += len(equipo)\n        print(f\"Equipo con {len(equipo)} pokémons\")\n    print(f\"Total: {total} pokémons\")\ncontador_equipos()",
           "exercisePrompt": "Trabajá con listas de Pokémons: crear, añadir, eliminar, iterar, slicing.",
           "codeFile": "./lessons/08.py",
           "solutionFile": "./solutions/08.py",
@@ -392,7 +392,7 @@
             {
               "id": "t2",
               "name": "Append",
-              "description": "7 despues de agregar",
+              "description": "7 después de agregar",
               "expect": ".append("
             },
             {
@@ -524,7 +524,7 @@
           "shortTitle": "Diccionarios",
           "objective": "Crear y manipular diccionarios para representar fichas de Pokémons.",
           "keyConcept": "Diccionarios {clave: valor}. Acceder con clave, iterar keys/values/items.",
-          "theory": "### Construyendo la Pokédex\n\nUn **diccionario** mapea claves a valores. Cada Pokémon es un diccionario:\n\n```python\npikachu = {\n    \"nombre\": \"Pikachu\",\n    \"tipo\": \"electrico\",\n    \"nivel\": 25,\n    \"habilidades\": [\"fuerzasonica\", \"voltetick\"]\n}\nprint(pikachu[\"nombre\"])  # Pikachu\n```\n\n#### Métodos de diccionario\n\n| Método | Qué hace |\n|--------|----------|\n| `.keys()` | Todas las claves |\n| `.values()` | Todos los valores |\n| `.items()` | Pares clave-valor |\n| `.get(key, default)` | Obtener con fallback |\n| `.update(dict2)` | Fusionar diccionarios |",
+          "theory": "### Construyendo la Pokédex\n\nUn **diccionario** mapea claves a valores. Cada Pokémon es un diccionario:\n\n```python\npikachu = {\n    \"nombre\": \"Pikachu\",\n    \"tipo\": \"electrico\",\n    \"nivel\": 25,\n    \"habilidades\": [\"electricidad estática\", \"pararrayos\"]\n}\nprint(pikachu[\"nombre\"])  # Pikachu\n```\n\n#### Métodos de diccionario\n\n| Método | Qué hace |\n|--------|----------|\n| `.keys()` | Todas las claves |\n| `.values()` | Todos los valores |\n| `.items()` | Pares clave-valor |\n| `.get(key, default)` | Obtener con fallback |\n| `.update(dict2)` | Fusionar diccionarios |",
           "example": "pokdex = {\n    25: {\"nombre\": \"Pikachu\", \"tipo\": \"electrico\"},\n    6: {\"nombre\": \"Charizard\", \"tipo\": \"fuego\"},\n    9: {\"nombre\": \"Blastoise\", \"tipo\": \"agua\"}\n}\nprint(pokdex[25][\"nombre\"])  # Pikachu\nprint(list(pokdex.keys()))     # [25, 6, 9]",
           "exercisePrompt": "Construí tu Pokédex personal con diccionarios.",
           "codeFile": "./lessons/11.py",
@@ -576,7 +576,7 @@
           "title": "2. Comprensión de listas y diccionarios",
           "shortTitle": "Comprensión",
           "objective": "Escribir comprensiones concisas para transformar listas de Pokémons.",
-          "keyConcept": "List comprehension: [expresion for item in iterable if condicion]. Dict comp: {k:v for ...}",
+          "keyConcept": "List comprehension: [expresión for item in iterable if condición]. Dict comp: {k:v for ...}",
           "theory": "### Transformar tu equipo en una línea\n\nLas **list comprehensions** crean listas nuevas elegantemente:\n\n```python\npokemons = [\"Pikachu\", \"Charmander\", \"Squirtle\", \"Bulbasaur\"]\nnombres_largos = [p.lower() for p in pokemons if len(p) > 8]\n# ['charmander', 'bulbasaur']\n```\n\n#### Dict comprehension\n\n```python\nstats = {\"hp\": 35, \"attack\": 55, \"defense\": 40}\npokdex_num = {i: name for i, name in enumerate([...], start=1)}\n```",
           "example": "pokemons = [\"pikachu\", \"charizard\", \"blastoise\"]\nnombres_mayu = [p.upper() for p in pokemons]\nlongos = [p for p in pokemons if len(p) > 8]\nniveles = [25, 36, 42]\npor_nombre = {nom: niv for nom, niv in zip(nombres_mayu, niveles)}",
           "exercisePrompt": "Transformá colecciones con list y dict comprehensions.",

@@ -65,8 +65,8 @@ print(f"Movimientos compartidos: {', '.join(comunes)}")
 # Comparar otros equipos
 print("\n--- Comparaciones adicionales ---\n")
 
-p1_moves = ["Llamarada", "Plaza Solar", "Garra Dragon", "Arañazo"]
-p2_moves = ["Llamarada", "Plasma Ígneo", "Garra Dragón", "Rayo"]
+p1_moves = ["Llamarada", "Rayo Solar", "Garra Dragón", "Arañazo"]
+p2_moves = ["Llamarada", "Envite Ígneo", "Garra Dragón", "Rayo"]
 
 l1 = lcs_length(p1_moves, p2_moves)
 c1 = lcs_sequence(p1_moves, p2_moves)
@@ -74,8 +74,8 @@ print(f"Pokémon A:     {', '.join(p1_moves)}")
 print(f"Pokémon B:     {', '.join(p2_moves)}")
 print(f"Compartidos:   {', '.join(c1)} ({l1} en común)\n")
 
-p3_moves = ["Hidrobomba", "Piscada", "Burbuja", "Maremoto"]
-p4_moves = ["Hidrobomba", "Cascada", "Piscada", "Giro Agua"]
+p3_moves = ["Hidrobomba", "Acua Jet", "Burbuja", "Surf"]
+p4_moves = ["Hidrobomba", "Cascada", "Acua Jet", "Cascada"]
 
 l2 = lcs_length(p3_moves, p4_moves)
 c2 = lcs_sequence(p3_moves, p4_moves)

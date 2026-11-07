@@ -28,7 +28,7 @@ class Electrico(Pokemon):
 
 
 class Fuego(Pokemon):
-    MOVIMIENTOS = ["Llamarada", "Plaza Solar", "Arañazo"]
+    MOVIMIENTOS = ["Llamarada", "Rayo Solar", "Arañazo"]
     
     def atacar(self, objetivo):
         # objetivotipo: si self.tipo == objetivo.tipo → daño neutral
@@ -45,7 +45,7 @@ class Fuego(Pokemon):
 
 
 class Planta(Pokemon):
-    MOVIMIENTOS = ["Latigo Cepillo", "Hoja Afilada", "Gigadrenos"]
+    MOVIMIENTOS = ["Látigo Cepa", "Hoja Afilada", "Gigadrenado"]
     
     def atacar(self, objetivo):
         efectivo = objetivo.tipo == "agua"
@@ -57,7 +57,7 @@ class Planta(Pokemon):
 
 
 class Agua(Pokemon):
-    MOVIMIENTOS = ["Hidrobomba", "Piscada", "Burbuja"]
+    MOVIMIENTOS = ["Hidrobomba", "Acua Jet", "Burbuja"]
     
     def atacar(self, objetivo):
         efectivo = objetivo.tipo == "fuego"

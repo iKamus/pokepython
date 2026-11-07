@@ -1,0 +1,15 @@
+{
+  "nombre": "Red",
+  "nivel": 8,
+  "insignias": 8,
+  "equipo": [
+    "Pikachu",
+    "Charizard",
+    "Blastoise",
+    "Venusaur",
+    "Eevee",
+    "Alakazam"
+  ],
+  "pociones": 10,
+  "revivir": 2
+}

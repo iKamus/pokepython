@@ -25,7 +25,7 @@ class Electrico(Pokemon):
 
 
 class Fuego(Pokemon):
-    MOVIMIENTOS = ["Llamarada", "Plaza Solar", "Arañazo"]
+    MOVIMIENTOS = ["Llamarada", "Rayo Solar", "Arañazo"]
     
     def atacar(self, objetivo):
         # TODO: ventaja contra planta (20) o neutral (10); descontá de
@@ -34,7 +34,7 @@ class Fuego(Pokemon):
 
 
 class Planta(Pokemon):
-    MOVIMIENTOS = ["Latigo Cepillo", "Hoja Afilada", "Gigadrenos"]
+    MOVIMIENTOS = ["Látigo Cepa", "Hoja Afilada", "Gigadrenado"]
     
     def atacar(self, objetivo):
         # TODO: ventaja contra agua (20) o neutral (10); descontá de
@@ -43,7 +43,7 @@ class Planta(Pokemon):
 
 
 class Agua(Pokemon):
-    MOVIMIENTOS = ["Hidrobomba", "Piscada", "Burbuja"]
+    MOVIMIENTOS = ["Hidrobomba", "Acua Jet", "Burbuja"]
     
     def atacar(self, objetivo):
         # TODO: ventaja contra fuego (20) o neutral (10); descontá de

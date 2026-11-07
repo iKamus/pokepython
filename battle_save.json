@@ -1,0 +1,20 @@
+{
+  "fecha": "2026-11-07 19:02:19.672548",
+  "entrenador": "Entrenador",
+  "pokemon": {
+    "nombre": "Blastoise",
+    "tipo": "agua",
+    "nivel": 5,
+    "hp_max": 100,
+    "hp": 100,
+    "exp": 0,
+    "velocidad": 40
+  },
+  "tipo_clase": "Agua",
+  "movimientos": [
+    "Placaje",
+    "Hidrobomba",
+    "Acua Jet",
+    "Burbuja"
+  ]
+}

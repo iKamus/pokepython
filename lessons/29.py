@@ -79,7 +79,7 @@ class Pokemon:
 
 
 class Electrico(Pokemon):
-    MOVIMIENTOS = ["Chispazo", "Rayo", "Thunderbolt", "Volt Tackle", "ColaFerrovia"]
+    MOVIMIENTOS = ["Chispazo", "Rayo", "Thunderbolt", "Volt Tackle", "Cola Férrea"]
     
     def __init__(self, nombre, voltaje=100000):
         super().__init__(nombre, "electrico")
@@ -94,7 +94,7 @@ class Electrico(Pokemon):
 
 
 class Fuego(Pokemon):
-    MOVIMIENTOS = ["Llamarada", "Arañazo", "Plaza Solar", "GarraDragon", "PlasmaIgneo"]
+    MOVIMIENTOS = ["Llamarada", "Arañazo", "Rayo Solar", "Garra Dragón", "Envite Ígneo"]
     
     def __init__(self, nombre, poder_llama=85):
         super().__init__(nombre, "fuego")
@@ -109,7 +109,7 @@ class Fuego(Pokemon):
 
 
 class Agua(Pokemon):
-    MOVIMIENTOS = ["Hidrobomba", "Piscada", "Burbuja", "Maremoto", "Cascada"]
+    MOVIMIENTOS = ["Hidrobomba", "Acua Jet", "Burbuja", "Surf", "Cascada"]
     
     def __init__(self, nombre, velocidad=30):
         super().__init__(nombre, "agua")

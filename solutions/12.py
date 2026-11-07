@@ -4,13 +4,13 @@ Solución completa de la lección, lista para ejecutar.
 """
 
 # RETO 1 — Lista de nombres en mayúsculas:
-pokemons = ["pikachu", "charizard", "blastiose", "venusaur"]
+pokemons = ["pikachu", "charizard", "blastoise", "venusaur"]
 nombres_mayu = [p.upper() for p in pokemons]
-print(nombres_mayu)  # ['PIKACHU', 'CHARIZARD', 'BLASTIOSE', 'VENUSAUR']
+print(nombres_mayu)  # ['PIKACHU', 'CHARIZARD', 'BLASTOISE', 'VENUSAUR']
 
 # RETO 2 — Filtrar Pokémons largos (más de 8 letras):
 longos = [p for p in pokemons if len(p) > 8]
-print(f"Largos: {longos}")  # ['charizard', 'blastiose']
+print(f"Largos: {longos}")  # ['charizard', 'blastoise']
 
 # RETO 3 — Mapear a diccionario {nombre: nivel}
 nombres = ["pika", "char", "blasto", "venus"]

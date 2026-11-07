@@ -16,7 +16,7 @@ print(f"{charizard['nombre']} es tipo {charizard['tipo']}")
 charizard["habilidad"] = "Blaze"
 
 # RETO 3 — Agregar nueva clave (lista de habilidades):
-charizard["movimientos"] = ["Llamarada", "Plaza Solar", "Arañazo"]
+charizard["movimientos"] = ["Llamarada", "Rayo Solar", "Arañazo"]
 charizard["habilidades"] = ["Blaze", "Intimidación"]
 
 # Texto escapado de la ficha (comillas dobles con \):
