@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es-AR" data-build="2026-11-06-local">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<meta name="app-build" content="2026-11-06-local">
+<meta name="description" content="PokéPython: curso interactivo de Python desde cero hasta programación dinámica, con ejercicios que corren en tu navegador.">
+<title>PokéPython — Curso de Python con Pokémon</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script>
+  // Tema antes del primer paint: sin esto se ve un flash del tema equivocado.
+  (function () {
+    try {
+      var saved = localStorage.getItem('pokpy_theme');
+      var theme = saved === 'light' || saved === 'dark'
+        ? saved
+        : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) { /* localStorage bloqueado: queda el tema por defecto del HTML */ }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=2026-11-06-local">
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header class="app-header" data-build="2026-11-06-local">
+  <div class="header-left">
+    <a href="#/" class="logo" aria-label="Inicio PokéPython">
+      <span class="logo-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2 4.8 13.4h5.4L9.5 22l8.9-11.6h-5.3z"/></svg>
+      </span>
+      <span class="logo-text">Poké<span class="logo-accent">Python</span></span>
+    </a>
+    <nav class="mode-toggle" role="tablist" aria-label="Filtrar por nivel">
+      <button class="mode-btn active" data-mode="all" role="tab" aria-selected="true">Todos</button>
+      <button class="mode-btn" data-mode="beginner" role="tab" aria-selected="false">Básico</button>
+      <button class="mode-btn" data-mode="intermediate" role="tab" aria-selected="false">Intermedio</button>
+      <button class="mode-btn" data-mode="advanced" role="tab" aria-selected="false">Avanzado</button>
+    </nav>
+  </div>
+  <div class="header-right">
+    <div class="progress-pill" id="progressPill" title="Lecciones completadas">
+      <span class="progress-count">0/29</span>
+      <span class="progress-bar-mini"><span class="fill" style="width:0%"></span></span>
+    </div>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar entre tema claro y oscuro" title="Tema claro / oscuro">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <a href="https://github.com/freeCodeCamp/freeCodeCamp" class="ref-link" target="_blank" rel="noopener" title="Curso freeCodeCamp original">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      <span>freeCodeCamp</span>
+    </a>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- ══════════ SIDEBAR ══════════ -->
+  <aside class="sidebar" id="sidebar">
+    <nav class="module-nav" id="moduleNav" role="navigation" aria-label="Módulos del curso">
+      <p class="sidebar-title">Módulos</p>
+    </nav>
+  </aside>
+
+  <!-- ══════════ MAIN ══════════ -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Landing -->
+    <section class="view active" id="indexView">
+      <div class="hero-banner">
+        <span class="hero-eyebrow"><span class="dot"></span>Curso interactivo · Python</span>
+        <h1 class="hero-title">Lecciones del curso</h1>
+        <p class="hero-sub">
+          Un recorrido completo por Python contado como un entrenamiento Pokémon:
+          <strong>cada concepto</strong> con teoría, un ejercicio que corre de verdad en tu navegador
+          y tests que te dicen si vas bien. Sin instalaciones, sin configurar nada.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-value" id="statLessons">29</span>
+            <span class="stat-label">Lecciones</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-value" id="statModules">13</span>
+            <span class="stat-label">Módulos</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-value" id="statTests">135</span>
+            <span class="stat-label">Retos con test</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>Módulos del curso</h2>
+        <span class="section-hint">Clic en un módulo para entrar</span>
+      </div>
+      <div class="modules-grid" id="modulesGrid"></div>
+    </section>
+
+    <!-- Lección -->
+    <section class="view" id="lessonView">
+      <div class="lesson-toolbar">
+        <a href="#/" class="back-btn" aria-label="Volver al índice">← Índice</a>
+        <div class="lesson-title-block">
+          <h1 class="lesson-title" id="lessonTitle"></h1>
+          <p class="lesson-meta" id="lessonMeta"></p>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Secciones de la lección">
+        <button class="tab active" data-tab="teoria" role="tab" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h8"/></svg>
+          Teoría
+        </button>
+        <button class="tab" data-tab="ejercicio" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8l-4 4 4 4M17 8l4 4-4 4"/></svg>
+          Ejercicio
+        </button>
+        <button class="tab" data-tab="tests" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6M10 4v5l-4 8a2 2 0 0 0 1.8 3h8.4A2 2 0 0 0 18 17l-4-8V4"/></svg>
+          Tests
+        </button>
+        <button class="tab" data-tab="solucion" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M5.6 5.6l1.4 1.4M3 12h2M18.4 5.6 17 7M21 12h-2"/><path d="M9 17h6M10 21h4a5 5 0 0 0 3-9 5 5 0 0 0-8 0 5 5 0 0 0 3 9z"/></svg>
+          Solución
+        </button>
+      </div>
+
+      <div class="tab-content">
+        <div class="panel theory-panel active" data-panel="teoria" id="theoryPanel"></div>
+
+        <div class="panel exercise-panel" data-panel="ejercicio" id="exercisePanel">
+          <div class="exercise-description" id="exerciseDesc"></div>
+          <div class="editor-wrap">
+            <div class="editor-header"><span id="editorLabel">archivo.py</span></div>
+            <pre class="code-line-numbers" id="lineNumbers" aria-hidden="true"></pre>
+            <div id="editorHost"></div>
+            <textarea class="code-editor" id="codeEditor" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Editor de código"></textarea>
+          </div>
+          <div class="editor-actions">
+            <button class="tool-btn reset-btn" id="resetBtn" title="Reiniciar ejercicio (vuelve al código original)">↺ Reset</button>
+            <button class="tool-btn run-btn" id="runBtn" title="Ejecutar código (Ctrl+Enter)">▶ Correr</button>
+          </div>
+          <div class="console-wrap">
+            <div class="console-header"><span>Consola</span><span class="console-status" id="consoleStatus">Esperando…</span></div>
+            <div class="console-output" id="consoleOutput" role="log" aria-live="polite"><p class="placeholder">Acá va a aparecer la salida de tu código cuando corras el botón ▶ <b>Correr</b>.</p></div>
+          </div>
+        </div>
+
+        <div class="panel tests-panel" data-panel="tests" id="testsPanel"></div>
+        <div class="panel solution-panel" data-panel="solucion" id="solutionPanel"></div>
+      </div>
+
+      <div class="lesson-footer">
+        <button class="nav-btn prev-btn" id="prevBtn">← Anterior</button>
+        <button class="nav-btn next-btn" id="nextBtn">Siguiente →</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js?v=2026-11-06-local" type="module"></script>
+</body>
+</html>
