@@ -13,7 +13,7 @@ class Pokemon:
         self.vivo = True             # TODO: @property de solo lectura: ¿sigue en pie?
         self.porcentaje_hp = 100.0   # TODO: @property calculada: hp / hp_max * 100
 
-    def recibir_dano(self, dano):
+    def recibir_daño(self, daño):
         # TODO: aplicá el daño usando el setter de hp
         pass
 
@@ -31,7 +31,7 @@ print(f"Vivo: {pikachu.vivo}")          # True
 print(f"Porcentaje: {pikachu.porcentaje_hp}%")  # 100.0
 
 print("\n--- Batalla ---")
-pikachu.recibir_dano(200)
+pikachu.recibir_daño(200)
 print(f"HP ahora: {pikachu.hp}")         # 300
 print(f"% HP: {pikachu.porcentaje_hp}%") # 60.0
 

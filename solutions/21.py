@@ -20,10 +20,10 @@ class Electrico(Pokemon):
     
     def atacar(self, objetivo):
         efectivo = objetivo.tipo == "agua"
-        dano = 20 if efectivo else 10
-        objetivo.hp = max(0, objetivo.hp - dano)
+        daño = 20 if efectivo else 10
+        objetivo.hp = max(0, objetivo.hp - daño)
         mov = self.MOVIMIENTOS[min(len(self.MOVIMIENTOS)-1, self.nivel//5)] if hasattr(self,'nivel') else "Chispazo"
-        print(f"⚡ {self.nombre} usa {mov}! (-{dano}HP)")
+        print(f"⚡ {self.nombre} usa {mov}! (-{daño}HP)")
         return efectivo
 
 
@@ -34,13 +34,13 @@ class Fuego(Pokemon):
         # objetivotipo: si self.tipo == objetivo.tipo → daño neutral
         if self.tipo == objetivo.tipo:
             efectivo = False
-            dano = 10
+            daño = 10
         else:
             efectivo = objetivo.tipo == "planta"
-            dano = 20 if efectivo else 10
-        objetivo.hp = max(0, objetivo.hp - dano)
+            daño = 20 if efectivo else 10
+        objetivo.hp = max(0, objetivo.hp - daño)
         mov = self.MOVIMIENTOS[min(len(self.MOVIMIENTOS)-1, getattr(self,'nivel',0)//5)] if hasattr(self,'nivel') else "Llamarada"
-        print(f"🔥 {self.nombre} usa {mov}! (-{dano}HP)")
+        print(f"🔥 {self.nombre} usa {mov}! (-{daño}HP)")
         return efectivo
 
 
@@ -49,10 +49,10 @@ class Planta(Pokemon):
     
     def atacar(self, objetivo):
         efectivo = objetivo.tipo == "agua"
-        dano = 20 if efectivo else 10
-        objetivo.hp = max(0, objetivo.hp - dano)
+        daño = 20 if efectivo else 10
+        objetivo.hp = max(0, objetivo.hp - daño)
         mov = self.MOVIMIENTOS[min(len(self.MOVIMIENTOS)-1, getattr(self,'nivel',0)//5)] if hasattr(self,'nivel') else "Hoja Afilada"
-        print(f"🌿 {self.nombre} usa {mov}! (-{dano}HP)")
+        print(f"🌿 {self.nombre} usa {mov}! (-{daño}HP)")
         return efectivo
 
 
@@ -61,10 +61,10 @@ class Agua(Pokemon):
     
     def atacar(self, objetivo):
         efectivo = objetivo.tipo == "fuego"
-        dano = 20 if efectivo else 10
-        objetivo.hp = max(0, objetivo.hp - dano)
+        daño = 20 if efectivo else 10
+        objetivo.hp = max(0, objetivo.hp - daño)
         mov = self.MOVIMIENTOS[min(len(self.MOVIMIENTOS)-1, getattr(self,'nivel',0)//5)] if hasattr(self,'nivel') else "Hidrobomba"
-        print(f"💧 {self.nombre} usa {mov}! (-{dano}HP)")
+        print(f"💧 {self.nombre} usa {mov}! (-{daño}HP)")
         return efectivo
 
 

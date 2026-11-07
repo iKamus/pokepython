@@ -30,7 +30,7 @@ for clave, valor in charizard.items():
 
 # RETO 5 — get() con valor por defecto:
 movimiento_especial = charizard.get("ataque_especial", "Placaje")
-print(f"\nAtaque especial: {movimiento_especial}")  # Placaje (no existe, usa default)
+print(f"\nAtaque especial: {movimiento_especial}")  # Placaje (no existe, usa el valor por defecto)
 
 # RETO 6 — Pokédex completa con varios Pokémon:
 pokedex = {

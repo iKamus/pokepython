@@ -13,14 +13,14 @@ def xp_total(nivel):
 print(f"XP al nivel 5: {xp_total(5)}")     # 1400
 
 # RETO 2 — Daño total de un combo (suma recursiva de una lista):
-def dano_total(combo):
+def daño_total(combo):
     """Suma el daño de cada golpe del combo, recursivamente."""
     # TODO: caso base combo vacío devuelve 0;
-    #   paso recursivo: combo[0] + dano_total(combo[1:])
+    #   paso recursivo: combo[0] + daño_total(combo[1:])
     return None
 
 golpes = [12, 8, 20, 5]
-print(f"Daño total del combo: {dano_total(golpes)}")   # 45
+print(f"Daño total del combo: {daño_total(golpes)}")   # 45
 
 # RETO 3 — Potencia recursiva (el ataque se multiplica por sí mismo):
 def potencia(base, nivel):

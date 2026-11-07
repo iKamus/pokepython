@@ -49,10 +49,10 @@ class Pokemon:
         """¿Cuánto HP queda en porcentaje?"""
         return round(self._hp / self._hp_max * 100, 1)
     
-    def recibir_dano(self, dano):
-        nuevo_hp = max(0, self._hp - dano)
+    def recibir_daño(self, daño):
+        nuevo_hp = max(0, self._hp - daño)
         self.hp = nuevo_hp
-        print(f"💥 {self.nombre}: {dano} daño. HP: {nuevo_hp}/{self._hp_max}")
+        print(f"💥 {self.nombre}: {daño} daño. HP: {nuevo_hp}/{self._hp_max}")
     
     def curar(self, cantidad=20):
         self.hp = min(self._hp + cantidad, self._hp_max)
@@ -68,7 +68,7 @@ print(f"Vivo: {pikachu.vivo}")          # True
 print(f"Porcentaje: {pikachu.porcentaje_hp}%")  # 100.0
 
 print("\n--- Batalla ---")
-pikachu.recibir_dano(200)
+pikachu.recibir_daño(200)
 print(f"HP ahora: {pikachu.hp}")         # 300
 print(f"% HP: {pikachu.porcentaje_hp}%") # 60.0
 

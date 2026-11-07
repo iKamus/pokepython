@@ -160,37 +160,37 @@
               "id": "t1",
               "name": "Suma HP",
               "description": "HP total",
-              "expect": "100"
+              "expect": "hp_base + bono_hp"
             },
             {
               "id": "t2",
               "name": "Resta daño",
               "description": "HP después",
-              "expect": "65"
+              "expect": "hp_actual - daño_recibido"
             },
             {
               "id": "t3",
               "name": "multiplicación ATK",
               "description": "ATK efectivo",
-              "expect": "105"
+              "expect": "atk * multiplicador"
             },
             {
               "id": "t4",
               "name": "división entera",
               "description": "Por entrenador",
-              "expect": "8"
+              "expect": "niveles_totales // entrenadores"
             },
             {
               "id": "t5",
               "name": "módulo",
               "description": "Sobran pokémons",
-              "expect": "1"
+              "expect": "pokemons % tamaño_equipo"
             },
             {
               "id": "t6",
               "name": "Potencia",
               "description": "3^4",
-              "expect": "81"
+              "expect": "fuerza ** exponente"
             }
           ]
         },
@@ -203,7 +203,7 @@
           "objective": "Tomar decisiones en código con if/elif/else comparando tipos y estados.",
           "keyConcept": "Booleanos son True/False. Condicionales permiten ejecutar código distinto según el estado.",
           "theory": "### Advantage tipo: cuándo atacar\n\nEn Pokémon, **los tipos** definen quién gana a quién. Tu código debe decidir si un movimiento es súper efectivo.\n\n```python\ntipo_movimiento = \"eléctrico\"\ntipo_enemigo = \"agua\"\n\nif tipo_movimiento == \"eléctrico\" and tipo_enemigo == \"agua\":\n    print(\"¡Súper efectivo! x2\")\nelif tipo_movimiento == tipo_enemigo:\n    print(\"Neutral. x1\")\nelse:\n    print(\"No muy efectivo. x0.5\")\n```\n\n#### Operadores de comparación\n\n| Operador | Significado | Ejemplo |\n|----------|-------------|---------|\n| `==` | Igual | `hp == 0` |\n| `!=` | Diferente | `tipo != \"normal\"` |\n| `>` | Mayor que | `vel > 100` |\n| `<` | Menor que | `vel < 50` |\n| `>=` | Mayor o igual | `nivel >= 50` |\n| `<=` | Menor o igual | `nivel <= 10` |",
-          "example": "hp = 15\ntipo_mov = \"fuego\"\ntipo_def = \"planta\"\ndefinitivo = hp > 0\nprint(f\"¿En pie? {definitivo}\")  # True\nsuper_efectivo = {\n    \"fuego\": [\"planta\", \"hielo\", \"acero\"],\n    \"agua\": [\"fuego\", \"roca\"]\n}\nsi_efect = any(t in super_efectivo.get(tipo_mov, []) for t in [tipo_def])\nprint(f\"Efectivo: {si_efect}\")",
+          "example": "hp = 15\ntipo_mov = \"fuego\"\ntipo_def = \"planta\"\nen_pie = hp > 0\nprint(f\"¿En pie? {en_pie}\")                     # True\nmov_es_fuego = tipo_mov == \"fuego\"\ndef_es_planta = tipo_def == \"planta\"\nprint(f\"¿Fuego vence a planta? {mov_es_fuego and def_es_planta}\")   # True",
           "exercisePrompt": "Programá decisiones para diferentes situaciones de batalla y entrenamiento.",
           "codeFile": "./lessons/05.py",
           "solutionFile": "./solutions/05.py",
@@ -248,15 +248,15 @@
           "shortTitle": "Funciones",
           "objective": "Crear funciones reutilizables para calcular daño, saludar y gestionar estados.",
           "keyConcept": "Las funciones encapsulan lógica. Def con parámetros, return devuelve resultado. Scope local vs global.",
-          "theory": "### Funciones: tus movimientos especiales\n\nCada función es como un movimiento especial: recibe información (parámetros), ejecuta una acción, y devuelve un resultado.\n\n```python\ndef calcular_dano(ataque, defensa):\n    dano = ataque - defensa // 2\n    return dano\n\nd = calcular_dano(100, 40)\nprint(d)  # 80\n```\n\n#### Parámetros con valor por defecto\n\n```python\ndef curar(pokemon, cantidad=20):\n    pokemon['hp'] += cantidad\n    return pokemon['hp']\n\ncurar(charmander)       # cura 20 (default)\ncurar(charmander, 50)   # cura 50\n```\n\n#### Scope: lo local vs lo global\n\n```python\nhp_global = 100\n\ndef perder_hp(cantidad):\n    global hp_global\n    hp_global -= cantidad\n\ndef restar_local(valor):\n    hp_local = valor\n    return hp_local\n```",
-          "example": "def tipo_efectivo(tipo_mov, tipo_def):\n    eficaces = {\n        \"fuego\": [\"planta\", \"hielo\", \"acero\"],\n        \"agua\": [\"fuego\", \"roca\"]\n    }\n    if tipo_def in eficaces.get(tipo_mov, []):\n        return \"x2\"\n    return \"x1\"\n\nbulbasaur = {\"hp\": 30, \"hp_max\": 100}\ndef curar_equipo(pokemon, cantidad=25):\n    pokemon[\"hp\"] = min(pokemon[\"hp\"] + cantidad, pokemon[\"hp_max\"])\n    return pokemon[\"hp\"]\nprint(curar_equipo(bulbasaur))  # 55",
+          "theory": "### Funciones: tus movimientos especiales\n\nCada función es como un movimiento especial: recibe información (parámetros), ejecuta una acción, y devuelve un resultado.\n\n```python\ndef calcular_daño(ataque, defensa):\n    daño = ataque - defensa // 2\n    return daño\n\nd = calcular_daño(100, 40)\nprint(d)  # 80\n```\n\n#### Parámetros con valor por defecto\n\n```python\ndef curar(pokemon, cantidad=20):\n    pokemon['hp'] += cantidad\n    return pokemon['hp']\n\ncurar(charmander)       # cura 20 (default)\ncurar(charmander, 50)   # cura 50\n```\n\n#### Scope: lo local vs lo global\n\n```python\nhp_global = 100\n\ndef perder_hp(cantidad):\n    global hp_global\n    hp_global -= cantidad\n\ndef restar_local(valor):\n    hp_local = valor\n    return hp_local\n```",
+          "example": "def calcular_daño(base, multiplicador=1.5):\n    return base * multiplicador\n\nprint(f\"Daño normal: {calcular_daño(40)}\")        # 60.0\nprint(f\"Con ventaja: {calcular_daño(40, 2.0)}\")   # 80.0\n\ndef curar(hp, cantidad, tope=100):\n    if hp + cantidad > tope:\n        return tope\n    return hp + cantidad\n\nprint(f\"Curado: {curar(80, 30)}\")                 # 100",
           "exercisePrompt": "Definí funciones que resuelvan problemas comunes de batalla: calcular daño, aplicar curaciones, verificar condiciones.",
           "codeFile": "./lessons/06.py",
           "solutionFile": "./solutions/06.py",
           "tests": [
             {
               "id": "t1",
-              "name": "calcular_dano",
+              "name": "calcular_daño",
               "description": "Daño con multiplicador por defecto",
               "expect": "return base * multiplicador"
             },
@@ -264,7 +264,7 @@
               "id": "t2",
               "name": "curar",
               "description": "Curación con tope",
-              "expect": "return min(hp + cantidad, tope)"
+              "expect": "hp + cantidad > tope"
             },
             {
               "id": "t3",
@@ -274,7 +274,7 @@
             },
             {
               "id": "t4",
-              "name": "sumar_dano",
+              "name": "sumar_daño",
               "description": "Sumar daño",
               "expect": "return a + b"
             },
@@ -751,7 +751,7 @@
           "objective": "Crear una clase Pokemon con atributos y métodos básicos.",
           "keyConcept": "class define un objeto. __init__ inicializa atributos. self refiere al objeto.",
           "theory": "### Definir tu propia especie\n\nUna **clase** es un molde para crear objetos. La clase Pokemon define qué tiene cada Pokémon:\n\n```python\nclass Pokemon:\n    def __init__(self, nombre, tipo, nivel=5):\n        self.nombre = nombre\n        self.tipo = tipo\n        self.nivel = nivel\n        self.hp_max = nivel * 10\n        self.hp = self.hp_max\n\n    def __str__(self):\n        return f\"{self.nombre} (Nv.{self.nivel}) - {self.hp}/{self.hp_max}HP\"\n\nmi_pokemon = Pokemon(\"Pikachu\", \"electrico\")\nprint(mi_pokemon)\n```",
-          "example": "class Pokemon:\n    def __init__(self, nombre, tipo, nivel=5):\n        self.nombre = nombre\n        self.tipo = tipo\n        self.nivel = nivel\n        self.hp_max = nivel * 10\n        self.hp = self.hp_max\n        self.movimientos = [\"Placaje\"]\n    def __str__(self):\n        return f\"{self.nombre} Nv.{self.nivel} - {self.hp}/{self.hp_max}HP\"\n    def aprender(self, mov):\n        if mov not in self.movimientos:\n            self.movimientos.append(mov)\n            print(f\"{self.nombre} aprendió {mov}!\")\n    def recibir_dano(self, dano):\n        self.hp = max(0, self.hp - dano)\n    def curar(self, cantidad=20):\n        self.hp = min(self.hp + cantidad, self.hp_max)\n        print(f\"{self.nombre} recuperó {cantidad}HP. HP: {self.hp}\")\npika = Pokemon(\"Pikachu\", \"electrico\", 20)\npika.aprender(\"Rayo\")\npika.recibir_dano(50)\npika.curar(25)\nprint(pika)",
+          "example": "class Pokemon:\n    def __init__(self, nombre, tipo, nivel=5):\n        self.nombre = nombre\n        self.tipo = tipo\n        self.nivel = nivel\n        self.hp_max = nivel * 10\n        self.hp = self.hp_max\n        self.movimientos = [\"Placaje\"]\n    def __str__(self):\n        return f\"{self.nombre} Nv.{self.nivel} - {self.hp}/{self.hp_max}HP\"\n    def aprender(self, mov):\n        if mov not in self.movimientos:\n            self.movimientos.append(mov)\n            print(f\"{self.nombre} aprendió {mov}!\")\n    def recibir_daño(self, daño):\n        self.hp = max(0, self.hp - daño)\n    def curar(self, cantidad=20):\n        self.hp = min(self.hp + cantidad, self.hp_max)\n        print(f\"{self.nombre} recuperó {cantidad}HP. HP: {self.hp}\")\npika = Pokemon(\"Pikachu\", \"electrico\", 20)\npika.aprender(\"Rayo\")\npika.recibir_daño(50)\npika.curar(25)\nprint(pika)",
           "exercisePrompt": "Definí una clase Pokemon completa con atributos, métodos de combate y utilidades.",
           "codeFile": "./lessons/15_clase.py",
           "solutionFile": "./solutions/16.py",
@@ -957,7 +957,7 @@
           "objective": "Usar polimorfismo para tratar subclases como su clase padre.",
           "keyConcept": "Polimorfismo: objetos distintos comparten interfaz. duck typing en Python.",
           "theory": "### Un equipo diverso, misma interfaz\n\nEl **polimorfismo** permite tratar objetos distintos de forma uniforme:\n\n```python\ndef iniciar_combate(eq1, eq2):\n    p1 = eq1[0]  # puede ser Electrico, Fuego, Agua...\n    p2 = eq2[0]\n    print(f\"¡{p1} vs {p2}!\")\n    while p1.hp > 0 and p2.hp > 0:\n        p1.atacar(p2)  # same method, different behavior!\n        p2.atacar(p1)\n\nclass Electrico(Pokemon): ...\nclass Fuego(Pokemon): ...\n\npikachu = Electrico(\"Pikachu\")\ncharmander = Fuego(\"Charmander\")\niniciar_combate([pikachu], [charmander])\n```",
-          "example": "class Pokemon:\n    def __init__(self, nombre, tipo):\n        self.nombre = nombre\n        self.tipo = tipo\n        self.hp = 100\n    def atacar(self, objetivo):\n        pass\nclass Electrico(Pokemon):\n    def atacar(self, objetivo):\n        dano = 20 if objetivo.tipo == \"agua\" else 10\n        objetivo.hp = max(0, objetivo.hp - dano)\n        print(f\"{self.nombre} → {objetivo.nombre}: {dano} daño\")\nclass Fuego(Pokemon):\n    def atacar(self, objetivo):\n        dano = 20 if objetivo.tipo == \"planta\" else 10\n        objetivo.hp = max(0, objetivo.hp - dano)\n        print(f\"{self.nombre} → {objetivo.nombre}: {dano} daño\")\npikachu = Electrico(\"Pikachu\", \"electrico\")\nchar = Fuego(\"Char\", \"fuego\")\npikachu.atacar(char)\nprint(f\"Char HP: {char.hp}\")",
+          "example": "class Pokemon:\n    def __init__(self, nombre, tipo):\n        self.nombre = nombre\n        self.tipo = tipo\n        self.hp = 100\n    def atacar(self, objetivo):\n        pass\nclass Electrico(Pokemon):\n    def atacar(self, objetivo):\n        daño = 20 if objetivo.tipo == \"agua\" else 10\n        objetivo.hp = max(0, objetivo.hp - daño)\n        print(f\"{self.nombre} → {objetivo.nombre}: {daño} daño\")\nclass Fuego(Pokemon):\n    def atacar(self, objetivo):\n        daño = 20 if objetivo.tipo == \"planta\" else 10\n        objetivo.hp = max(0, objetivo.hp - daño)\n        print(f\"{self.nombre} → {objetivo.nombre}: {daño} daño\")\npikachu = Electrico(\"Pikachu\", \"electrico\")\nchar = Fuego(\"Char\", \"fuego\")\npikachu.atacar(char)\nprint(f\"Char HP: {char.hp}\")",
           "exercisePrompt": "Creá un sistema de batalla donde cada tipo ataca diferente pero con la misma interfaz.",
           "codeFile": "./lessons/20_polimorfismo.py",
           "solutionFile": "./solutions/21.py",
@@ -1064,7 +1064,7 @@
               "id": "t2",
               "name": "Daño del combo",
               "description": "Suma recursiva de la lista",
-              "expect": "combo[0] + dano_total(combo[1:])"
+              "expect": "combo[0] + daño_total(combo[1:])"
             },
             {
               "id": "t3",
@@ -1313,7 +1313,7 @@
           "objective": "Construir un juego CLI de batallas Pokémon integrando todas las técnicas del curso.",
           "keyConcept": "Integración: POO + herencia + polimorfismo + estructuras + algoritmos + DP.",
           "theory": "### El desafío final\n\nConstruí un **juego de batallas Pokémon** por consola que use:\n- Clases con herencia (Pokemon, tipos especializados)\n- Polimorfismo (todos tienen atacar()) y propiedades\n- Diccionarios para Pokédex y inventario\n- Try/except para manejo de errores de input\n- JSON para guardar/cargar partida\n- Algoritmos para matchmaking y elección de movimientos óptimos\n\nEste proyecto sintetiza **todo** lo aprendido en los bloques anteriores en una aplicación cohesiva y funcional.",
-          "example": "import json, random\nfrom datetime import datetime\n\nclass Pokemon:\n    TIPOS_SUPER = {\"electrico\":[\"agua\",\"volador\"],\"fuego\":[\"planta\",\"hielo\",\"acero\"],\"agua\":[\"fuego\",\"roca\",\"tierra\"]}\n    def __init__(self,nombre,tipo,nivel=5):\n        self.nombre=nombre;self.tipo=tipo;self.nivel=nivel\n        self.hp_max=nivel*20;self.hp=self.hp_max;self.movimientos=[\"Placaje\"]\n    @property\n    def vivo(self): return self.hp > 0\n    def __str__(self): return f\"{self.nombre} Nv.{self.nivel} {self.tipo} HP:{self.hp}/{self.hp_max}\"\n    def recibir_dano(self,d): self.hp=max(0,self.hp-d)\n    def curar(self,c=20): self.hp=min(self.hp+c,self.hp_max)\n\nclass Electrico(Pokemon):\n    def __init__(self,nombre,voltaje=50000):\n        super().__init__(nombre,\"electrico\")\n        self.voltaje=voltaje;self.movimientos=[\"Chispazo\",\"Rayo\",\"Impactrueno\"]\n    def atacar(self,target):\n        mult=2.0 if target.tipo in self.TIPOS_SUPER.get(\"electrico\",[]) else 1.0\n        mult=0.5 if target.tipo==\"planta\" else mult\n        d=max(1,int((self.nivel*8*self.voltaje/10000)*mult))\n        target.recibir_dano(d);print(f\"⚡{self.nombre}->{target.nombre} {d}DMG\")\n\npikachu=Electrico(\"Pikachu\",50000);charmander=Pokemon(\"Charmander\",\"fuego\",5)\nprint(pikachu);print(charmander)\npikachu.atacar(charmander);print(charmander)",
+          "example": "import json, random\nfrom datetime import datetime\n\nclass Pokemon:\n    TIPOS_SUPER = {\"electrico\":[\"agua\",\"volador\"],\"fuego\":[\"planta\",\"hielo\",\"acero\"],\"agua\":[\"fuego\",\"roca\",\"tierra\"]}\n    def __init__(self,nombre,tipo,nivel=5):\n        self.nombre=nombre;self.tipo=tipo;self.nivel=nivel\n        self.hp_max=nivel*20;self.hp=self.hp_max;self.movimientos=[\"Placaje\"]\n    @property\n    def vivo(self): return self.hp > 0\n    def __str__(self): return f\"{self.nombre} Nv.{self.nivel} {self.tipo} HP:{self.hp}/{self.hp_max}\"\n    def recibir_daño(self,d): self.hp=max(0,self.hp-d)\n    def curar(self,c=20): self.hp=min(self.hp+c,self.hp_max)\n\nclass Electrico(Pokemon):\n    def __init__(self,nombre,voltaje=50000):\n        super().__init__(nombre,\"electrico\")\n        self.voltaje=voltaje;self.movimientos=[\"Chispazo\",\"Rayo\",\"Impactrueno\"]\n    def atacar(self,target):\n        mult=2.0 if target.tipo in self.TIPOS_SUPER.get(\"electrico\",[]) else 1.0\n        mult=0.5 if target.tipo==\"planta\" else mult\n        d=max(1,int((self.nivel*8*self.voltaje/10000)*mult))\n        target.recibir_daño(d);print(f\"⚡{self.nombre}->{target.nombre} {d}DMG\")\n\npikachu=Electrico(\"Pikachu\",50000);charmander=Pokemon(\"Charmander\",\"fuego\",5)\nprint(pikachu);print(charmander)\npikachu.atacar(charmander);print(charmander)",
           "exercisePrompt": "Esta es tu oportunidad de integrar TODO lo aprendido. Implementá un juego de batallas Pokémon funcional.",
           "codeFile": "./lessons/28_proyecto_final.py",
           "solutionFile": "./solutions/29.py",

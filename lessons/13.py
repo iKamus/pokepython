@@ -24,13 +24,13 @@ for tipo, lista in grupo.items():
 # fuego: ['charizard', 'arcanine']
 
 # RETO 3 — defaultdict(int) para sumar daños recibidos:
-dano_total = defaultdict(int)
+daño_total = defaultdict(int)
 turnos = [
     ("Pikachu", 15), ("Charizard", 20), ("Pikachu", 8),
     ("Blastoise", 12), ("Charizard", 5)
 ]
-for pokemon, dano in turnos:
-    dano_total[pokemon] += dano
+for pokemon, daño in turnos:
+    daño_total[pokemon] += daño
 print("\nDaño recibido por Pokémon:")
-for pk, total in sorted(dano_total.items()):
+for pk, total in sorted(daño_total.items()):
     print(f"  {pk}: {total} damage")

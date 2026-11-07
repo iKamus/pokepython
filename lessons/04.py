@@ -5,33 +5,33 @@ Calculá estadísticas de combate con operadores aritméticos.
 
 # RETO 1 — Suma de HP (base + boost):
 hp_base = 80
-ehill_boost = 20
-hp_total = hp_base + ehill_boost
+bono_hp = 20
+hp_total = None            # TODO: sumá hp_base + bono_hp
 
 # RETO 2 — Restar daño recibido:
 hp_actual = 100
 daño_recibido = 35
-hp_despues = hp_actual - daño_recibido
+hp_despues = None          # TODO: restale el daño recibido
 
 # RETO 3 — Multiplicar ATK por multiplicador (ej: ventaja tipo):
 atk = 70
 multiplicador = 1.5
-atk_efectivo = atk * multiplicador
+atk_efectivo = None        # TODO: multiplicá el ataque
 
 # RETO 4 — División entera // :
 niveles_totales = 42
 entrenadores = 5
-por_entrenador = niveles_totales // entrenadores
+por_entrenador = None      # TODO: usá la división entera
 
 # RETO 5 — Módulo % (distribuir Pokémons en equipos de 6):
 pokemons = 25
-equipe_size = 6
-sobran = pokemons % equipe_size
+tamaño_equipo = 6
+sobran = None              # TODO: usá el módulo
 
 # RETO 6 — Potencia ** (velocidad x velocidad):
 fuerza = 3
 exponente = 4
-resultado = fuerza ** exponente
+resultado = None           # TODO: usá la potencia
 
 # Verificá:
 print(f"HP total: {hp_total}")           # Esperado: 100

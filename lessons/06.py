@@ -3,16 +3,16 @@
 Creá funciones reutilizables para calcular daño, curar y verificar condiciones.
 """
 
-# RETO 1 — calcular_dano(base, multiplicador=1.5): retorna base * multiplicador
-def calcular_dano(base, multiplicador=1.5):
+# RETO 1 — calcular_daño(base, multiplicador=1.5): retorna base * multiplicador
+def calcular_daño(base, multiplicador=1.5):
     # TODO: retorná base * multiplicador
     pass
 
-print(f"calcular_dano(40) = {calcular_dano(40)}")   # 60.0
+print(f"calcular_daño(40) = {calcular_daño(40)}")   # 60.0
 
 # RETO 2 — curar(hp, cantidad, tope=100): cura sin superar el tope
 def curar(hp, cantidad, tope=100):
-    # TODO: retorná el mínimo entre hp + cantidad y tope
+    # TODO: si hp + cantidad supera el tope, devolvé el tope
     pass
 
 print(f"curar(80, 30) = {curar(80, 30)}")  # 100
@@ -24,12 +24,12 @@ def efectividad(tipo_ataque, tipo_defensor):
 
 print(f"efectividad('agua', 'fuego') = {efectividad('agua', 'fuego')}")  # 2.0
 
-# RETO 4 — sumar_dano(a, b): retorna la suma
-def sumar_dano(a, b):
+# RETO 4 — sumar_daño(a, b): retorna la suma
+def sumar_daño(a, b):
     # TODO: retorná a + b
     pass
 
-print(f"sumar_dano(40, 35) = {sumar_dano(40, 35)}")  # 75
+print(f"sumar_daño(40, 35) = {sumar_daño(40, 35)}")  # 75
 
 # RETO 5 — saludar_entrenador(nombre): imprime saludo, no devuelve nada
 def saludar_entrenador(nombre):

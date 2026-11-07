@@ -28,8 +28,8 @@ class Pokemon:
         pass
     
     # RETO 3 — Recibir daño:
-    def recibir_dano(self, dano):
-        # TODO: restá dano a self.hp sin bajar de 0 (usá max)
+    def recibir_daño(self, daño):
+        # TODO: restá daño a self.hp sin bajar de 0 (usá max)
         pass
     
     # RETO 4 — Curar:
@@ -57,6 +57,6 @@ pikachu.aprender("Placaje Eléctrico")
 print(f"Movimientos: {pikachu.movimientos}")
 
 print("\n--- Batalla ---")
-pikachu.recibir_dano(100)
+pikachu.recibir_daño(100)
 charizard.curar(50)
 print(f"\nVentaja: {pikachu.ventaja_vs(charizard)}")

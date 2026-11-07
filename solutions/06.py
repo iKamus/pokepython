@@ -4,14 +4,16 @@ Solución completa de la lección, lista para ejecutar.
 """
 
 # RETO 1 — Daño con multiplicador por defecto:
-def calcular_dano(base, multiplicador=1.5):
+def calcular_daño(base, multiplicador=1.5):
     return base * multiplicador
 
-print(f"calcular_dano(40) = {calcular_dano(40)}")  # 60.0
+print(f"calcular_daño(40) = {calcular_daño(40)}")  # 60.0
 
 # RETO 2 — Curación con tope:
 def curar(hp, cantidad, tope=100):
-    return min(hp + cantidad, tope)
+    if hp + cantidad > tope:
+        return tope
+    return hp + cantidad
 
 print(f"curar(80, 30) = {curar(80, 30)}")  # 100
 
@@ -26,10 +28,10 @@ def efectividad(tipo_ataque, tipo_defensor):
 print(f"efectividad('agua', 'fuego') = {efectividad('agua', 'fuego')}")  # 2.0
 
 # RETO 4 — Sumar daño:
-def sumar_dano(a, b):
+def sumar_daño(a, b):
     return a + b
 
-print(f"sumar_dano(40, 35) = {sumar_dano(40, 35)}")  # 75
+print(f"sumar_daño(40, 35) = {sumar_daño(40, 35)}")  # 75
 
 # RETO 5 — Saludar sin devolver:
 def saludar_entrenador(nombre):

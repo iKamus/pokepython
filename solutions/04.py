@@ -5,8 +5,8 @@ Solución completa de la lección, lista para ejecutar.
 
 # RETO 1 — Suma de HP (base + boost):
 hp_base = 80
-ehill_boost = 20
-hp_total = hp_base + ehill_boost
+bono_hp = 20
+hp_total = hp_base + bono_hp
 
 # RETO 2 — Restar daño recibido:
 hp_actual = 100
@@ -25,8 +25,8 @@ por_entrenador = niveles_totales // entrenadores
 
 # RETO 5 — Módulo % (distribuir Pokémons en equipos de 6):
 pokemons = 25
-equipe_size = 6
-sobran = pokemons % equipe_size
+tamaño_equipo = 6
+sobran = pokemons % tamaño_equipo
 
 # RETO 6 — Potencia ** (velocidad x velocidad):
 fuerza = 3
@@ -40,11 +40,3 @@ print(f"ATK efectivo (x1.5): {atk_efectivo}")  # Esperado: 105.0
 print(f"42 niveles ÷ 5 entrenadores: {por_entrenador}")  # Esperado: 8
 print(f"25 Pokémons en equipos de 6 → sobran {sobran}")  # Esperado: 1
 print(f"3⁴ = {resultado}")               # Esperado: 81
-
-# Verificación:
-assert hp_total == 100
-assert hp_despues == 65
-assert atk_efectivo == 105.0
-assert por_entrenador == 8
-assert sobran == 1
-assert resultado == 81

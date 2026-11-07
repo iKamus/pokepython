@@ -20,11 +20,11 @@ class Pokemon:
             self.movimientos.append(mov)
     
     def atacar(self, objetivo):
-        dano = self.nivel * 5
-        objetivo.recibir_dano(dano)
+        daño = self.nivel * 5
+        objetivo.recibir_daño(daño)
     
-    def recibir_dano(self, dano):
-        self.hp = max(0, self.hp - dano)
+    def recibir_daño(self, daño):
+        self.hp = max(0, self.hp - daño)
     
     def curar(self, cantidad=20):
         self.hp = min(self.hp + cantidad, self.hp_max)
@@ -47,13 +47,13 @@ class Electrico(Pokemon):
             print(f"❌ {self.nombre} NO puede aprender '{mov}' (no es eléctrico)")
     
     def atacar(self, objetivo):
-        dano = self.voltaje // 10000  # Convertir voltios a daño
+        daño = self.voltaje // 10000  # Convertir voltios a daño
         if objetivo.tipo == "agua":
-            dano *= 2  # Super efectivo contra agua
+            daño *= 2  # Super efectivo contra agua
         elif objetivo.tipo == "planta":
-            dano //= 2  # No muy efectivo contra planta
-        objetivo.recibir_dano(dano)
-        print(f"⚡ {self.nombre} usa Chispazo! (-{dano}HP)")
+            daño //= 2  # No muy efectivo contra planta
+        objetivo.recibir_daño(daño)
+        print(f"⚡ {self.nombre} usa Chispazo! (-{daño}HP)")
 
 
 class Fuego(Pokemon):
@@ -70,13 +70,13 @@ class Fuego(Pokemon):
             print(f"❌ {self.nombre} NO puede aprender '{mov}' (no es fuego)")
     
     def atacar(self, objetivo):
-        dano = self.poder_llama
+        daño = self.poder_llama
         if objetivo.tipo == "planta":
-            dano *= 2
+            daño *= 2
         elif objetivo.tipo == "agua":
-            dano //= 2
-        objetivo.recibir_dano(dano)
-        print(f"🔥 {self.nombre} usa Llamarada! (-{dano}HP)")
+            daño //= 2
+        objetivo.recibir_daño(daño)
+        print(f"🔥 {self.nombre} usa Llamarada! (-{daño}HP)")
 
 
 class Agua(Pokemon):
@@ -93,13 +93,13 @@ class Agua(Pokemon):
             print(f"❌ {self.nombre} NO puede aprender '{mov}' (no es agua)")
     
     def atacar(self, objetivo):
-        dano = 20
+        daño = 20
         if objetivo.tipo == "fuego":
-            dano *= 2
+            daño *= 2
         elif objetivo.tipo == "planta":
-            dano //= 2
-        objetivo.recibir_dano(dano)
-        print(f"💧 {self.nombre} usa Hidrobomba! (-{dano}HP)")
+            daño //= 2
+        objetivo.recibir_daño(daño)
+        print(f"💧 {self.nombre} usa Hidrobomba! (-{daño}HP)")
 
 
 # CREAR EQUIPO DE TIPOS DIFERENTES

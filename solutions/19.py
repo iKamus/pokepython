@@ -39,7 +39,7 @@ class Pokemon:
     # Método de instancia normal:
     def atacar(self, target):
         efectivo = self.ventaja(self.tipo, target.tipo)
-        dano = 20 if efectivo else 10
+        daño = 20 if efectivo else 10
         print(f"→ {self.nombre} ({self.tipo}) vs {target.nombre} ({target.tipo}): {'x2' if efectivo else 'x1'}")
 
 

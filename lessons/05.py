@@ -27,12 +27,7 @@ puede_atacar = None  # TODO: resultado de en_batalla and hp > 0
 print(f"¿Puede atacar? {puede_atacar}")  # True
 
 # RETO 5 — Verificar super efectivo (diccionario de matchups):
-super_efectivo = {
-    "fuego": ["planta", "hielo", "acero"],
-    "agua": ["fuego", "roca", "tierra"],
-    "electrico": ["agua", "volador"]
-}
 mov = "electrico"
 defensor = "agua"
-si_efectivo = None  # TODO: usá `in` sobre super_efectivo.get(mov, [])
+si_efectivo = None  # TODO: combiná comparaciones con and/or: eléctrico vence a agua
 print(f"¿{mov} vs {defensor} es efectivo? {si_efectivo}")  # True

@@ -29,9 +29,9 @@ class Pokemon:
             print(f"📚 {self.nombre} aprendió {mov}!")
     
     # RETO 3 — Recibir daño:
-    def recibir_dano(self, dano):
-        self.hp = max(0, self.hp - dano)
-        print(f"💥 {self.nombre} recibió {dano} daño. HP: {self.hp}")
+    def recibir_daño(self, daño):
+        self.hp = max(0, self.hp - daño)
+        print(f"💥 {self.nombre} recibió {daño} daño. HP: {self.hp}")
     
     # RETO 4 — Curar:
     def curar(self, cantidad=20):
@@ -62,6 +62,6 @@ pikachu.aprender("Placaje Eléctrico")
 print(f"Movimientos: {pikachu.movimientos}")
 
 print("\n--- Batalla ---")
-pikachu.recibir_dano(100)
+pikachu.recibir_daño(100)
 charizard.curar(50)
 print(f"\nVentaja: {pikachu.ventaja_vs(charizard)}")

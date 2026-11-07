@@ -71,8 +71,8 @@ class Pokemon:
         self.hp = min(self.hp + 20, self.hp_max)
         print(f"  ⬆️ ¡{self.nombre} subió a Nv.{self.nivel}!")
     
-    def recibir_dano(self, dano):
-        self.hp = max(0, self.hp - dano)
+    def recibir_daño(self, daño):
+        self.hp = max(0, self.hp - daño)
     
     def curar(self, cantidad=20):
         self.hp = min(self.hp + cantidad, self.hp_max)
@@ -88,7 +88,7 @@ class Electrico(Pokemon):
     
     def atacar(self, objetivo):
         # TODO: daño = nivel × 8 × voltaje / 10000 × multiplicador de tipo
-        #   (agua x2, planta x1/2); aplicá con recibir_dano() e imprimí
+        #   (agua x2, planta x1/2); aplicá con recibir_daño() e imprimí
         #   "⚡ {nombre} usa {movimiento}! (-{daño}HP)"
         pass
 
@@ -103,7 +103,7 @@ class Fuego(Pokemon):
     
     def atacar(self, objetivo):
         # TODO: daño = poder_llama × (nivel / 10) × multiplicador de tipo
-        #   (fuego x2, agua x1/2); aplicá con recibir_dano() e imprimí
+        #   (fuego x2, agua x1/2); aplicá con recibir_daño() e imprimí
         #   "🔥 {nombre} usa {movimiento}! (-{daño}HP)"
         pass
 
@@ -118,7 +118,7 @@ class Agua(Pokemon):
     
     def atacar(self, objetivo):
         # TODO: daño = nivel × 7 × multiplicador de tipo (agua x2, planta x1/2);
-        #   aplicá con recibir_dano() e imprimí "💧 {nombre} usa {movimiento}!"
+        #   aplicá con recibir_daño() e imprimí "💧 {nombre} usa {movimiento}!"
         pass
 
 

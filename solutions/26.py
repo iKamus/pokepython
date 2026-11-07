@@ -29,12 +29,12 @@ def win_probability(attacker_hp, defender_hp, turnos_restantes):
         return 1.0 if attacker_hp > 0 else 0.0
 
     # El atacante golpea primero (70% de las veces, daño del 15% de su HP)
-    atk_dano = int(attacker_hp * 0.15)
-    new_def_hp = max(0, defender_hp - atk_dano)
+    atk_daño = int(attacker_hp * 0.15)
+    new_def_hp = max(0, defender_hp - atk_daño)
 
     # El defensor responde (30% de las veces, daño del 10%)
-    def_atk_dano = int(defender_hp * 0.10)
-    new_att_hp = max(0, attacker_hp - def_atk_dano)
+    def_atk_daño = int(defender_hp * 0.10)
+    new_att_hp = max(0, attacker_hp - def_atk_daño)
 
     prob_ataca = 0.7 * win_probability(new_def_hp, defender_hp, turnos_restantes - 1)
     prob_defiende = 0.3 * win_probability(attacker_hp, new_def_hp, turnos_restantes - 1)

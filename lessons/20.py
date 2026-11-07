@@ -20,11 +20,11 @@ class Pokemon:
             self.movimientos.append(mov)
     
     def atacar(self, objetivo):
-        dano = self.nivel * 5
-        objetivo.recibir_dano(dano)
+        daño = self.nivel * 5
+        objetivo.recibir_daño(daño)
     
-    def recibir_dano(self, dano):
-        self.hp = max(0, self.hp - dano)
+    def recibir_daño(self, daño):
+        self.hp = max(0, self.hp - daño)
     
     def curar(self, cantidad=20):
         self.hp = min(self.hp + cantidad, self.hp_max)
@@ -46,7 +46,7 @@ class Electrico(Pokemon):
     
     def atacar(self, objetivo):
         # TODO: convertí el voltaje en daño (voltaje // 10000), aplicá ventaja
-        #   contra agua/planta, descontá con recibir_dano() e imprimí el movimiento
+        #   contra agua/planta, descontá con recibir_daño() e imprimí el movimiento
         pass
 
 
@@ -64,7 +64,7 @@ class Fuego(Pokemon):
     
     def atacar(self, objetivo):
         # TODO: usá poder_llama como daño base, aplicá ventaja contra
-        #   planta/agua, descontá con recibir_dano() e imprimí el movimiento
+        #   planta/agua, descontá con recibir_daño() e imprimí el movimiento
         pass
 
 
@@ -82,7 +82,7 @@ class Agua(Pokemon):
     
     def atacar(self, objetivo):
         # TODO: daño base 20, aplicá ventaja contra fuego/planta, descontá
-        #   con recibir_dano() e imprimí el movimiento
+        #   con recibir_daño() e imprimí el movimiento
         pass
 
 

@@ -68,8 +68,8 @@ class Pokemon:
         self.hp = min(self.hp + 20, self.hp_max)
         print(f"  ⬆️ ¡{self.nombre} subió a Nv.{self.nivel}!")
     
-    def recibir_dano(self, dano):
-        self.hp = max(0, self.hp - dano)
+    def recibir_daño(self, daño):
+        self.hp = max(0, self.hp - daño)
     
     def curar(self, cantidad=20):
         self.hp = min(self.hp + cantidad, self.hp_max)
@@ -86,10 +86,10 @@ class Electrico(Pokemon):
     def atacar(self, objetivo):
         mult = 2.0 if objetivo.tipo in self.TIPOS_SUPER.get("electrico", []) else 1.0
         mult = 0.5 if objetivo.tipo == "planta" else mult
-        dano = max(1, int((self.nivel * 8 * self.voltaje / 10000) * mult))
-        objetivo.recibir_dano(dano)
+        daño = max(1, int((self.nivel * 8 * self.voltaje / 10000) * mult))
+        objetivo.recibir_daño(daño)
         mov = self.movimientos[min(len(self.movimientos)-1, self.nivel // 5)]
-        print(f"  ⚡ {self.nombre} usa {mov}! (-{dano}HP)")
+        print(f"  ⚡ {self.nombre} usa {mov}! (-{daño}HP)")
 
 
 class Fuego(Pokemon):
@@ -103,10 +103,10 @@ class Fuego(Pokemon):
     def atacar(self, objetivo):
         mult = 2.0 if objetivo.tipo in self.TIPOS_SUPER.get("fuego", []) else 1.0
         mult = 0.5 if objetivo.tipo == "agua" else mult
-        dano = max(1, int(self.poder_llama * (self.nivel / 10) * mult))
-        objetivo.recibir_dano(dano)
+        daño = max(1, int(self.poder_llama * (self.nivel / 10) * mult))
+        objetivo.recibir_daño(daño)
         mov = self.movimientos[min(len(self.movimientos)-1, self.nivel // 5)]
-        print(f"  🔥 {self.nombre} usa {mov}! (-{dano}HP)")
+        print(f"  🔥 {self.nombre} usa {mov}! (-{daño}HP)")
 
 
 class Agua(Pokemon):
@@ -120,10 +120,10 @@ class Agua(Pokemon):
     def atacar(self, objetivo):
         mult = 2.0 if objetivo.tipo in self.TIPOS_SUPER.get("agua", []) else 1.0
         mult = 0.5 if objetivo.tipo == "planta" else mult
-        dano = max(1, int(self.nivel * 7 * mult))
-        objetivo.recibir_dano(dano)
+        daño = max(1, int(self.nivel * 7 * mult))
+        objetivo.recibir_daño(daño)
         mov = self.movimientos[min(len(self.movimientos)-1, self.nivel // 5)]
-        print(f"  💧 {self.nombre} usa {mov}! (-{dano}HP)")
+        print(f"  💧 {self.nombre} usa {mov}! (-{daño}HP)")
 
 
 # ════════════ MOTOR DE BATALLA ════════════
