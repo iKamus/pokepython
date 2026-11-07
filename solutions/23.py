@@ -3,37 +3,34 @@
 Solución completa de la lección, lista para ejecutar.
 """
 
-# RETO 1 — Factorial recursivo (caso base + paso recursivo):
-def factorial(n):
-    """Calcula n! = n * (n-1) * ... * 1"""
-    if n <= 1:
-        return 1      # CASO BASE
-    return n * factorial(n - 1)  # PASO RECUSIVO
-
-print(f"5! = {factorial(5)}")     # 120
-print(f"10! = {factorial(10)}")   # 3628800
-
-# RETO 2 — Suma recursiva de una lista:
-def suma_recursiva(lista):
-    """Suma todos los elementos de la lista recursivamente."""
-    if not lista:           # CASO BASE: lista vacía
+# RETO 1 — XP acumulada hasta un nivel:
+def xp_total(nivel):
+    """XP que junta un Pokémon para llegar a ese nivel: 100 por nivel, acumulada."""
+    if nivel <= 1:                      # CASO BASE
         return 0
-    return lista[0] + suma_recursiva(lista[1:])  # PASO: primer elemento + resto
+    return nivel * 100 + xp_total(nivel - 1)   # PASO RECURSIVO
 
-numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-print(f"\nSuma de {numeros} = {suma_recursiva(numeros)}")  # 55
+print(f"XP al nivel 5: {xp_total(5)}")     # 1400
+
+# RETO 2 — Daño total de un combo:
+def dano_total(combo):
+    """Suma el daño de cada golpe del combo, recursivamente."""
+    if not combo:                                   # CASO BASE: sin golpes
+        return 0
+    return combo[0] + dano_total(combo[1:])         # PASO: primer golpe + resto
+
+golpes = [12, 8, 20, 5]
+print(f"Daño total del combo: {dano_total(golpes)}")   # 45
 
 # RETO 3 — Potencia recursiva:
-def potencia(base, exp):
-    """Calcula base^exp de forma recursiva."""
-    if exp == 0:            # CASO BASE
+def potencia(base, nivel):
+    """Calcula base ** nivel de forma recursiva."""
+    if nivel == 0:                          # CASO BASE
         return 1
-    if exp == 1:            # CASO BASE
-        return base
-    return base * potencia(base, exp - 1)  # PASO
+    return base * potencia(base, nivel - 1)  # PASO
 
-print(f"\n2^10 = {potencia(2, 10)}")   # 1024
-print(f"3^4 = {potencia(3, 4)}")       # 81
+print(f"Ataque base 2 a nivel 3: {potencia(2, 3)}")   # 8
+print(f"Ataque base 3 a nivel 4: {potencia(3, 4)}")   # 81
 
 # RETO 4 — Cadena de evolución (recursión con diccionario):
 EVOLUTION_CHAINS = {
@@ -48,19 +45,19 @@ def evolucion(name, chain=None):
     """Devuelve toda la cadena evolutiva desde el nombre dado."""
     if chain is None:
         chain = []
-    
+
     formas = EVOLUTION_CHAINS.get(name, [])
     nueva_chain = chain + [name]
-    
+
     if not formas:
         return nueva_chain  # CASO BASE: fin de la cadena
-    
+
     # Para cada posible siguiente evolución, recursar y tomar la primera
     for next_form in formas:
         sub_cadena = evolucion(next_form, nueva_chain)
         if len(sub_cadena) > len(nueva_chain):
             return sub_cadena
-    
+
     return nueva_chain
 
 

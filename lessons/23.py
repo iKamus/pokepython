@@ -3,32 +3,34 @@
 Funciones que se llaman a sí mismas para simular evolución Pokémon.
 """
 
-# RETO 1 — Factorial recursivo (caso base + paso recursivo):
-def factorial(n):
-    """Calcula n! = n * (n-1) * ... * 1"""
-    # TODO: caso base con n <= 1 y paso recursivo n * factorial(n - 1)
+# RETO 1 — XP acumulada hasta un nivel (caso base + paso recursivo):
+def xp_total(nivel):
+    """XP que junta un Pokémon para llegar a ese nivel: 100 por nivel, acumulada."""
+    # TODO: caso base nivel <= 1 devuelve 0;
+    #   paso recursivo: nivel * 100 + xp_total(nivel - 1)
     return None
 
-print(f"5! = {factorial(5)}")     # 120
-print(f"10! = {factorial(10)}")   # 3628800
+print(f"XP al nivel 5: {xp_total(5)}")     # 1400
 
-# RETO 2 — Suma recursiva de una lista:
-def suma_recursiva(lista):
-    """Suma todos los elementos de la lista recursivamente."""
-    # TODO: caso base con lista vacía y paso lista[0] + suma_recursiva(lista[1:])
+# RETO 2 — Daño total de un combo (suma recursiva de una lista):
+def dano_total(combo):
+    """Suma el daño de cada golpe del combo, recursivamente."""
+    # TODO: caso base combo vacío devuelve 0;
+    #   paso recursivo: combo[0] + dano_total(combo[1:])
     return None
 
-numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-print(f"\nSuma de {numeros} = {suma_recursiva(numeros)}")  # 55
+golpes = [12, 8, 20, 5]
+print(f"Daño total del combo: {dano_total(golpes)}")   # 45
 
-# RETO 3 — Potencia recursiva:
-def potencia(base, exp):
-    """Calcula base^exp de forma recursiva."""
-    # TODO: caso base con exp == 0 (o 1) y paso base * potencia(base, exp - 1)
+# RETO 3 — Potencia recursiva (el ataque se multiplica por sí mismo):
+def potencia(base, nivel):
+    """Calcula base ** nivel de forma recursiva."""
+    # TODO: caso base nivel == 0 devuelve 1;
+    #   paso recursivo: base * potencia(base, nivel - 1)
     return None
 
-print(f"\n2^10 = {potencia(2, 10)}")   # 1024
-print(f"3^4 = {potencia(3, 4)}")       # 81
+print(f"Ataque base 2 a nivel 3: {potencia(2, 3)}")   # 8
+print(f"Ataque base 3 a nivel 4: {potencia(3, 4)}")   # 81
 
 # RETO 4 — Cadena de evolución (recursión con diccionario):
 EVOLUTION_CHAINS = {

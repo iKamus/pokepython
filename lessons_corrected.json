@@ -1056,27 +1056,27 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Factorial",
-              "description": "Base cases and recursion correct",
-              "expect": "if n <= 1"
+              "name": "XP acumulada",
+              "description": "Caso base y paso recursivo",
+              "expect": "return nivel * 100 + xp_total(nivel - 1)"
             },
             {
               "id": "t2",
-              "name": "Recursive sum",
-              "description": "Accumulates correctly",
-              "expect": "lista[0] +"
+              "name": "Daño del combo",
+              "description": "Suma recursiva de la lista",
+              "expect": "combo[0] + dano_total(combo[1:])"
             },
             {
               "id": "t3",
-              "name": "Power",
-              "description": "Base^exp via recursion",
-              "expect": "base *"
+              "name": "Potencia recursiva",
+              "description": "base ** nivel con recursión",
+              "expect": "base * potencia(base, nivel - 1)"
             },
             {
               "id": "t4",
-              "name": "Evolution chain",
-              "description": "Complete list of forms",
-              "expect": "chains"
+              "name": "Cadena de evolución",
+              "description": "Recorre EVOLUTION_CHAINS",
+              "expect": "evolucion(next_form,"
             }
           ]
         }
@@ -1194,27 +1194,27 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Memoized fib",
-              "description": "Cache avoids recalculations",
-              "expect": "cache[n]"
+              "name": "Caché manual",
+              "description": "Guarda y reutiliza cache[nivel]",
+              "expect": "cache[nivel] ="
             },
             {
               "id": "t2",
-              "name": "LRU decorated",
-              "description": "Automatic caching",
-              "expect": "@lru_cache"
+              "name": "Turnos cacheados",
+              "description": "Recursión de turnos con @lru_cache",
+              "expect": "0.7 * win_probability("
             },
             {
               "id": "t3",
-              "name": "Bottom-up path",
-              "description": "Shortest path found",
-              "expect": "min("
+              "name": "Camino entre tipos",
+              "description": "Cola de (tipo, camino) con BFS",
+              "expect": "queue.pop(0)"
             },
             {
               "id": "t4",
-              "name": "Visited protection",
-              "description": "Prevents cycles",
-              "expect": "visited"
+              "name": "Estados visitados",
+              "description": "Evita ciclos de tipos",
+              "expect": "visitados.add("
             }
           ]
         },
