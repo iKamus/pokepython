@@ -13,11 +13,11 @@ charizard = {
 
 # RETO 2 — Acceder y modificar atributos:
 print(f"{charizard['nombre']} es tipo {charizard['tipo']}")
-charizard["habilidad"] = "Blaze"
+charizard["habilidad"] = "Mar Llamas"
 
 # RETO 3 — Agregar nueva clave (lista de habilidades):
 charizard["movimientos"] = ["Llamarada", "Rayo Solar", "Arañazo"]
-charizard["habilidades"] = ["Blaze", "Intimidación"]
+charizard["habilidades"] = ["Mar Llamas", "Intimidación"]
 
 # Texto escapado de la ficha (comillas dobles con \):
 print("Ficha como texto: {\"nombre\": \"Charizard\"}")

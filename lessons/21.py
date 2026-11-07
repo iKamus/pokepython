@@ -16,7 +16,7 @@ class Pokemon:
 
 
 class Electrico(Pokemon):
-    MOVIMIENTOS = ["Chispazo", "Rayo", "Thunderbolt"]
+    MOVIMIENTOS = ["Chispazo", "Rayo", "Impactrueno"]
     
     def atacar(self, objetivo):
         # TODO: si el tipo del objetivo da ventaja, el daño es 20; si no, 10.

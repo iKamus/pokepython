@@ -13,7 +13,7 @@ charizard = {
 
 # RETO 2 — Acceder y modificar atributos:
 print(f"{charizard['nombre']} es tipo {charizard['tipo']}")
-charizard["habilidad"] = "Blaze"
+charizard["habilidad"] = "Mar Llamas"
 
 # RETO 3 — Agregar nueva clave (lista de habilidades):
 charizard["movimientos"] = ["Llamarada", "Rayo Solar", "Arañazo"]

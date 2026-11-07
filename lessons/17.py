@@ -11,12 +11,12 @@ class Movimiento:
         self.pp = pp
 
     # RETO 1 — __str__: representación legible con print():
-    #   print(mov) -> Thunderbolt (potencia:90) [20PP]
+    #   print(mov) -> Rayo (potencia:90) [20PP]
     # TODO: implementá el método especial para que print(mov) muestre
-    #   "Thunderbolt (potencia:90) [20PP]"
+    #   "Rayo (potencia:90) [20PP]"
 
     # RETO 2 — __lt__: comparar por potencia con el operador <:
-    #   Movimiento("Rayo",40) < Movimiento("Thunderbolt",90) -> True
+    #   Movimiento("Impactrueno",40) < Movimiento("Rayo",90) -> True
     def __lt__(self, otro):
         # TODO: retorná True si este movimiento tiene MENOS potencia que otro
         return False
@@ -33,14 +33,14 @@ class Movimiento:
         return None
 
 # DEMOSTRACIÓN — completá los TODOs y volvé a correr:
-thunderbolt = Movimiento("Thunderbolt", 90)
-rayo = Movimiento("Rayo", 40)
-otro_rayo = Movimiento("Rayo", 40)
+rayo = Movimiento("Rayo", 90)
+impactrueno = Movimiento("Impactrueno", 40)
+otro_rayo = Movimiento("Rayo", 90)
 
-print(thunderbolt)
-print(rayo < thunderbolt)
+print(rayo)
+print(impactrueno < rayo)
 print(rayo == otro_rayo)
 
-thunderbolt.usar()
-thunderbolt.usar()
-print(f"PP restantes: {thunderbolt.pp}")
+rayo.usar()
+rayo.usar()
+print(f"PP restantes: {rayo.pp}")

@@ -76,7 +76,7 @@ class Pokemon:
 
 
 class Electrico(Pokemon):
-    MOVIMIENTOS = ["Chispazo", "Rayo", "Thunderbolt", "Volt Tackle", "Cola Férrea"]
+    MOVIMIENTOS = ["Chispazo", "Rayo", "Impactrueno", "Placaje Eléctrico", "Cola Férrea"]
     
     def __init__(self, nombre, voltaje=100000):
         super().__init__(nombre, "electrico")

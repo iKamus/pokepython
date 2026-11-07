@@ -50,8 +50,8 @@ def lcs_sequence(seq1, seq2):
 # COMPARAR MOVESSETS DE POKÉMONS
 print("=== ANÁLISIS DE MOVESSETS ===\n")
 
-teammoves = ["Thunderbolt", "Volt Tackle", "Iron Tail", "Quick Attack"]
-optimal_moveset = ["Thunderbolt", "Discharge", "Volt Tackle", "Electro Ball"]
+teammoves = ["Rayo", "Placaje Eléctrico", "Cola Férrea", "Ataque Rápido"]
+optimal_moveset = ["Rayo", "Chispazo", "Placaje Eléctrico", "Bola Voltio"]
 
 print(f"Tu equipo actual:   {', '.join(teammoves)}")
 print(f"Moveset óptimo:     {', '.join(optimal_moveset)}")

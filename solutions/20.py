@@ -33,7 +33,7 @@ class Pokemon:
 # --- Subclases con HERENCIA ---
 
 class Electrico(Pokemon):
-    MOVIMIENTOS_ELEC = ["Chispazo", "Rayo", "Thunderbolt", "Cola Férrea", "Volt Tackle"]
+    MOVIMIENTOS_ELEC = ["Chispazo", "Rayo", "Impactrueno", "Cola Férrea", "Placaje Eléctrico"]
     
     def __init__(self, nombre, voltaje=100000):
         super().__init__(nombre, "electrico")
@@ -117,7 +117,7 @@ print(f"Tipo: {pikachu.tipo}")
 
 # PROBAR APRENDIZAJE LIMITADO POR TIPO
 print("\n--- Entrenamiento ---")
-pikachu.aprender("Thunderbolt")      # OK
+pikachu.aprender("Rayo")      # OK
 pikachu.aprender("Llamarada")         # NO - no es eléctrico
 charmander.aprender("Hidrobomba")     # NO - no es fuego
 squirtle.aprender("Burbuja")          # OK

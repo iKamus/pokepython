@@ -31,14 +31,14 @@ class Movimiento:
         return None
 
 # DEMOSTRACIÓN:
-thunderbolt = Movimiento("Thunderbolt", 90)
-rayo = Movimiento("Rayo", 40)
-otro_rayo = Movimiento("Rayo", 40)
+rayo = Movimiento("Rayo", 90)
+impactrueno = Movimiento("Impactrueno", 40)
+otro_rayo = Movimiento("Rayo", 90)
 
-print(thunderbolt)                          # __str__ → Thunderbolt (potencia:90) [20PP]
-print(f"¿Rayo < Thunderbolt? {rayo < thunderbolt}")   # __lt__ → True
+print(rayo)                          # __str__ → Rayo (potencia:90) [20PP]
+print(f"¿Impactrueno < Rayo? {impactrueno < rayo}")   # __lt__ → True
 print(f"¿Rayo == Rayo? {rayo == otro_rayo}")          # __eq__ → True
 
-thunderbolt.usar()
-thunderbolt.usar()
-print(f"PP restantes: {thunderbolt.pp}")    # self.pp → 18
+rayo.usar()
+rayo.usar()
+print(f"PP restantes: {rayo.pp}")    # self.pp → 18

@@ -57,8 +57,8 @@ print(pikachu)               # Pikachu Nv.25 electrico HP:500/500
 print(charizard)             # Charizard Nv.36 fuego HP:720/720
 
 print("\n--- Entrenamiento ---")
-pikachu.aprender("Thunderbolt")
-pikachu.aprender("Volt Tackle")
+pikachu.aprender("Rayo")
+pikachu.aprender("Placaje Eléctrico")
 print(f"Movimientos: {pikachu.movimientos}")
 
 print("\n--- Batalla ---")

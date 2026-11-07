@@ -16,7 +16,7 @@ class Pokemon:
 
 
 class Electrico(Pokemon):
-    MOVIMIENTOS = ["Chispazo", "Rayo", "Thunderbolt"]
+    MOVIMIENTOS = ["Chispazo", "Rayo", "Impactrueno"]
     
     def atacar(self, objetivo):
         efectivo = objetivo.tipo == "agua"
