@@ -126,20 +126,20 @@
             },
             {
               "id": "t5",
-              "name": ".replace()",
-              "description": "Reemplazo _ by space",
+              "name": "Reemplazo con .replace()",
+              "description": "Guion bajo → espacio",
               "expect": "pi kachu"
             },
             {
               "id": "t6",
-              "name": "in operator",
-              "description": "Contains chu",
+              "name": "Operador in",
+              "description": "Contiene chu",
               "expect": "chu"
             },
             {
               "id": "t7",
               "name": ".strip()",
-              "description": "No spaces left",
+              "description": "Sin espacios sobrantes",
               "expect": "Raichu"
             }
           ],
@@ -226,8 +226,8 @@
             },
             {
               "id": "t3",
-              "name": "Tipo advantage",
-              "description": "Agua vs fuego",
+              "name": "Ventaja de tipo",
+              "description": "Agua contra fuego",
               "expect": "Súper efectivo"
             },
             {
@@ -238,8 +238,8 @@
             },
             {
               "id": "t5",
-              "name": "Super check",
-              "description": "electric vs water",
+              "name": "Chequeo de supereficacia",
+              "description": "Eléctrico contra agua",
               "expect": "True"
             }
           ],
@@ -438,8 +438,8 @@
             },
             {
               "id": "t3",
-              "name": "Slice first 3",
-              "description": "First slice",
+              "name": "Slicing primeros 3",
+              "description": "Primeros tres stats",
               "expect": "[::3]"
             },
             {
@@ -462,8 +462,8 @@
             },
             {
               "id": "t7",
-              "name": "Slice step",
-              "description": "Every second item",
+              "name": "Slicing con paso",
+              "description": "Uno de cada dos",
               "expect": "[::2]"
             }
           ],
@@ -491,20 +491,20 @@
             },
             {
               "id": "t2",
-              "name": "Victory HP reaches 0",
-              "description": "Enemy HP decreases",
+              "name": "Victoria cuando el HP llega a 0",
+              "description": "El HP enemigo baja",
               "expect": "hp_enemigo"
             },
             {
               "id": "t3",
-              "name": "Break works",
-              "description": "Exits when hp <= 0",
+              "name": "break funciona",
+              "description": "Sale cuando hp <= 0",
               "expect": "break"
             },
             {
               "id": "t4",
-              "name": "Continue skips",
-              "description": "Skips fainted pokemon",
+              "name": "continue salta",
+              "description": "Saltea Pokémon debilitados",
               "expect": "continue"
             }
           ],
@@ -538,20 +538,20 @@
             },
             {
               "id": "t2",
-              "name": "Modify type",
-              "description": "Type changed",
+              "name": "Modificar el tipo",
+              "description": "El tipo cambia",
               "expect": "[\\\"tipo\\\"]"
             },
             {
               "id": "t3",
-              "name": "Add abilities",
-              "description": "New key added",
+              "name": "Agregar habilidades",
+              "description": "Clave nueva agregada",
               "expect": "[\\\"habilidades\\\"]"
             },
             {
               "id": "t4",
-              "name": "Iterate items",
-              "description": "Print each pair",
+              "name": "Iterar con items()",
+              "description": "Imprime cada par",
               "expect": "items()"
             },
             {
@@ -585,14 +585,14 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Upper case list",
-              "description": "All names upper",
+              "name": "Lista en mayúsculas",
+              "description": "Todos los nombres en mayúsculas",
               "expect": ".upper()"
             },
             {
               "id": "t2",
-              "name": "Filter long",
-              "description": "Names longer than 8",
+              "name": "Filtrar los largos",
+              "description": "Nombres de más de 8 letras",
               "expect": "len(p)"
             },
             {
@@ -744,8 +744,8 @@
             },
             {
               "id": "t4",
-              "name": "Finally executes",
-              "description": "Cleanup always happens",
+              "name": "finally se ejecuta",
+              "description": "La limpieza pasa siempre",
               "expect": "finally"
             }
           ],
@@ -773,8 +773,8 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Class defined",
-              "description": "__init__ initializes properly",
+              "name": "Clase definida",
+              "description": "__init__ inicializa bien",
               "expect": "class Pokemon"
             },
             {
@@ -785,8 +785,8 @@
             },
             {
               "id": "t3",
-              "name": "Take damage",
-              "description": "HP reduces correctly",
+              "name": "Recibir daño",
+              "description": "El HP baja bien",
               "expect": "max(0"
             },
             {
@@ -814,26 +814,26 @@
           "tests": [
             {
               "id": "t1",
-              "name": "__str__ implemented",
-              "description": "Readable representation",
+              "name": "__str__ implementado",
+              "description": "Representación legible",
               "expect": "__str__"
             },
             {
               "id": "t2",
-              "name": "__lt__ compares",
-              "description": "Less by power",
+              "name": "__lt__ compara",
+              "description": "Menor por potencia",
               "expect": "__lt__"
             },
             {
               "id": "t3",
-              "name": "__eq__ equality",
-              "description": "Equality by name",
+              "name": "__eq__ igualdad",
+              "description": "Igualdad por nombre",
               "expect": "__eq__"
             },
             {
               "id": "t4",
-              "name": "Usage reduces PP",
-              "description": "PP decrements on use",
+              "name": "Uso baja los PP",
+              "description": "Los PP bajan al usar",
               "expect": "self.pp"
             }
           ],
@@ -861,8 +861,8 @@
             },
             {
               "id": "t2",
-              "name": "Property nivel setter",
-              "description": "Validates range 1-100",
+              "name": "Propiedad nivel (setter)",
+              "description": "Valida el rango 1-100",
               "expect": "@nivel.setter"
             },
             {
@@ -873,8 +873,8 @@
             },
             {
               "id": "t4",
-              "name": "Living property",
-              "description": "True if HP > 0",
+              "name": "Propiedad vivo",
+              "description": "Es True si el HP > 0",
               "expect": "hp > 0"
             }
           ],
@@ -903,7 +903,7 @@
             {
               "id": "t2",
               "name": "@staticmethod",
-              "description": "Function without self",
+              "description": "Función sin self",
               "expect": "@staticmethod"
             },
             {
@@ -915,7 +915,7 @@
             {
               "id": "t4",
               "name": "tipos_cubiertos",
-              "description": "Property computes correctly",
+              "description": "La propiedad calcula bien",
               "expect": "@property"
             }
           ],
@@ -961,8 +961,8 @@
             },
             {
               "id": "t4",
-              "name": "Override learning",
-              "description": "Electric only learns electric moves",
+              "name": "Override al aprender",
+              "description": "Eléctrico solo aprende eléctricos",
               "expect": "super().aprender"
             }
           ],
@@ -984,14 +984,14 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Polymorphism works",
-              "description": "atacar() works on all",
+              "name": "Funciona el polimorfismo",
+              "description": "atacar() sirve en todos",
               "expect": "def atacar"
             },
             {
               "id": "t2",
-              "name": "Type advantage",
-              "description": "Damage varies by type",
+              "name": "Ventaja de tipo",
+              "description": "El daño varía por tipo",
               "expect": "== objetivo.tipo"
             },
             {
@@ -1043,14 +1043,14 @@
             },
             {
               "id": "t3",
-              "name": "Sum HP linear",
-              "description": "Sums all HP",
+              "name": "Suma de HP lineal",
+              "description": "Suma todos los HP",
               "expect": "sum"
             },
             {
               "id": "t4",
-              "name": "Comparisons quadratic",
-              "description": "nC2 pairs",
+              "name": "Comparaciones cuadráticas",
+              "description": "nC2 pares",
               "expect": "* (n-1) / 2"
             }
           ],
@@ -1260,8 +1260,8 @@
           "tests": [
             {
               "id": "t1",
-              "name": "Knapsack table",
-              "description": "Table built correctly",
+              "name": "Tabla de knapsack",
+              "description": "La tabla se arma bien",
               "expect": "dp[i][w] ="
             },
             {
@@ -1372,8 +1372,8 @@
             },
             {
               "id": "t5",
-              "name": "Save/load",
-              "description": "JSON persistence",
+              "name": "Guardar y cargar",
+              "description": "Persistencia en JSON",
               "expect": "json"
             }
           ],
