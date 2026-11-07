@@ -105,3 +105,25 @@ def test_todos_los_starters_compilan(tmp_path):
         py_compile.compile(
             str(path), cfile=str(tmp_path / f"{path.stem}.pyc"), doraise=True
         )
+
+
+# Vocabulario del curso: si el panel se llama "Ejemplo Pokémon", el ejemplo tiene que
+# hablar de Pokémon y no de Python en general.
+POKEMON_TERMS = (
+    "pokemon", "pokemons", "pikachu", "charmander", "squirtle", "bulbasaur", "entrenador",
+    "pokedex", "tipo", "tipos", "hp", "nivel", "movimiento", "movimientos",
+    "evolucion", "evolucionar", "batalla", "equipo", "stat", "stats",
+    "pocion", "revivir", "fuego", "agua", "planta", "electrico", "hielo",
+    "acero", "roca", "volador", "medalla", "gimnasio", "dano", "ataque",
+)
+
+
+def test_cada_ejemplo_habla_de_pokemon():
+    """El panel se llama "Ejemplo Pokémon": un ejemplo de Python genérico lo desmiente."""
+    for lesson in _flat_lessons(_load("lessons.json")):
+        ejemplo = _norm(lesson.get("example") or "")
+        assert ejemplo, f"lección {lesson['id']} sin example"
+        assert set(ejemplo.split()) & set(POKEMON_TERMS), (
+            f"lección {lesson['id']}: el ejemplo no habla de Pokémon — "
+            f"{(lesson.get('example') or '').splitlines()[0][:70]!r}"
+        )

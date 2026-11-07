@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-"""Genera lessons.json con escape correcto de saltos de línea."""
+"""OBSOLETO — no ejecutar. lessons.json es la fuente de verdad.
+
+Este generador quedó atrás de las correcciones hechas a mano sobre lessons.json.
+Correrlo lo sobrescribe y provoca pérdida de datos, verificado: borra el campo
+`solutionFile` de las 29 lecciones (el panel ✨ Solución queda vacío), revierte el
+expect corregido de la lección 3 (10 → 11), reapunta `codeFile` a archivos que no
+existen (./lessons/02_instalacion.py) y duplica el escape de los saltos de línea en
+`exercisePrompt`. Si hace falta regenerar, primero portar esos cambios acá.
+
+Genera lessons.json con escape correcto de saltos de línea.
+"""
 import json
 from pathlib import Path
 
