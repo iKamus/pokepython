@@ -323,13 +323,17 @@ _CONTRAST_JS = """
     const la = lum(a), lb = lum(b);
     return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
   };
-  const bg = resolve('var(--bg-code)');
+  const bgCode = resolve('var(--bg-code)');
+  const bgRaised = resolve('var(--bg-raised)');
   const out = {};
   for (const token of ['--syn-keyword', '--syn-string', '--syn-number',
                        '--syn-comment', '--syn-function', '--syn-operator']) {
-    out[token] = Number(ratio(resolve('var(' + token + ')'), bg).toFixed(2));
+    const color = resolve('var(' + token + ')');
+    out[token + '__code'] = Number(ratio(color, bgCode).toFixed(2));
+    out[token + '__raised'] = Number(ratio(color, bgRaised).toFixed(2));
   }
-  out.bg = bg;
+  out.bg_code = bgCode;
+  out.bg_raised = bgRaised;
   probe.remove();
   return out;
 }
@@ -345,9 +349,13 @@ def test_syntax_palette_passes_aa_contrast(page, static_site, theme):
     page.wait_for_selector(".cm-content")
 
     result = page.evaluate(_CONTRAST_JS)
-    assert result["bg"], "no se pudo resolver --bg-code"
+    assert result["bg_code"], "no se pudo resolver --bg-code"
+    assert result["bg_raised"], "no se pudo resolver --bg-raised"
     failing = {k: v for k, v in result.items() if k.startswith("--syn-") and v < 4.5}
-    assert not failing, f"tokens bajo AA 4.5:1 en tema {theme}: {failing} (fondo {result['bg']})"
+    assert not failing, (
+        f"tokens bajo AA 4.5:1 en tema {theme}: {failing} "
+        f"(--bg-code={result['bg_code']}, --bg-raised={result['bg_raised']})"
+    )
 
 
 # ── Regresiones de la consola de la página ──────────────────────

@@ -3,7 +3,7 @@
    SPA con routing hash, Pyodide para ejecución local
    ═══════════════════════════════════════════════════ */
 
-console.info('PokéPython build: 2026-11-07-p2');
+console.info('PokéPython build: 2026-11-07-h');
 
 // ── Estado global ──────────────────────────────
 let LESSONS = [];       // flat array [lesson, ...]
@@ -38,6 +38,50 @@ function typeLabel(type){ return TYPE_LABELS[type]||capitalize(type||''); }
 function levelLabel(level){ return LEVEL_LABELS[level]||capitalize(level||''); }
 function plural(n,singular,pluralForm){ return n===1?singular:pluralForm; }
 function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+// Resalta sintaxis Python en los bloques de teoría (fences ```python y ejemplo).
+// Tokeniza el código crudo y escapa cada fragmento por separado: escapar antes
+// destruiría la detección de strings (las comillas se vuelven &quot;).
+const PY_KW_SET=new Set(['def','class','return','if','elif','else','for','while','in','not','and','or','is','import','from','as','with','try','except','finally','pass','break','continue','lambda','None','True','False','global','yield','assert','raise','del']);
+const PY_BI_SET=new Set(['print','len','range','int','str','float','bool','list','dict','set','tuple','sum','min','max','sorted','enumerate','zip','open','input','abs','round','type','isinstance','super','format','map','filter','any','all','self']);
+function highlightPython(code){
+  const n=code.length; let i=0; let out=''; let buf='';
+  const flush=()=>{ if(buf){ out+=escapeHtml(buf); buf=''; } };
+  while(i<n){
+    const c=code[i];
+    if(c==='#'){ flush(); let j=i; while(j<n && code[j]!=='\n') j++; out+=`<span class="tok-comentario">${escapeHtml(code.slice(i,j))}</span>`; i=j; continue; }
+    if(c==='"' || c==="'"){
+      flush();
+      const triple=code.startsWith(c+c+c,i);
+      let j=i;
+      if(triple){ j=i+3; while(j<n){ if(code.startsWith(c+c+c,j)){ j+=3; break;} j++; } }
+      else { j=i+1; while(j<n && code[j]!==c && code[j]!=='\n') j++; if(j<n && code[j]===c) j++; }
+      out+=`<span class="tok-texto">${escapeHtml(code.slice(i,j))}</span>`;
+      i=j; continue;
+    }
+    if(/[0-9]/.test(c)){
+      const prev=i>0?code[i-1]:'';
+      if(!/[A-Za-z_]/.test(prev)){
+        flush(); let j=i;
+        while(j<n && /[0-9]/.test(code[j])) j++;
+        if(j<n && code[j]==='.'){ j++; while(j<n && /[0-9]/.test(code[j])) j++; }
+        if(j<n && (code[j]==='e'||code[j]==='E')){ j++; if(j<n && (code[j]==='+'||code[j]==='-')) j++; while(j<n && /[0-9]/.test(code[j])) j++; }
+        out+=`<span class="tok-numero">${escapeHtml(code.slice(i,j))}</span>`;
+        i=j; continue;
+      }
+    }
+    if(/[A-Za-z_]/.test(c)){
+      flush(); let j=i; while(j<n && /[A-Za-z0-9_]/.test(code[j])) j++;
+      const word=code.slice(i,j);
+      if(PY_KW_SET.has(word)) out+=`<span class="tok-clave">${escapeHtml(word)}</span>`;
+      else if(PY_BI_SET.has(word)) out+=`<span class="tok-builtin">${escapeHtml(word)}</span>`;
+      else out+=escapeHtml(word);
+      i=j; continue;
+    }
+    buf+=c; i++;
+  }
+  flush();
+  return out;
+}
 // Bloques primero: fences, tablas y listas. Si las reglas inline corren antes, el
 // fence ```python se lo come el regex de `código` (quedaba un <code> gigante y un
 // backtick huérfano) y las tablas y listas salían con barras y guiones literales.
@@ -63,7 +107,7 @@ function renderMarkdown(t,enLinea=false){
 
   let out=String(t)
     .replace(/```[a-z]*\n([\s\S]*?)```/g,(_,codigo)=>
-      guardar(`<pre><code>${escapeHtml(codigo.replace(/\n$/,''))}</code></pre>`))
+      guardar(`<pre><code>${highlightPython(codigo.replace(/\n$/,''))}</code></pre>`))
     .replace(/(?:^\|.*\|[ \t]*\n?){2,}/gm,bloque=>guardar(tabla(bloque.trim().split('\n'))))
     .replace(/(?:^[ \t]*[-*] .*\n?)+/gm,bloque=>guardar(`<ul>${items(bloque,/^[ \t]*[-*] /)}</ul>`))
     .replace(/(?:^\d+\. .*\n?)+/gm,bloque=>guardar(`<ol>${items(bloque,/^\d+\. /)}</ol>`));
@@ -373,7 +417,7 @@ async function renderLesson(id){
   // El concepto clave es prosa con markdown (`código` inline): crudo mostraba los backticks.
   if(lesson.keyConcept) theoryHTML+=`<div class="concept-box"><strong>Concepto clave:</strong> ${renderMarkdown(lesson.keyConcept,true)}</div>`;
   if(lesson.theory) theoryHTML+=`<h2>Teoría</h2>${renderMarkdown(lesson.theory)}`;
-  if(lesson.example) theoryHTML+=`<h2>Ejemplo Pokémon</h2><pre class="ejemplo">${escapeHtml(lesson.example)}</pre>`;
+  if(lesson.example) theoryHTML+=`<h2>Ejemplo Pokémon</h2><pre class="ejemplo"><code>${highlightPython(lesson.example)}</code></pre>`;
   if(lesson.extraTheory) theoryHTML+=`<h2>Profundizando</h2>${renderMarkdown(lesson.extraTheory)}`;
   $('#theoryPanel').innerHTML=theoryHTML;
   
@@ -780,7 +824,7 @@ async function initCodeMirror(){
   const host=$('#editorHost');
   if(!ta||!host) return;
   try{
-    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-07-p2');
+    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-07-h');
     cmAPI=cm;
     cmExtensions=buildCMExtensions(cm);
     ta.addEventListener('input',syncTextareaToEditor);

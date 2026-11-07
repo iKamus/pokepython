@@ -428,3 +428,34 @@ def test_tipografia_legible_y_ejemplo_destacado(static_site, page):
     assert m["ejemplo"] >= 15, f"el ejemplo mide {m['ejemplo']}px"
     assert m["ejemploFondo"] != m["codigoFondo"], "el ejemplo tiene el mismo fondo que el código suelto"
     assert m["ejemploRegla"] != m["codigoRegla"], "el ejemplo no tiene la regla de acento"
+
+
+def test_teoria_resalta_la_sintaxis(static_site, page):
+    """Los bloques de código de la teoría se colorean con la paleta --syn-*.
+
+    El fence ```python y el bloque de ejemplo deben contener spans .tok-*; el
+    código visible conserva sus caracteres y saltos de línea (sin <br>).
+    """
+    page.goto(static_site)
+    page.wait_for_selector(".module-card")
+    page.evaluate("window.location.hash = '#/lesson/1'")
+    page.wait_for_selector("#theoryPanel pre code", timeout=15000)
+
+    fence = page.locator("#theoryPanel pre:not(.ejemplo)").first
+    codigo = fence.locator("code").inner_text()
+    assert "# En Python todo empieza con print()" in codigo, codigo
+    assert 'print("¡Hola, Entrenador!")' in codigo, codigo
+    assert "\n" in codigo, "el bloque perdió sus saltos de línea"
+    assert "<br>" not in fence.inner_html(), "el bloque usa <br> en lugar de saltos reales"
+
+    fence_html = fence.inner_html()
+    assert ".tok-comentario" in fence_html or fence.locator(".tok-comentario").count() >= 1
+    assert fence.locator(".tok-comentario").count() >= 1, "falta .tok-comentario en el fence"
+    assert fence.locator(".tok-texto").count() >= 1, "falta .tok-texto en el fence"
+
+    ejemplo = page.locator("#theoryPanel pre.ejemplo code")
+    assert ejemplo.count() >= 1, "el ejemplo no tiene <code>"
+    token_spans = ejemplo.locator(
+        ".tok-comentario, .tok-texto, .tok-numero, .tok-clave, .tok-builtin"
+    ).count()
+    assert token_spans >= 1, "el ejemplo no contiene ningún span de token"
