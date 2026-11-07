@@ -459,3 +459,37 @@ def test_teoria_resalta_la_sintaxis(static_site, page):
         ".tok-comentario, .tok-texto, .tok-numero, .tok-clave, .tok-builtin"
     ).count()
     assert token_spans >= 1, "el ejemplo no contiene ningún span de token"
+
+
+def test_simbolos_sin_ligaduras(static_site, page):
+    """`==` tiene que verse como dos iguales, no como un glifo único.
+
+    JetBrains Mono trae ligaduras de programación (`==`, `!=`, `>=`, `<=`, `->`):
+    para alguien que recién aprende, el glifo esconde cuántos caracteres van.
+    """
+    page.goto(static_site)
+    page.wait_for_selector(".module-card")
+    page.evaluate("window.location.hash = '#/lesson/5'")
+    page.wait_for_selector("#theoryPanel table code", timeout=15000)
+    page.wait_for_selector("body.has-cm .cm-content", state="attached", timeout=15000)
+
+    medidas = page.evaluate(
+        """() => {
+          const leer = el => {
+            const s = getComputedStyle(el);
+            return {
+              liga: (s.fontVariantLigatures || '').toLowerCase(),
+              feat: (s.fontFeatureSettings || '').toLowerCase(),
+            };
+          };
+          const sels = ['#theoryPanel code', '#theoryPanel pre code', '.cm-content', '#consoleOutput'];
+          return Object.fromEntries(sels.map(sel => {
+            const el = document.querySelector(sel);
+            return [sel, el ? leer(el) : null];
+          }));
+        }"""
+    )
+    for sel, m in medidas.items():
+        assert m is not None, f"no encontré {sel} en la página"
+        apagadas = m["liga"] == "none" or ("calt" in m["feat"] and "0" in m["feat"])
+        assert apagadas, f"{sel} sigue con ligaduras: {m}"

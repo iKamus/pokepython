@@ -129,6 +129,20 @@
 /* ══════════ BASE ══════════ */
 html { font-size: 17px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
+/* Sin ligaduras en todo lo monoespaciado. JetBrains Mono liga `==`, `!=`, `>=`,
+   `<=` y `->`: para quien recién aprende, un glifo único esconde cuántos
+   caracteres hay que escribir. `calt` es la feature que las activa. */
+code, pre, kbd, samp,
+.theory-panel code, .theory-panel pre,
+.exercise-description code,
+.code-editor, .code-line-numbers,
+#editorHost .cm-editor, #editorHost .cm-content, #editorHost .cm-gutters,
+.console-status, #consoleOutput,
+.solution-code, #editorLabel {
+  font-variant-ligatures: none;
+  font-feature-settings: "calt" 0, "liga" 0, "dlig" 0;
+}
+
 body {
   font-family: var(--font-main);
   background-color: var(--bg-deep);
