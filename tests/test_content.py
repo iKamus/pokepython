@@ -9,6 +9,8 @@ import ast
 import json
 import py_compile
 import re
+import subprocess
+import sys
 import unicodedata
 from pathlib import Path
 
@@ -127,3 +129,17 @@ def test_cada_ejemplo_habla_de_pokemon():
             f"lección {lesson['id']}: el ejemplo no habla de Pokémon — "
             f"{(lesson.get('example') or '').splitlines()[0][:70]!r}"
         )
+
+
+def test_todos_los_ejemplos_corren(tmp_path):
+    """Un ejemplo que no corre al pegarlo enseña a copiar errores."""
+    for lesson in _flat_lessons(_load("lessons.json")):
+        archivo = tmp_path / f"ejemplo_{lesson['id']}.py"
+        archivo.write_text(lesson["example"], encoding="utf-8")
+        corrida = subprocess.run(
+            # -X utf8: los ejemplos imprimen emoji y la consola de Windows usa cp1252.
+            [sys.executable, "-X", "utf8", str(archivo)],
+            capture_output=True, text=True, encoding="utf-8",
+        )
+        ultima = (corrida.stderr.strip().splitlines() or [""])[-1]
+        assert corrida.returncode == 0, f"lección {lesson['id']}: {ultima}"
