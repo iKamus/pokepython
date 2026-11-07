@@ -74,7 +74,7 @@
             {
               "id": "t3",
               "name": "Cantidad de equipo",
-              "description": "Normalmente 6 Pokémons",
+              "description": "Normalmente 6 Pokémon",
               "expect": "6"
             },
             {
@@ -92,11 +92,11 @@
           "type": "water",
           "title": "3. Strings — Manipulando texto",
           "shortTitle": "Strings",
-          "objective": "Usar métodos de strings para transformar texto de nombres de movimientos y Pokémons.",
+          "objective": "Usar métodos de strings para transformar texto de nombres de movimientos y Pokémon.",
           "keyConcept": "Los strings tienen muchos métodos útiles: `.upper()`, `.lower()`, `.replace()`, `.split()`, `.strip()`.",
           "theory": "### Movimientos en mayúsculas\n\nCuando escribís en la Pokédex, a veces querés formatear el texto. Los **strings** (textos) tienen **métodos** que los transforman:\n\n| Método | Qué hace |\n|--------|----------|\n| `.upper()` | TODO A MAYÚSCULAS |\n| `.lower()` | todo a minúsculas |\n| `.capitalize()` / `.title()` | Primera letra mayúscula |\n| `.replace('a','b')` | Reemplaza texto |\n| `.strip()` | Quita espacios sobrantes |\n| `.split(',')` | Divide en lista |\n\n```python\nmovimiento = \"huracán\"\nprint(movimiento.upper())       # HURACÁN\nprint(movimiento.replace(\"á\",\"a\"))\n```\n\n#### f-strings — formato poderoso\n\nLa `f` antes de las comillas te permite insertar variables directamente:\n\n```python\npokemon = \"Gengar\"\nnivel = 50\nprint(f\"{pokemon} (Nv.{nivel})\")  # Gengar (Nv.50)\n```",
           "example": "nombre = \"sQUIRTle\"\nmovimiento = \"hidrobomba\".upper()\nprint(nombre.title())     # Squirtle\nprint(movimiento)         # HIDROBOMBA\nprint(len(movimiento))    # 11",
-          "exercisePrompt": "Transformá nombres de Pokémons y movimientos usando los métodos de string.",
+          "exercisePrompt": "Transformá nombres de Pokémon y movimientos usando los métodos de string.",
           "codeFile": "./lessons/03.py",
           "solutionFile": "./solutions/03.py",
           "tests": [
@@ -186,7 +186,7 @@
             {
               "id": "t5",
               "name": "módulo",
-              "description": "Sobran pokémons",
+              "description": "Sobran pokémon",
               "expect": "pokemons % tamaño_equipo"
             },
             {
@@ -318,7 +318,7 @@
           "shortTitle": "Instalación",
           "objective": "Verificar que Python está instalado y ejecutar scripts desde terminal.",
           "keyConcept": "Python se instala desde python.org. Archivos .py se ejecutan con python archivo.py.",
-          "theory": "### Preparando tu laboratorio\n\nAntes de poder crear Pokémons digitales, necesitás **Python instalado**.\n\n```bash\n# Verificar instalación\npython --version\n\n# Ejecutar un script\n$ python hola.py\nHola Mundo\n```\n\nSi ya tenés Python instalado (verificaste con `python --version`), ¡podés empezar!",
+          "theory": "### Preparando tu laboratorio\n\nAntes de poder crear Pokémon digitales, necesitás **Python instalado**.\n\n```bash\n# Verificar instalación\npython --version\n\n# Ejecutar un script\n$ python hola.py\nHola Mundo\n```\n\nSi ya tenés Python instalado (verificaste con `python --version`), ¡podés empezar!",
           "example": "# Verificación del entorno de entrenamiento\nimport sys\nprint(f\"Python {sys.version}\")\nprint(f\"Ruta: {sys.executable}\")\nprint(\"¡Entrenador verificado, listo para la liga!\")",
           "exercisePrompt": "Verificá tu entorno y completá los ejercicios de entrada.",
           "codeFile": "./lessons/07.py",
@@ -367,7 +367,7 @@
     },
     "03": {
       "title": "Bucles y Secuencias",
-      "description": "Recorrer equipos de Pokémons, repetir acciones y trabajar con listas.",
+      "description": "Recorrer equipos de Pokémon, repetir acciones y trabajar con listas.",
       "lessons": [
         {
           "id": 8,
@@ -375,11 +375,11 @@
           "type": "grass",
           "title": "1. Listas y bucles",
           "shortTitle": "Listas y bucles",
-          "objective": "Trabajar con listas de Pokémons y recorrerlas con for e while.",
+          "objective": "Trabajar con listas de Pokémon y recorrerlas con for e while.",
           "keyConcept": "Listas con []. Bucle for recorre elementos. Métodos: append, pop, remove, sort, len, insert.",
-          "theory": "### Tu equipo de 6 Pokémons\n\nUna **lista** es una colección ordenada de cosas.\n\n```python\nequipo = [\"Pikachu\", \"Charmander\", \"Squirtle\", \"Bulbasaur\", \"Jigglypuff\", \"Meowth\"]\n\nfor pokemon in equipo:\n    print(f\"🔹 {pokemon}\")\n```\n\n#### Métodos de lista\n\n| Método | Qué hace |\n|--------|----------|\n| `.append(x)` | Agrega al final |\n| `.insert(i, x)` | Inserta en posición |\n| `.remove(x)` | Elimina por valor |\n| `.pop()` | Saca el último |\n| `len(lista)` | Cantidad de elementos |\n| `.sort()` | Ordena la lista |\n| `.reverse()` | Invierte el orden |\n\n#### Enumerate — índice + valor\n\n```python\nfor i, poke in enumerate(equipo):\n    print(f\"#{i+1}: {poke}\")\n```",
+          "theory": "### Tu equipo de 6 Pokémon\n\nUna **lista** es una colección ordenada de cosas.\n\n```python\nequipo = [\"Pikachu\", \"Charmander\", \"Squirtle\", \"Bulbasaur\", \"Jigglypuff\", \"Meowth\"]\n\nfor pokemon in equipo:\n    print(f\"🔹 {pokemon}\")\n```\n\n#### Métodos de lista\n\n| Método | Qué hace |\n|--------|----------|\n| `.append(x)` | Agrega al final |\n| `.insert(i, x)` | Inserta en posición |\n| `.remove(x)` | Elimina por valor |\n| `.pop()` | Saca el último |\n| `len(lista)` | Cantidad de elementos |\n| `.sort()` | Ordena la lista |\n| `.reverse()` | Invierte el orden |\n\n#### Enumerate — índice + valor\n\n```python\nfor i, poke in enumerate(equipo):\n    print(f\"#{i+1}: {poke}\")\n```\n\n\n#### Herramientas que ya vienen con Python\n\nSobre listas, Python trae funciones listas para usar. No hay que importarlas:\n\n```python\nequipo = [\"Pikachu\", \"Snorlax\", \"Charizard\"]\nniveles = [25, 40, 36]\n\nprint(min(niveles))        # 25   el más bajo\nprint(max(niveles))        # 40   el más alto\nprint(sum(niveles))        # 101  la suma de todos\n\nprint(sorted(niveles))     # [25, 36, 40]  devuelve una copia ordenada\nprint(sorted(equipo))      # ordena alfabéticamente\n\nfor puesto, nombre in enumerate(equipo, start=1):\n    print(f\"{puesto}. {nombre}\")        # 1. Pikachu  2. Snorlax  3. Charizard\n\nfor nombre, nivel in zip(equipo, niveles):\n    print(f\"{nombre}: nivel {nivel}\")   # empareja las dos listas, en orden\n```\n\n`enumerate` te da el índice además del elemento, y `zip` pega dos listas elemento por\nelemento: son la forma corta de lo que harías con `for i in range(len(lista))`.\n",
           "example": "equipos_ronda = [\n    [\"Pikachu\", \"Charizard\", \"Blastoise\", \"Venusaur\", \"Dragonair\", \"Eevee\"],\n    [\"Gengar\", \"Alakazam\", \"Golem\", \"Arcanine\", \"Pidgeot\", \"Rapidash\"]\n]\ndef contador_equipos():\n    total = 0\n    for equipo in equipos_ronda:\n        total += len(equipo)\n        print(f\"Equipo con {len(equipo)} pokémons\")\n    print(f\"Total: {total} pokémons\")\ncontador_equipos()",
-          "exercisePrompt": "Trabajá con listas de Pokémons: crear, añadir, eliminar, iterar, slicing.",
+          "exercisePrompt": "Trabajá con listas de Pokémon: crear, añadir, eliminar, iterar, slicing.",
           "codeFile": "./lessons/08.py",
           "solutionFile": "./solutions/08.py",
           "tests": [
@@ -493,7 +493,7 @@
               "id": "t2",
               "name": "Victoria cuando el HP llega a 0",
               "description": "El HP enemigo baja",
-              "expect": "hp_enemigo"
+              "expect": "while hp_enemigo > 0"
             },
             {
               "id": "t3",
@@ -522,7 +522,7 @@
           "type": "bug",
           "title": "1. Diccionarios — La Pokédex",
           "shortTitle": "Diccionarios",
-          "objective": "Crear y manipular diccionarios para representar fichas de Pokémons.",
+          "objective": "Crear y manipular diccionarios para representar fichas de Pokémon.",
           "keyConcept": "Diccionarios {clave: valor}. Acceder con clave, iterar keys/values/items.",
           "theory": "### Construyendo la Pokédex\n\nUn **diccionario** mapea claves a valores. Cada Pokémon es un diccionario:\n\n```python\npikachu = {\n    \"nombre\": \"Pikachu\",\n    \"tipo\": \"electrico\",\n    \"nivel\": 25,\n    \"habilidades\": [\"electricidad estática\", \"pararrayos\"]\n}\nprint(pikachu[\"nombre\"])  # Pikachu\n```\n\n#### Métodos de diccionario\n\n| Método | Qué hace |\n|--------|----------|\n| `.keys()` | Todas las claves |\n| `.values()` | Todos los valores |\n| `.items()` | Pares clave-valor |\n| `.get(key, default)` | Obtener con fallback |\n| `.update(dict2)` | Fusionar diccionarios |",
           "example": "pokedex = {\n    25: {\"nombre\": \"Pikachu\", \"tipo\": \"electrico\"},\n    6: {\"nombre\": \"Charizard\", \"tipo\": \"fuego\"},\n    9: {\"nombre\": \"Blastoise\", \"tipo\": \"agua\"}\n}\nprint(pokedex[25][\"nombre\"])  # Pikachu\nprint(list(pokedex.keys()))     # [25, 6, 9]",
@@ -575,7 +575,7 @@
           "type": "poison",
           "title": "2. Comprensión de listas y diccionarios",
           "shortTitle": "Comprensión",
-          "objective": "Escribir comprensiones concisas para transformar listas de Pokémons.",
+          "objective": "Escribir comprensiones concisas para transformar listas de Pokémon.",
           "keyConcept": "List comprehension: [expresión for item in iterable if condición]. Dict comp: {k:v for ...}",
           "theory": "### Transformar tu equipo en una línea\n\nLas **list comprehensions** crean listas nuevas elegantemente:\n\n```python\npokemons = [\"Pikachu\", \"Charmander\", \"Squirtle\", \"Bulbasaur\"]\nnombres_largos = [p.lower() for p in pokemons if len(p) > 8]\n# ['charmander', 'bulbasaur']\n```\n\n#### Dict comprehension\n\n```python\nstats = {\"hp\": 35, \"attack\": 55, \"defense\": 40}\npokedex_num = {i: name for i, name in enumerate([...], start=1)}\n```",
           "example": "pokemons = [\"pikachu\", \"charizard\", \"blastoise\"]\nnombres_mayu = [p.upper() for p in pokemons]\nlargos = [p for p in pokemons if len(p) > 8]\nniveles = [25, 36, 42]\npor_nombre = {nom: niv for nom, niv in zip(nombres_mayu, niveles)}",
@@ -669,7 +669,7 @@
           "type": "dark",
           "title": "4. json — Guardar y cargar equipo",
           "shortTitle": "JSON",
-          "objective": "Persistir datos de Pokémons con el módulo json.",
+          "objective": "Persistir datos de Pokémon con el módulo json.",
           "keyConcept": "json.dumps convierte dict a string. json.loads convierte string a dict.",
           "theory": "### Guardar tu progreso de entrenador\n\n```python\nimport json\nteamp_data = {\"nombre\": \"Red\", \"equipo\": [\"Pikachu\", \"Charizard\"], \"insignias\": 8}\ntexto = json.dumps(teamp_data, indent=2, ensure_ascii=False)\nprint(texto)\ndatos = json.loads(texto)\nprint(datos[\"nombre\"])  # Red\n```",
           "example": "import json\nentrenador = {\"nombre\": \"Red\", \"nivel\": 8, \"equipo\": [\"Pikachu\",\"Charizard\",\"Blastoise\",\"Venusaur\",\"Eevee\",\"Alakazam\"], \"pociones\": 10}\ntexto_json = json.dumps(entrenador, indent=2, ensure_ascii=False)\nprint(texto_json)\ndatos_leidos = json.loads(texto_json)\nprint(f\"Equipo: {len(datos_leidos['equipo'])} pokémons\")",
@@ -708,7 +708,7 @@
     },
     "05": {
       "title": "Manejo de Errores",
-      "description": "Prevenir crashes y manejar errores elegantes como un entrenador experto.",
+      "description": "Evitar que el programa se rompa y manejar errores con elegancia, como un entrenador experto.",
       "lessons": [
         {
           "id": 15,
@@ -755,7 +755,7 @@
     },
     "06": {
       "title": "Clases y Objetos",
-      "description": "Introducción a la Programación Orientada a Objetos usando clases de Pokémon.",
+      "description": "Introducción a la programación orientada a objetos usando clases de Pokémon.",
       "lessons": [
         {
           "id": 16,
@@ -1021,7 +1021,7 @@
           "type": "steel",
           "title": "1. Big O Notation",
           "shortTitle": "Big O",
-          "objective": "Analizar la complejidad temporal de funciones usando Pokémons como ejemplo.",
+          "objective": "Analizar la complejidad temporal de funciones usando Pokémon como ejemplo.",
           "keyConcept": "Big O mide cómo escala el tiempo. O(1), O(log n), O(n), O(n²).",
           "theory": "### ¿Qué tan rápido es tu estrategia?\n\n| Complejidad | Nombre | Ejemplo Pokémon |\n|------------|--------|-----------------|\n| O(1) | Constante | Acceso directo a stat por índice |\n| O(log n) | Logarítmica | Buscar en Pokédex ordenada |\n| O(n) | Lineal | Buscar un Pokémon en lista |\n| O(n²) | Cuadrática | Comparar cada vs cada |\n\n```python\n# O(1) - Acceso directo\npokemons = [\"Pikachu\", \"Charmander\", \"Squirtle\"]\nprint(pokemons[0])\n\n# O(n) - Recorrer toda la lista\nfor poke in pokemons:\n    print(poke)\n\n# O(n²) - Comparar cada pareja\nfor p1 in pokemons:\n    for p2 in pokemons:\n        compare(p1, p2)\n```",
           "example": "pokemons = [\"Bulbasaur\", \"Charmander\", \"Pikachu\", \"Squirtle\"]\nprint(pokemons[0])  # O(1)\nfor p in pokemons:  # O(n)\n    print(p)",
@@ -1060,7 +1060,7 @@
     },
     "09": {
       "title": "Recursión",
-      "description": "Funciones que se llaman a sí mismas: evolución, trees de matchup, backtrack.",
+      "description": "Funciones que se llaman a sí mismas: evoluciones, ventajas de tipo y vuelta atrás.",
       "lessons": [
         {
           "id": 23,
@@ -1115,11 +1115,11 @@
           "type": "psychic",
           "title": "1. Merge Sort",
           "shortTitle": "Merge Sort",
-          "objective": "Implementar Merge Sort para ordenar Pokémons por estadísticas.",
+          "objective": "Implementar Merge Sort para ordenar Pokémon por estadísticas.",
           "keyConcept": "Divide y vencerás: O(n log n) ordenamiento estable.",
-          "theory": "### Ordenando tu equipo por fuerza\n\n**Merge Sort** divide la lista en mitades, ordena cada mitad, y las fusiona:\n\n```python\ndef merge_sort(arr, key=lambda x: x):\n    if len(arr) <= 1:\n        return arr\n    mid = len(arr) // 2\n    left = merge_sort(arr[:mid], key)\n    right = merge_sort(arr[mid:], key)\n    return merge(left, right, key)\n```",
+          "theory": "### Ordenando tu equipo por fuerza\n\n**Merge Sort** divide la lista en mitades, ordena cada mitad, y las fusiona:\n\n```python\ndef merge_sort(arr, key=lambda x: x):\n    if len(arr) <= 1:\n        return arr\n    mid = len(arr) // 2\n    left = merge_sort(arr[:mid], key)\n    right = merge_sort(arr[mid:], key)\n    return merge(left, right, key)\n```\n\n\n#### `lambda`: una función de una línea\n\n`sorted()`, `min()` y `max()` aceptan una función para decidir **por qué** comparar.\nCuando esa función es una sola expresión, se escribe con `lambda`:\n\n```python\nequipo = [(\"Pikachu\", 90), (\"Snorlax\", 30), (\"Charizard\", 80)]\nprint(sorted(equipo, key=lambda poke: poke[1]))   # ordenado por velocidad\nprint(max(equipo, key=lambda poke: poke[1]))      # el más veloz\n```\n\n`lambda poke: poke[1]` equivale a `def velocidad(poke): return poke[1]`, pero sin\nnombre y en una línea. Si la lógica necesita más de una línea o un `if`, conviene\nuna `def` normal.\n",
           "example": "def merge_sort(arr, key=lambda x: x):\n    if len(arr) <= 1: return arr\n    mid = len(arr)//2\n    return merge(merge_sort(arr[:mid], key), merge_sort(arr[mid:], key), key)\ndef merge(left, right, key=lambda x: x):\n    r = []; i = j = 0\n    while i < len(left) and j < len(right):\n        if key(left[i]) <= key(right[j]): r.append(left[i]); i += 1\n        else: r.append(right[j]); j += 1\n    r.extend(left[i:]); r.extend(right[j:])\n    return r\npokemons = [{\"name\":\"A\",\"speed\":50},{\"name\":\"B\",\"speed\":90}]\nordenado = merge_sort(pokemons, key=lambda p: p[\"speed\"])",
-          "exercisePrompt": "Implementá Merge Sort completo y ordená Pokémons por distintas estadísticas.",
+          "exercisePrompt": "Implementá Merge Sort completo y ordená Pokémon por distintas estadísticas.",
           "codeFile": "./lessons/24.py",
           "solutionFile": "./solutions/24.py",
           "tests": [
@@ -1154,7 +1154,7 @@
     },
     "11": {
       "title": "Grafos y Árboles",
-      "description": "Modelar matchups de tipo como grafo, explorar BFS/DFS.",
+      "description": "Modelar las ventajas de tipo como un grafo y recorrerlo con BFS y DFS.",
       "lessons": [
         {
           "id": 25,
@@ -1201,7 +1201,7 @@
     },
     "12": {
       "title": "Programación Dinámica",
-      "description": "Memoización y DP para resolver problemas de optimalidad en batalla.",
+      "description": "Memoización y programación dinámica para resolver problemas de optimización en batalla.",
       "lessons": [
         {
           "id": 26,

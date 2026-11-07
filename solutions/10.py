@@ -33,15 +33,12 @@ while True:
 print(f"Duró {giros} giros")
 
 # RETO 4 — continue en bucle for (saltar Pokémon debilitados)
-equipo = [
-    {"nombre": "Pikachu", "hp": 30},
-    {"nombre": "Snorlax", "hp": 0},
-    {"nombre": "Charizard", "hp": 85},
-]
+equipo = ["Pikachu", "Snorlax", "Charizard"]
+hps = [30, 0, 85]
 
 para_evadir = ["Snorlax"]
-for poke in equipo:
-    if poke["hp"] == 0:
-        print(f"⏭ Saltando {poke['nombre']} (debilitado)")
+for nombre, hp in zip(equipo, hps):
+    if hp == 0:
+        print(f"⏭ Saltando {nombre} (debilitado)")
         continue
-    print(f"→ {poke['nombre']} en combate ({poke['hp']}HP)")
+    print(f"→ {nombre} en combate ({hp}HP)")

@@ -21,12 +21,9 @@ print("")  # TODO: while True: restá 15 de hp, registrá "vivo"/"derrotado" en
            #   resultados, imprimí cada giro y salí con break cuando hp <= 0
 
 # RETO 4 — continue en bucle for (saltar Pokémon debilitados):
-equipo = [
-    {"nombre": "Pikachu", "hp": 30},
-    {"nombre": "Snorlax", "hp": 0},
-    {"nombre": "Charizard", "hp": 85},
-]
+equipo = ["Pikachu", "Snorlax", "Charizard"]
+hps = [30, 0, 85]
 
 para_evadir = ["Snorlax"]
-print("")  # TODO: recorré equipo con for y usá continue para saltar los que
-           #   tengan hp == 0; imprimí a los que quedan en combate
+print("")  # TODO: recorré con zip(equipo, hps) y usá continue para saltar los
+           #   que tengan hp == 0; imprimí a los que quedan en combate
