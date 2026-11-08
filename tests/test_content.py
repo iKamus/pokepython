@@ -164,3 +164,45 @@ def test_ningun_starter_aprueba_un_test():
         if pasan:
             culpables.append(f"{lid}:{pasan}")
     assert not culpables, f"starters que aprueban sin resolver: {culpables}"
+
+
+def test_no_quedan_errores_ortograficos_ni_controles():
+    banned_plain = ["hierarquias", "Advantage tipo", "crashing del programa", "infinite recursion"]
+    banned_regex = re.compile(r"\banios\b", re.IGNORECASE)
+    control_ranges = [
+        (0x0001, 0x0008),
+        (0x000B, 0x000B),
+        (0x000C, 0x000C),
+        (0x000E, 0x001F),
+        (0x007F, 0x009F),
+    ]
+
+    files = []
+    files += sorted((ROOT / "lessons").glob("*.py"))
+    files += sorted((ROOT / "solutions").glob("*.py"))
+    files += [ROOT / "lessons.json", ROOT / "lessons_corrected.json", ROOT / "index.html",
+              ROOT / "app.js", ROOT / "README.md", ROOT / "generate_lessons.py"]
+
+    violations = []
+    for path in files:
+        try:
+            text = path.read_text(encoding="utf-8")
+        except Exception as e:
+            violations.append(f"{path}:0: no se pudo leer ({e})")
+            continue
+        for lineno, line in enumerate(text.splitlines(), 1):
+            if banned_regex.search(line):
+                violations.append(f"{path.relative_to(ROOT)}:{lineno}: patron prohibido \\banios\\b")
+            low = line.lower()
+            for pat in banned_plain:
+                if pat.lower() in low:
+                    violations.append(f"{path.relative_to(ROOT)}:{lineno}: patron prohibido {pat!r}")
+            for ch in line:
+                cp = ord(ch)
+                for lo, hi in control_ranges:
+                    if lo <= cp <= hi:
+                        violations.append(
+                            f"{path.relative_to(ROOT)}:{lineno}: caracter de control U+{cp:04X}"
+                        )
+                        break
+    assert not violations, "violaciones encontradas:\n" + "\n".join(violations)

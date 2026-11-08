@@ -6,6 +6,8 @@ módulo vendorizado no carga, `body.has-cm` nunca aparece y el textarea queda
 usable (degradación progresiva, cubierta en el último test de este archivo).
 """
 
+import time
+
 import pytest
 
 from conftest import ROOT
@@ -428,3 +430,109 @@ def test_arranque_en_frio_corre_y_marca_los_tests(page, static_site):
     pending = [e for e in estados if "test-pending" in e]
     assert not pending, f"quedaron tests sin resolver: {estados}"
     assert all("test-pass" in e for e in estados), f"la solución no pasó todo: {estados}"
+
+
+def test_panel_de_tests_visible_abajo_de_la_consola(static_site, page):
+    page.goto(f"{static_site}#/lesson/2")
+    page.wait_for_selector("body.has-cm", timeout=15000)
+    page.click('.tab[data-tab="ejercicio"]')
+    page.wait_for_selector("#testsWrap", timeout=15000)
+    assert page.locator("#testsWrap").is_visible(), "#testsWrap no está visible"
+    tests_y = page.locator("#testsWrap").bounding_box()["y"]
+    console_y = page.locator(".console-wrap").bounding_box()["y"]
+    assert tests_y > console_y, f"testsWrap y={tests_y} no está debajo de console-wrap y={console_y}"
+    assert page.locator("#testsPanel table.tests-table").is_visible(), "la tabla de tests no está visible"
+    assert page.locator('.tab[data-tab="tests"]').count() == 0, "sigue existiendo la pestaña tests"
+
+
+@pytest.mark.slow
+def test_error_marca_la_linea_y_la_consola_sigue_viva(static_site, page):
+    _abrir_ejercicio(page, static_site, 2)
+    code = 'print("a")\nprint("b")\n1/0\n'
+    page.evaluate(
+        """code => {
+            const el = document.querySelector('#codeEditor');
+            el.value = code;
+            el.dispatchEvent(new Event('input', {bubbles: true}));
+        }""",
+        code,
+    )
+    page.click("#runBtn")
+    page.wait_for_function(
+        "() => document.querySelector('#consoleStatus').textContent === 'Error'",
+        timeout=60000,
+    )
+    console_text = page.locator("#consoleOutput").inner_text()
+    assert "línea 3" in console_text, f"no aparece 'línea 3' en la consola: {console_text!r}"
+    assert "ZeroDivisionError" in console_text, f"no aparece 'ZeroDivisionError': {console_text!r}"
+    assert page.evaluate("() => window.__lastRunError && window.__lastRunError.line") == 3, (
+        f"__lastRunError.line != 3: {page.evaluate('() => window.__lastRunError')}"
+    )
+    marked = (
+        page.locator("#lineNumbers .ln-error").count() > 0
+        and page.locator("#lineNumbers .ln-error").inner_text().strip() == "3"
+    ) or page.locator(".cm-error-line").count() == 1
+    assert marked, "la línea del error no está marcada"
+    assert page.locator(".test-status.test-pending").count() == 0, "quedan tests pendientes"
+    summary = page.locator("#testsSummary")
+    assert "is-fail" in (summary.get_attribute("class") or ""), "#testsSummary no tiene is-fail"
+    assert summary.inner_text().strip().startswith("✗"), f"summary no empieza con ✗: {summary.inner_text()!r}"
+    assert not page.locator("#runBtn").is_disabled(), "#runBtn sigue deshabilitado"
+
+
+@pytest.mark.slow
+def test_tras_un_error_la_solucion_pone_todo_en_verde(static_site, page):
+    _abrir_ejercicio(page, static_site, 2)
+    page.evaluate(
+        """code => {
+            const el = document.querySelector('#codeEditor');
+            el.value = code;
+            el.dispatchEvent(new Event('input', {bubbles: true}));
+        }""",
+        'print("a")\n1/0\n',
+    )
+    page.click("#runBtn")
+    page.wait_for_function(
+        "() => document.querySelector('#consoleStatus').textContent === 'Error'",
+        timeout=60000,
+    )
+    _pegar_solucion(page, 2)
+    page.wait_for_function("() => !document.querySelector('#runBtn').disabled", timeout=30000)
+    page.click("#runBtn")
+    page.wait_for_function(
+        "() => [...document.querySelectorAll('.test-status')].length > 0 && "
+        "[...document.querySelectorAll('.test-status')].every(e => e.classList.contains('test-pass'))",
+        timeout=30000,
+    )
+    summary = page.locator("#testsSummary")
+    assert "is-ok" in (summary.get_attribute("class") or ""), f"summary no is-ok: {summary.get_attribute('class')}"
+    console_text = page.locator("#consoleOutput").inner_text()
+    assert "retos cumplidos" in console_text, f"falta 'retos cumplidos': {console_text!r}"
+    assert page.locator("#lineNumbers .ln-error").count() == 0, "quedan .ln-error"
+    assert page.locator(".cm-error-line").count() == 0, "quedan .cm-error-line"
+
+
+@pytest.mark.slow
+def test_reset_repone_los_tests_a_pendiente(static_site, page):
+    _abrir_ejercicio(page, static_site, 2)
+    page.click("#runBtn")
+    page.wait_for_function(
+        "() => document.querySelector('#consoleStatus').textContent !== 'Ejecutando…' && "
+        "document.querySelector('#consoleStatus').textContent !== 'Cargando...'",
+        timeout=60000,
+    )
+    deadline = time.monotonic() + 30
+    while time.monotonic() < deadline:
+        if page.locator(".test-status.test-pending").count() == 0:
+            break
+        page.wait_for_timeout(500)
+    page.click("#resetBtn")
+    statuses = page.locator("#testsPanel .test-status").all_inner_texts()
+    assert statuses, "no hay test-status"
+    for s in page.locator("#testsPanel .test-status").evaluate_all("els => els.map(e => e.className)"):
+        assert "test-pending" in s, f"status no pendiente: {s}"
+    for txt in page.locator("#testsPanel .test-status").all_inner_texts():
+        assert txt.strip() == "?", f"texto no es '?': {txt!r}"
+    summary = page.locator("#testsSummary")
+    assert "Sin correr" in summary.inner_text(), f"summary: {summary.inner_text()!r}"
+    assert "Bloque 02" in page.locator("#codeEditor").input_value(), "el editor no restauró el starter"

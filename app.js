@@ -3,7 +3,7 @@
    SPA con routing hash, Pyodide para ejecución local
    ═══════════════════════════════════════════════════ */
 
-console.info('PokéPython build: 2026-11-07-l');
+console.info('PokéPython build: 2026-11-08-a');
 
 // ── Estado global ──────────────────────────────
 let LESSONS = [];       // flat array [lesson, ...]
@@ -440,6 +440,7 @@ async function renderLesson(id){
   }
   codeTemplate=codeTemplate||lesson.codeTemplate||'# Completá los ejercicios\nprint("Hello World")\n';
   
+  clearErrorLine();
   setEditorText(codeTemplate);
   
   // Solution — only fetch a file the lesson declares, so lessons without one
@@ -457,19 +458,8 @@ async function renderLesson(id){
     :lesson.solution?`<p>Solución:</p><div class="solution-code">${escapeHtml(lesson.solution)}</div>`
     :'<p>Solución disponible cuando completes todos los tests.</p>';
   
-  // Tests panel
-  const tests=lesson.tests||[];
-  $('#testsPanel').innerHTML=tests.length>0
-    ?tests.map(t=>`
-      <div class="test-item" data-test-id="${t.id}">
-        <span class="test-status test-pending" id="ts-${t.id}">?</span>
-        <div>
-          <strong>${t.name}</strong>
-          <p style="font-size:.8rem;color:var(--text-muted);margin-top:2px;">${t.description||''}</p>
-          ${t.expect?`<code style="font-size:.75rem;background:var(--bg-deep);padding:1px 6px;border-radius:3px;margin-top:4px;display:inline-block;">${escapeHtml(t.expect)}</code>`:''}
-        </div>
-      </div>`).join('')
-    :`<div class="concept-box">No hay tests obligatorios. Explorá libremente y experimentá con el código.</div>`;
+  // Tests panel: vive abajo de la consola (pestaña Ejercicio), no en otra pestaña.
+  renderTestsPanel(lesson);
   
   // Tab switching
   $$('.tab').forEach(tab=>{
@@ -486,6 +476,10 @@ async function renderLesson(id){
   $('#resetBtn').onclick=()=>{
     setEditorText(codeTemplate);
     consoleClear();
+    clearErrorLine();
+    const actual=LESSONS.find(l=>l.id===state.currentLessonId)||lesson;
+    resetTestStatuses(actual);
+    updateTestsSummary(actual,0,(actual.tests||[]).length,'idle');
   };
   
   // Prev/Next
@@ -525,10 +519,31 @@ function handleEditorKeydown(e){
 }
 
 function updateLineNumbers(){
-  const val=$('#codeEditor').value;
-  const lines=val.match(/\n/g);
+  const editor=$('#codeEditor');
+  if(!editor) return;
+  const lines=editor.value.match(/\n/g);
   const n=(lines?lines.length:0)+1;
-  $('#lineNumbers').textContent=Array.from({length:n},(_,i)=>i+1).join('\n');
+  // Cada número es un span: así se puede pintar en rojo SOLO la línea del error
+  // (la gutter del textarea simple no admite decoraciones como CodeMirror).
+  $('#lineNumbers').innerHTML=Array.from({length:n},(_,i)=>{
+    const num=i+1;
+    return `<span class="ln${num===errorLine?' ln-error':''}" data-line="${num}">${num}</span>`;
+  }).join('\n');
+}
+
+// Línea marcada por el último error de ejecución (null = sin error).
+let errorLine=null;
+
+function markErrorLine(n){
+  errorLine=Number.isInteger(n)&&n>0?n:null;
+  updateLineNumbers();
+  if(cmSetErrorLine) cmSetErrorLine(errorLine);
+}
+
+function clearErrorLine(){
+  errorLine=null;
+  updateLineNumbers();
+  if(cmSetErrorLine) cmSetErrorLine(null);
 }
 
 // ── CodeMirror 6 (vendorizado) ───────────────────
@@ -538,6 +553,7 @@ function updateLineNumbers(){
 let cmView=null;
 let cmAPI=null;
 let cmExtensions=null;
+let cmSetErrorLine=null;   // lo define buildCMExtensions: pinta la línea del error
 
 // Seteo programático (carga de lección y botón Reset): cambia el textarea Y el
 // documento del editor. setState además limpia el historial para que Ctrl+Z no
@@ -775,6 +791,32 @@ function buildCMExtensions(cm){
     acceptCompletion,completionStatus,python,pythonLanguage}=cm;
   const {theme,highlight}=cmEditorTheme(cm);
 
+  // La gutter de CodeMirror reemplaza a la del textarea cuando el bundle carga:
+  // el resaltado de la línea con error tiene que existir también acá.
+  const {StateField,StateEffect,Decoration}=cm;
+  const setErrorLine=StateEffect.define();
+  const errorLineField=StateField.define({
+    create:()=>Decoration.none,
+    update(deco,tr){
+      let next=deco.map(tr.changes);
+      for(const effect of tr.effects){
+        if(!effect.is(setErrorLine)) continue;
+        if(effect.value==null){ next=Decoration.none; continue; }
+        const lineNumber=Math.min(Math.max(1,Number(effect.value)||1),tr.state.doc.lines);
+        next=Decoration.set([
+          Decoration.line({class:'cm-error-line'}).range(tr.state.doc.line(lineNumber).from),
+        ]);
+      }
+      return next;
+    },
+    provide:field=>EditorView.decorations.from(field),
+  });
+  cmSetErrorLine=n=>{
+    try{
+      if(cmView) cmView.dispatch({effects:setErrorLine.of(n==null?null:n)});
+    }catch(e){}
+  };
+
   const editorKeymap=[
     // Ctrl/Cmd+Enter corre el código: mismo handler que el botón ▶ Correr.
     {key:'Mod-Enter',run:()=>{handleRunCode();return true;}},
@@ -801,6 +843,7 @@ function buildCMExtensions(cm){
     EditorState.tabSize.of(4),
     indentUnit.of('    '),
     theme,
+    errorLineField,
     syntaxHighlighting(highlight),
     autocompletion({icons:false}),
     pythonLanguage.data.of({autocomplete:ifNotIn(DONT_COMPLETE,builtinSource)}),
@@ -824,7 +867,7 @@ async function initCodeMirror(){
   const host=$('#editorHost');
   if(!ta||!host) return;
   try{
-    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-07-l');
+    const cm=await import('./vendor/codemirror.bundle.js?v=2026-11-08-a');
     cmAPI=cm;
     cmExtensions=buildCMExtensions(cm);
     ta.addEventListener('input',syncTextareaToEditor);
@@ -853,6 +896,81 @@ function consoleClear(){
   $('#consoleOutput').innerHTML='';
 }
 
+function firstLine(text){
+  return String(text||'').split('\n').map(l=>l.trim()).filter(Boolean)[0]||'';
+}
+
+// El traceback de Pyodide trae frames internos (_base.py) que no dicen nada: el
+// frame real es `<exec>`. Extraemos línea, tipo y mensaje para que la consola
+// responda "dónde" y "qué", en vez de mostrar solo el encabezado del traceback.
+function parsePythonError(err, code){
+  let raw;
+  try{ raw=String(err); }catch(e){ raw='Error desconocido'; }
+  const rawLines=raw.split('\n');
+  const codeLines=String(code||'').split('\n');
+  const execFrame=/File "<(?:exec|string|console)>", line (\d+)(.*)$/;
+  let lineNo=null;
+  let sourceLine='';
+  let column=null;
+  for(let i=0;i<rawLines.length;i++){
+    const match=execFrame.exec(rawLines[i]);
+    if(!match) continue;
+    lineNo=Number(match[1]);
+    // Sin ", in ..." el frame es de compilación: la línea siguiente es el
+    // código culpable y la próxima, el caret que marca la columna.
+    if(!/,\s*in\s+/.test(match[2])){
+      const next=rawLines[i+1]||'';
+      if(next.trim()) sourceLine=next.replace(/^ {0,4}/,'');
+      const caret=rawLines[i+2]||'';
+      if(/^\s*\^+\s*$/.test(caret)) column=caret.indexOf('^')+1;
+    }
+  }
+  if(!sourceLine&&lineNo&&codeLines[lineNo-1]!==undefined) sourceLine=codeLines[lineNo-1];
+
+  // La última línea con forma "TipoError: mensaje" es la excepción real (el
+  // resto del traceback son frames internos).
+  let kind='Error';
+  let message='';
+  for(let i=rawLines.length-1;i>=0;i--){
+    const text=rawLines[i].trim();
+    const match=/^([A-Za-z_][\w.]*(?:Error|Exception|Interrupt|Exit|Warning))(?::\s*([\s\S]*))?$/.exec(text);
+    if(!match) continue;
+    const continuacion=rawLines.slice(i+1).map(l=>l.trim()).filter(Boolean);
+    kind=match[1];
+    message=[(match[2]||'').trim(),...continuacion].filter(Boolean).join(' ');
+    break;
+  }
+  if(!message&&rawLines.length) message=rawLines[rawLines.length-1].trim();
+  return {raw,lineNo,sourceLine,column,kind,message};
+}
+
+function showRunError(err, code){
+  const info=parsePythonError(err, code);
+  // Hook de diagnóstico: la suite de navegador lee el traceback crudo sin
+  // depender del texto formateado de la consola.
+  window.__lastRunError={raw:info.raw,line:info.lineNo,kind:info.kind,message:info.message};
+
+  const donde=info.lineNo?`la línea ${info.lineNo}`:'una línea desconocida';
+  const detalle=info.message?`${info.kind}: ${info.message}`:info.kind;
+  consoleLog(`✗ Error en ${donde} — ${detalle}`,'error');
+  if(info.sourceLine) consoleLog(`${info.lineNo||''} │ ${info.sourceLine}`,'error-source');
+  if(info.column) consoleLog(`  ↳ columna ${info.column}`,'error-meta');
+
+  const out=$('#consoleOutput');
+  const details=document.createElement('details');
+  details.className='console-details';
+  const summary=document.createElement('summary');
+  summary.textContent='Ver traceback completo';
+  const pre=document.createElement('pre');
+  pre.textContent=info.raw;
+  details.appendChild(summary);
+  details.appendChild(pre);
+  out.appendChild(details);
+  out.scrollTop=out.scrollHeight;
+
+  markErrorLine(info.lineNo);
+}
+
 // ── Code Execution (Pyodide) ────────────────────
 // stdout/stderr de Pyodide → consola de la página. Sin esto, print() solo
 // llega a la consola del navegador (F12) y #consoleOutput queda vacío.
@@ -872,6 +990,9 @@ function routePyodideOutput(py){
 // instante cuando había que inyectar el <script>, así que la primera corrida
 // seguía de largo sin runtime y los tests quedaban en "?" para siempre.
 let pyodideLoading=null;
+// La corrida y la evaluación de tests son una sola operación: si el botón se
+// clickea dos veces, la segunda no pisa el estado de la primera.
+let runInFlight=false;
 
 function initPyodide(){
   if(state.pyodideReady) return Promise.resolve(true);
@@ -912,37 +1033,63 @@ function initPyodide(){
 }
 
 async function handleRunCode(){
-  if(!state.pyodideReady){
-    const listo=await initPyodide();
-    if(!listo) return;   // initPyodide ya explicó el motivo en la consola
-  }
-  
-  const code=$('#codeEditor').value;
-  consoleClear();
-  $('#consoleStatus').textContent='Ejecutando...';
-  
-  try{
-    const output=await state.pyodide.runPythonAsync(code);
-    if(output!==undefined&&output!==null){
-      consoleLog(String(output),'success');
-    }
-    consoleLog('— Código ejecutado sin errores.','info');
-    $('#consoleStatus').textContent='Listo';
+  if(runInFlight) return;   // una corrida a la vez: nada de estados cruzados
+  runInFlight=true;
+  const runBtn=$('#runBtn');
+  if(runBtn){ runBtn.disabled=true; runBtn.classList.add('is-running'); }
+  const lesson=LESSONS.find(l=>l.id===state.currentLessonId)||null;
 
-    // Auto-run tests
-    if(state.currentLessonId){
-      const lesson=LESSONS.find(l=>l.id===state.currentLessonId);
-      if(lesson?.tests?.length>0){
-        setTimeout(()=>runTests(lesson,code),500);
+  clearErrorLine();
+  resetTestStatuses(lesson);
+  window.__lastRunError=null;
+  try{
+    if(!state.pyodideReady){
+      const listo=await initPyodide();
+      if(!listo){
+        updateTestsSummary(lesson,0,(lesson?.tests||[]).length,'idle');
+        return;   // initPyodide ya explicó el motivo en la consola
       }
     }
+
+    // Re-enganchar stdout/stderr en cada corrida: si una corrida anterior dejó
+    // el runtime en un estado raro, la consola vuelve a recibir la salida.
+    routePyodideOutput(state.pyodide);
+
+    const code=$('#codeEditor').value;
+    consoleClear();
+    $('#consoleStatus').textContent='Ejecutando…';
+    let failed=false;
+
+    try{
+      const output=await state.pyodide.runPythonAsync(code);
+      if(output!==undefined&&output!==null){
+        consoleLog(String(output),'success');
+      }
+      consoleLog('— Código ejecutado sin errores.','info');
+    }catch(err){
+      failed=true;
+      showRunError(err, code);
+    }
+
+    // Los tests se evalúan SIEMPRE, también cuando el código lanzó: antes un
+    // error de Python dejaba el panel en "?" para siempre y parecía muerto.
+    if(lesson&&(lesson.tests||[]).length){
+      const resultado=await runTests(lesson, code);
+      if(resultado){
+        const fallan=resultado.total-resultado.passed;
+        if(fallan===0&&!failed) consoleLog(`✓ ${resultado.passed}/${resultado.total} retos cumplidos.`,'success');
+        else if(fallan===0) consoleLog(`✓ ${resultado.passed}/${resultado.total} retos cumplidos (aunque el código lanzó un error).`,'info');
+        else consoleLog(`✗ ${fallan} de ${resultado.total} retos sin cumplir: revisá la tabla de tests.`,'error');
+      }
+    }
+    $('#consoleStatus').textContent=failed?'Error':'Listo';
   }catch(err){
-    // Antes se mostraba solo la primera línea, que en un traceback de Python
-    // es "PythonError: Traceback (most recent call last):" y no dice nada.
-    const lineas=String(err).split('\n').filter(l=>l.trim());
-    const detalle=lineas.length>1?lineas.slice(0,4).join('\n'):lineas[0]||String(err);
-    consoleLog(detalle,'error');
+    // Fallo inesperado del arnés (no de Python): la consola nunca queda muerta.
+    consoleLog(`✗ Falló la ejecución: ${firstLine(err)||String(err)}`,'error');
     $('#consoleStatus').textContent='Error';
+  }finally{
+    runInFlight=false;
+    if(runBtn){ runBtn.disabled=false; runBtn.classList.remove('is-running'); }
   }
 }
 
@@ -1009,55 +1156,127 @@ function matcherClean(s){
   return s.toLowerCase().replace(/[^a-z0-9]/g,'');
 }
 
-async function runTests(lesson, code){
-  if(!state.pyodideReady) return;
-  
-  for(const test of lesson.tests){
+// ── Panel de tests ────────────────────────────────────────────
+// Tabla siempre visible abajo de la consola: estado, reto y qué se espera.
+// Conserva #testsPanel, .test-item, .test-status y #ts-<id> (contratos de la
+// suite) pero deja de ser una pestaña aparte.
+function renderTestsPanel(lesson){
+  const panel=$('#testsPanel');
+  if(!panel) return;
+  const tests=lesson.tests||[];
+  if(!tests.length){
+    panel.innerHTML='<div class="concept-box">No hay tests obligatorios. Explorá libremente y experimentá con el código.</div>';
+    updateTestsSummary(lesson,0,0,'idle');
+    return;
+  }
+  panel.innerHTML=`<table class="tests-table" aria-label="Tests del ejercicio">
+    <thead><tr><th class="col-status" scope="col">Estado</th><th scope="col">Reto</th><th scope="col">Qué se espera</th></tr></thead>
+    <tbody>${tests.map(t=>`
+      <tr class="test-item" data-test-id="${escapeHtml(String(t.id))}">
+        <td class="col-status"><span class="test-status test-pending" id="ts-${escapeHtml(String(t.id))}" role="img" aria-label="Pendiente">?</span></td>
+        <td><strong>${escapeHtml(String(t.name||'Reto'))}</strong>${t.description?`<p class="test-desc">${escapeHtml(String(t.description))}</p>`:''}</td>
+        <td>${t.expect?`<code class="test-expect">${escapeHtml(String(t.expect))}</code>`:''}<p class="test-fail-detail" id="td-${escapeHtml(String(t.id))}"></p></td>
+      </tr>`).join('')}</tbody></table>`;
+  updateTestsSummary(lesson,0,tests.length,'idle');
+}
+
+// Repone todos los retos a "?" antes de cada corrida y durante Reset: sin esto
+// los estados del run anterior quedaban pegados y la tabla mentía.
+function resetTestStatuses(lesson){
+  const tests=(lesson&&lesson.tests)||[];
+  for(const test of tests){
+    const status=$(`#ts-${test.id}`);
+    if(status){
+      status.className='test-status test-pending';
+      status.textContent='?';
+      status.setAttribute('aria-label','Pendiente');
+    }
+    const detail=$(`#td-${test.id}`);
+    if(detail) detail.textContent='';
+  }
+  updateTestsSummary(lesson,0,tests.length,'running');
+  const wrap=$('#testsWrap');
+  if(wrap) wrap.classList.remove('has-failure');
+}
+
+function updateTestsSummary(lesson, passed, total, mode){
+  const el=$('#testsSummary');
+  if(!el) return;
+  el.classList.remove('is-ok','is-fail');
+  const n=Number(total)||0;
+  if(!lesson||!n){ el.textContent='Sin retos'; return; }
+  if(mode==='running'){ el.textContent=`Corriendo… 0/${n}`; return; }
+  if(mode==='idle'){ el.textContent=`Sin correr · ${n} retos`; return; }
+  const fallan=n-passed;
+  // La cruz roja con el resumen es la señal de "ejercicio mal hecho" (S5).
+  el.textContent=fallan===0?`✓ ${passed}/${n} retos OK`:`✗ ${fallan} de ${n} retos fallan`;
+  el.classList.add(fallan===0?'is-ok':'is-fail');
+  const wrap=$('#testsWrap');
+  if(wrap) wrap.classList.toggle('has-failure',fallan>0);
+}
+
+async function evaluateTest(test, code){
+  if(test.validate){
+    return {passed:Boolean(test.validate(code))};
+  }
+  if(test.pythonTest){
     try{
-      let passed=false;
-      
-      if(test.validate){
-        passed=test.validate(code);
-      } else if(test.pythonTest){
-        // Run a python assertion
-        const result=await state.pyodide.runPythonAsync(test.pythonTest(code));
-        passed=result===true||String(result)==='True';
-      } else if(test.expect){
-        // Código REAL, en minúsculas, sin comentarios ni docstrings
-        // (espejo en tests/py_matcher.py).
-        const normalized=stripPythonNoise(code).toLowerCase();
-        const expected=test.expect.toLowerCase();
-        
-        if(expected.includes('assert ')||expected.includes('==')||expected.includes('!=')){
-          // Correrlo como Python es un intento OPCIONAL: solo puede mejorar el
-          // resultado (L28). SyntaxError o False → comparación normalizada.
-          try{
-            const res=await state.pyodide.runPythonAsync(test.expect);
-            if(res===true) passed=true;
-          }catch(e){ /* esperado: el expect es un fragmento, no un programa */ }
-          if(!passed){
-            passed=matcherClean(normalized).includes(matcherClean(expected));
-          }
-        } else {
-          passed=normalized.includes(expected);
-        }
-      }
-      
-      const statusEl=$(`#ts-${test.id}`);
-      if(statusEl){
-        statusEl.className=`test-status ${passed?'test-pass':'test-fail'}`;
-        statusEl.textContent=passed?'✓':'✗';
-      }
-      
-      if(passed) markCompleted(lesson.id);
+      const result=await state.pyodide.runPythonAsync(test.pythonTest(code));
+      return {passed:result===true||String(result)==='True'};
     }catch(e){
-      const statusEl=$(`#ts-${test.id}`);
-      if(statusEl){
-        statusEl.className='test-status test-fail';
-        statusEl.textContent='✗';
-      }
+      return {passed:false,detalle:`El test no se pudo ejecutar: ${firstLine(e)||'error de Python'}`};
     }
   }
+  if(test.expect){
+    // Código REAL, en minúsculas, sin comentarios ni docstrings
+    // (espejo en tests/py_matcher.py).
+    const normalized=stripPythonNoise(code).toLowerCase();
+    const expected=test.expect.toLowerCase();
+
+    if(expected.includes('assert ')||expected.includes('==')||expected.includes('!=')){
+      // Correrlo como Python es un intento OPCIONAL: solo puede mejorar el
+      // resultado (L28). SyntaxError o False → comparación normalizada.
+      try{
+        const res=await state.pyodide.runPythonAsync(test.expect);
+        if(res===true) return {passed:true};
+      }catch(e){ /* esperado: el expect es un fragmento, no un programa */ }
+      if(matcherClean(normalized).includes(matcherClean(expected))) return {passed:true};
+      return {passed:false,detalle:`Falta en tu código: ${test.expect}`};
+    }
+    if(normalized.includes(expected)) return {passed:true};
+    return {passed:false,detalle:`Falta en tu código: ${test.expect}`};
+  }
+  return {passed:false,detalle:'El reto no tiene criterio de evaluación.'};
+}
+
+async function runTests(lesson, code){
+  if(!state.pyodideReady) return null;
+  const tests=lesson.tests||[];
+  let passed=0;
+  for(const test of tests){
+    let resultado;
+    try{
+      resultado=await evaluateTest(test, code);
+    }catch(e){
+      resultado={passed:false,detalle:`No se pudo evaluar: ${firstLine(e)||'error inesperado'}`};
+    }
+
+    const statusEl=$(`#ts-${test.id}`);
+    if(statusEl){
+      statusEl.className=`test-status ${resultado.passed?'test-pass':'test-fail'}`;
+      statusEl.textContent=resultado.passed?'✓':'✗';
+      statusEl.setAttribute('aria-label',resultado.passed?'Cumplido':'Falló');
+    }
+    const detailEl=$(`#td-${test.id}`);
+    if(detailEl) detailEl.textContent=resultado.passed?'':(resultado.detalle||'No cumple lo que pide el reto.');
+
+    if(resultado.passed){
+      passed++;
+      markCompleted(lesson.id);
+    }
+  }
+  updateTestsSummary(lesson,passed,tests.length,'done');
+  return {passed,total:tests.length};
 }
 
 // ── Init ────────────────────────────────────────

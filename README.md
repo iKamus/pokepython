@@ -118,9 +118,14 @@ python -m venv .venv && .venv/Scripts/pip install -r requirements-dev.txt   # un
 Cada lección incluye:
 
 - **📖 Teoría** — Explicaciones con ejemplos Pokémon
-- **💻 Ejercicio** — Editor de código Python integrado (Pyodide)
-- **🧪 Tests** — Verificación automática de ejercicios
+- **💻 Ejercicio** — Editor de código Python integrado (Pyodide), consola y la tabla de tests
+- **🧪 Tests** — Verificación automática dentro de la pestaña Ejercicio: cada reto muestra
+  ✓ verde o ✗ roja y qué fragmento falta en tu código
 - **✨ Solución** — Respuesta completa disponible al completar
+
+El diagnóstico de errores muestra la línea y la columna del fallo, resalta esa línea en el
+editor y deja el traceback completo plegado en la consola. Un error de Python ya no deja los
+tests en «?»: la tabla se evalúa igual y la consola sigue respondiendo en la corrida siguiente.
 
 ### Atajos de teclado
 - `Ctrl + Enter` — Ejecutar código
