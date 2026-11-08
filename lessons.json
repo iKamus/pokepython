@@ -898,19 +898,19 @@
               "id": "t1",
               "name": "@classmethod fábrica",
               "description": "Crea la instancia desde la clase",
-              "expect": "@classmethod"
+              "expect": "return cls(f\"Huevo-{tipo}\", tipo)"
             },
             {
               "id": "t2",
               "name": "@staticmethod",
               "description": "Función sin self",
-              "expect": "@staticmethod"
+              "expect": "return tipo_def in efectivos"
             },
             {
               "id": "t3",
               "name": "Calcula la efectividad",
               "description": "Devuelve el multiplicador correcto",
-              "expect": "SUPER"
+              "expect": "efectivos = Pokemon.TIPOS_SUPER.get(tipo_mov, [])"
             },
             {
               "id": "t4",
@@ -951,13 +951,13 @@
               "id": "t2",
               "name": "Subclase Fuego",
               "description": "Extiende Pokemon con movimientos de fuego",
-              "expect": "class Fuego"
+              "expect": "if mov in self.MOVIMIENTOS_FUEGO:"
             },
             {
               "id": "t3",
               "name": "Subclase Agua",
               "description": "Extiende Pokemon con movimientos de agua",
-              "expect": "class Agua"
+              "expect": "if objetivo.tipo == \"fuego\":"
             },
             {
               "id": "t4",
@@ -986,7 +986,7 @@
               "id": "t1",
               "name": "Funciona el polimorfismo",
               "description": "atacar() sirve en todos",
-              "expect": "def atacar"
+              "expect": "return efectivo"
             },
             {
               "id": "t2",
@@ -998,13 +998,13 @@
               "id": "t3",
               "name": "Combate alternado",
               "description": "Cada Pokémon ataca por turno",
-              "expect": "while"
+              "expect": "objetivo.hp = max(0, objetivo.hp - daño)"
             },
             {
               "id": "t4",
               "name": "Ganador detectado",
               "description": "El HP del perdedor queda en 0",
-              "expect": "ganador ="
+              "expect": "print(\"BATALLA 4: Espejo — Fuego vs Fuego (mismo tipo → neutral)\")"
             }
           ],
           "module": "07"
@@ -1033,19 +1033,19 @@
               "id": "t1",
               "name": "Búsqueda secuencial",
               "description": "Devuelve el índice o -1",
-              "expect": "return"
+              "expect": "return i"
             },
             {
               "id": "t2",
               "name": "Acceso O(1)",
               "description": "Acceso directo al primero",
-              "expect": "[0]"
+              "expect": "return equipo[0]"
             },
             {
               "id": "t3",
               "name": "Suma de HP lineal",
               "description": "Suma todos los HP",
-              "expect": "sum"
+              "expect": "total += poke[\"hp\"]"
             },
             {
               "id": "t4",
@@ -1127,13 +1127,13 @@
               "id": "t1",
               "name": "Merge sort básico",
               "description": "Ordena la lista",
-              "expect": "merge_sort"
+              "expect": "mid = len(arr) // 2"
             },
             {
               "id": "t2",
               "name": "Ordena por clave",
               "description": "Ordena por el campo indicado",
-              "expect": "lambda"
+              "expect": "key = lambda x: x"
             },
             {
               "id": "t3",
@@ -1174,19 +1174,19 @@
               "id": "t1",
               "name": "Grafo construido",
               "description": "Grafo dirigido con aristas",
-              "expect": "grafo"
+              "expect": "self.grafo[ofensivo] = set()"
             },
             {
               "id": "t2",
               "name": "Quién gana",
               "description": "Multiplicador correcto",
-              "expect": "def_tipo in"
+              "expect": "if def_tipo in self.super_efectivo.get(mov_tipo, set()):"
             },
             {
               "id": "t3",
               "name": "Mejores opciones",
               "description": "Tipos efectivos",
-              "expect": "mejores"
+              "expect": "mejores.append((ofensivo, 2.0))"
             },
             {
               "id": "t4",
@@ -1350,19 +1350,19 @@
               "id": "t1",
               "name": "Existe la clase Pokemon",
               "description": "Tiene __init__, __str__ y vivo",
-              "expect": "class Pokemon"
+              "expect": "mult = 2.0 if objetivo.tipo in self.TIPOS_SUPER.get(\"electrico\", []) else 1.0"
             },
             {
               "id": "t2",
               "name": "Los tipos heredan",
               "description": "Subtipos Electrico, Fuego, Agua",
-              "expect": "class Electrico"
+              "expect": "mult = 2.0 if objetivo.tipo in self.TIPOS_SUPER.get(\"fuego\", []) else 1.0"
             },
             {
               "id": "t3",
               "name": "Ataque polimórfico",
               "description": "Cada tipo ataca distinto",
-              "expect": "def atacar"
+              "expect": "objetivo.recibir_daño(daño)"
             },
             {
               "id": "t4",
@@ -1374,7 +1374,7 @@
               "id": "t5",
               "name": "Guardar y cargar",
               "description": "Persistencia en JSON",
-              "expect": "json"
+              "expect": "while pokemon1.vivo and pokemon2.vivo and turno <= 30:"
             }
           ],
           "module": "proyecto"

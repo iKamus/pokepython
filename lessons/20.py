@@ -96,7 +96,7 @@ print(charmander)
 print(squirtle)
 
 # VERIFICAR HERENCIA
-print(f"\n¿Pikachu es Pokemon? {isinstance(pikachu, Pokemon)}")
+print("")  # TODO: verificá isinstance(pikachu, Pokemon)
 print(f"Tipo: {pikachu.tipo}")
 
 # PROBAR APRENDIZAJE LIMITADO POR TIPO

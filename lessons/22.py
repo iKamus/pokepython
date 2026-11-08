@@ -8,29 +8,26 @@ import time
 # RETO 1 — Búsqueda secuencial O(n):
 def buscar_secuencial(lista, objetivo):
     """Recorre toda la lista hasta encontrar el objetivo."""
-    for i, item in enumerate(lista):
-        if item == objetivo:
-            return i
-    return -1
+    # TODO: recorré la lista y devolvé el índice o -1
+    return None  # TODO
 
 pokemons = ["Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Eevee"]
-print(f"Pikachu está en posición: {buscar_secuencial(pokemons, 'Pikachu')}")  # 3
-print(f"Mewtwo está en posición: {buscar_secuencial(pokemons, 'Mewtwo')}")    # -1
+print("")  # TODO: mostrá la posición
+print("")  # TODO
 
 # RETO 2 — Acceso directo O(1):
 def get_primero(equipo):
     """Accede directamente al primer elemento."""
-    return equipo[0]
+    return None  # TODO: equipo[0]
 
-print(f"Primer pokemon: {get_primero(pokemons)}")  # Bulbasaur
+print("")  # TODO
 
 # RETO 3 — Suma lineal O(n):
 def sumar_hp(equipo):
     """Suma HP de todo el equipo."""
     total = 0
-    for poke in equipo:
-        total += poke["hp"]
-    return total
+    # TODO: sumá poke["hp"] de cada uno
+    return None  # TODO
 
 equipo = [
     {"nombre": "Pikachu", "hp": 35},
@@ -43,11 +40,8 @@ print(f"\nHP total del equipo: {sumar_hp(equipo)}")  # 118
 def comparar_parejas(pokemons):
     """Compara cada Pokémon contra todos los demás."""
     comparaciones = 0
-    for i in range(len(pokemons)):
-        for j in range(i + 1, len(pokemons)):
-            comparaciones += 1
-            print(f"  {pokemons[i]} vs {pokemons[j]}")
-    return comparaciones
+    # TODO: bucles anidados contando comparaciones
+    return None  # TODO
 
 nombres = ["A", "B", "C"]
 total = comparar_parejas(nombres)
@@ -57,9 +51,4 @@ print(f"\nComparaciones totales ({len(nombres)} pokémons): {total}")  # C(3,2)=
 tamanos = [100, 1000, 10000]
 for tam in tamanos:
     lista = list(range(tam))
-    
-    start = time.time()
-    buscar_secuencial(lista, tam - 1)
-    duracion = time.time() - start
-    
-    print(f"Búsqueda en {tam:>6} items: {duracion*1000:.3f}ms")
+    print("")  # TODO: medí el tiempo de búsqueda

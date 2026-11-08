@@ -21,14 +21,14 @@ class Pokemon:
     @classmethod
     def huevo(cls, tipo):
         """Crea un Pokémon 'huevo' del tipo especificado."""
-        return cls(f"Huevo-{tipo}", tipo)
+        return None  # TODO: cls(f"Huevo-{tipo}", tipo)
     
     # RETO 2 — @staticmethod: Consulta de ventaja de tipo sin instancia:
     @staticmethod
     def ventaja(tipo_mov, tipo_def):
         """Verifica si tipo_mov tiene ventaja sobre tipo_def."""
-        efectivos = Pokemon.TIPOS_SUPER.get(tipo_mov, [])
-        return tipo_def in efectivos
+        efectivos = None  # TODO: Pokemon.TIPOS_SUPER.get(tipo_mov, [])
+        return None  # TODO: tipo_def in efectivos
     
     # Método de instancia normal:
     def atacar(self, target):
@@ -41,8 +41,7 @@ class Pokemon:
 print("Creando huevos:")
 huevo_elec = Pokemon.huevo("electrico")
 huego_fuego = Pokemon.huevo("fuego")
-print(f"{huevo_elec.nombre} es tipo {huevo_elec.tipo}")
-print(f"{huego_fuego.nombre} es tipo {huego_fuego.tipo}")
+print("")  # TODO: mostrá los huevos
 
 # USO DE @staticmethod
 print("\nConsultas estáticas:")

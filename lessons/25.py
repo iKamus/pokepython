@@ -30,36 +30,22 @@ class TypeMatchup:
     
     def _construir(self):
         """Construye el grafo de adyacencia."""
-        for ofensivo in self.SUPER_EFECTIVO:
-            if ofensivo not in self.grafo:
-                self.grafo[ofensivo] = set()
-        
-        # Grafo inverso: quién supera a este tipo?
-        self.vulnerable_a = {}
-        for ofensivo, defensivos in self.SUPER_EFECTIVO.items():
-            for defensivo in defensivos:
-                self.vulnerable_a.setdefault(defensivo, []).append(ofensivo)
+        # TODO: construí el grafo y el inverso
+        pass
     
     def quien_gana(self, mov_tipo, def_tipo):
         """Retorna el multiplicador de daño."""
-        if def_tipo in self.super_efectivo.get(mov_tipo, set()):
-            return 2.0
-        return 1.0
+        # TODO: 2.0 si es super efectivo, si no 1.0
+        return None  # TODO
     
     def mejor_ataque(self, defensor_tipo):
         """¿Qué tipo de movimiento sería más efectivo?"""
-        mejores = []
-        max_mult = 0
-        for ofensivo, defensivos in self.super_efectivo.items():
-            if defensor_tipo in defensivos:
-                mejores.append((ofensivo, 2.0))
-                max_mult = 2.0
-        
-        return mejores or [("normal", 1.0)]
+        # TODO: buscá los tipos que superan al defensor
+        return None  # TODO
     
     def vulnerable_a_list(self, tipo):
         """¿Quiénes son fuertes contra este tipo?"""
-        return self.vulnerable_a.get(tipo, [])
+        return []  # TODO
     
     def mostrar_tabla(self):
         """Imprime toda la tabla de matchups."""
@@ -77,9 +63,7 @@ tm.mostrar_tabla()
 print("\n\n=== CONSULTAS ===\n")
 # ¿Qué ataca fuerte al Charizard (fuego)?
 mejores_vs_fuego = tm.mejor_ataque("fuego")
-print(f"Mejores ataques contra FUEGO:")
-for t, m in mejores_vs_fuego:
-    print(f"  {t} ({m}x)")
+print("")  # TODO
 
 # ¿Quién gana eléctrico vs agua?
 resultado = tm.quien_gana("electrico", "agua")

@@ -5,43 +5,14 @@ Seleccioná los mejores items para tu equipo con límite de peso.
 
 def knapsack(capacidad, pesos, valores, n):
     """Resuelve el problema de mochila 0/1 con programación dinámica."""
-    # Crear tabla DP
-    dp = [[0] * (capacidad + 1) for _ in range(n + 1)]
-    
-    # Llenar la tabla fila por fila
-    for i in range(1, n + 1):
-        for w in range(capacidad + 1):
-            if pesos[i - 1] <= w:
-                # Elegir entre incluir o no el item
-                dp[i][w] = max(dp[i - 1][w], 
-                               dp[i - 1][w - pesos[i - 1]] + valores[i - 1])
-            else:
-                dp[i][w] = dp[i - 1][w]
-    
-    return dp[n][capacidad]
+    # TODO: armá la tabla DP y devolvé dp[n][capacidad]
+    return None  # TODO
 
 
 def knapsack_trace(capacidad, pesos, valores, nombres, n):
     """Retorna el valor máximo Y los items seleccionados."""
-    dp = [[0] * (capacidad + 1) for _ in range(n + 1)]
-    
-    for i in range(1, n + 1):
-        for w in range(capacidad + 1):
-            if pesos[i - 1] <= w:
-                dp[i][w] = max(dp[i - 1][w],
-                               dp[i - 1][w - pesos[i - 1]] + valores[i - 1])
-            else:
-                dp[i][w] = dp[i - 1][w]
-    
-    # Backtrack para encontrar qué items fueron elegidos
-    seleccionado = []
-    w = capacidad
-    for i in range(n, 0, -1):
-        if dp[i][w] != dp[i - 1][w]:
-            seleccionado.append(i - 1)
-            w -= pesos[i - 1]
-    
-    return dp[n][capacidad], seleccionado[::-1]
+    # TODO: armá la tabla DP y reconstruí la selección
+    return None  # TODO
 
 
 # ITEMS DE PREPARACIÓN PARA BATALLA

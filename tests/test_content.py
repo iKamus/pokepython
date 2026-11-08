@@ -149,16 +149,12 @@ def test_todos_los_ejemplos_corren(tmp_path):
         assert corrida.returncode == 0, f"lección {lesson['id']}: {ultima}"
 
 
-@pytest.mark.xfail(
-    strict=False,
-    reason="T26: 16 lecciones más siguen con el starter resuelto o con expects que ya "
-           "aparecen en el starter. Este test pasa a XPASS cuando se corrijan (S10).",
-)
 def test_ningun_starter_aprueba_un_test():
     """Un ejercicio sin resolver no puede aprobar ningún test (S10).
 
-    Medido con el matcher real. Hoy falla en 16 lecciones; la lista queda visible
-    en el mensaje del fallo en vez de descubrirse de a una.
+    Regla del curso: el starter nunca viene resuelto. Se mide con el matcher real
+    en las 29 lecciones, así que un starter que vuelva a entregarse con la
+    respuesta escrita rompe la suite con el id de la lección.
     """
     ls = {l["id"]: l for l in py_matcher.lessons_by_id()}
     culpables = []

@@ -5,16 +5,14 @@ Algoritmo divide y vencerás para ordenar Pokémons en O(n log n).
 
 def merge_sort(arr, key=None):
     """Ordena una lista usando el algoritmo Merge Sort."""
-    # TODO: caso base (lista de longitud <= 1), partí en dos mitades y
-    #   combiná merge_sort(izquierda) y merge_sort(derecha) con merge()
-    return arr
+    # TODO: caso base, dividí y combiná con merge()
+    return None  # TODO
 
 
 def merge(left, right, key=None):
     """Fusiona dos listas ya ordenadas en una sola ordenada."""
-    # TODO: recorré ambas listas comparando con key(...), agregá siempre el
-    #   menor y concatená los restos al final
-    return left + right
+    # TODO: fusioná las dos listas ordenadas
+    return None  # TODO
 
 
 # DATOS DE POKÉMONS CON STATS
@@ -29,9 +27,7 @@ pokemons = [
 
 # RETO 1 — Ordenar por velocidad:
 ordenado_speed = merge_sort(pokemons, key=lambda p: p["speed"])
-print("Ordenados por velocidad:")
-for p in ordenado_speed:
-    print(f"  {p['nombre']:>12} — Speed: {p['speed']}")
+print("")  # TODO: mostrá ordenados por velocidad
 
 # RETO 2 — Ordenar por ataque:
 ordenado_attack = merge_sort(pokemons, key=lambda p: p["attack"])
