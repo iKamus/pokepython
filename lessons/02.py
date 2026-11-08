@@ -17,7 +17,7 @@ MAX_NIVEL = None
 # RETO 3 — Cantidad de compañeros en tu equipo:
 cantidad_equipo = None
 
-# RETO 4 — F-string: "{nombre_completo} tiene {edad} anios"
+# RETO 4 — F-string: "{nombre_completo} tiene {edad} años"
 mensaje = None
 
 # RETO 5 — Imprimí mensaje con print()

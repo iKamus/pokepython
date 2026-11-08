@@ -20,12 +20,12 @@ MAX_NIVEL = 100
 # RETO 3 — Cantidad de compañeros en tu equipo:
 cantidad_equipo = 6
 
-# RETO 4 — F-string: "{nombre_completo} tiene {edad} anios"
-mensaje = f"{nombre_completo} tiene {edad} anios"
+# RETO 4 — F-string: "{nombre_completo} tiene {edad} años"
+mensaje = f"{nombre_completo} tiene {edad} años"
 
 # RETO 5 — Imprimí mensaje con print()
 print(mensaje)
 
 # RETO 6 — La misma info concatenando con + y str():
-resumen = nombre_completo + " tiene " + str(edad) + " anios"
+resumen = nombre_completo + " tiene " + str(edad) + " años"
 print(resumen)

@@ -80,7 +80,7 @@
               "id": "t4",
               "name": "F-string mensaje",
               "description": "Contiene años",
-              "expect": "anios"
+              "expect": "años"
             }
           ]
         },
@@ -202,7 +202,7 @@
           "shortTitle": "Condicionales",
           "objective": "Tomar decisiones en código con if/elif/else comparando tipos y estados.",
           "keyConcept": "Booleanos son True/False. Condicionales permiten ejecutar código distinto según el estado.",
-          "theory": "### Advantage tipo: cuándo atacar\n\nEn Pokémon, **los tipos** definen quién gana a quién. Tu código debe decidir si un movimiento es súper efectivo.\n\n```python\ntipo_movimiento = \"eléctrico\"\ntipo_enemigo = \"agua\"\n\nif tipo_movimiento == \"eléctrico\" and tipo_enemigo == \"agua\":\n    print(\"¡Súper efectivo! x2\")\nelif tipo_movimiento == tipo_enemigo:\n    print(\"Neutral. x1\")\nelse:\n    print(\"No muy efectivo. x0.5\")\n```\n\n#### Operadores de comparación\n\n| Operador | Significado | Ejemplo |\n|----------|-------------|---------|\n| `==` | Igual | `hp == 0` |\n| `!=` | Diferente | `tipo != \"normal\"` |\n| `>` | Mayor que | `vel > 100` |\n| `<` | Menor que | `vel < 50` |\n| `>=` | Mayor o igual | `nivel >= 50` |\n| `<=` | Menor o igual | `nivel <= 10` |",
+          "theory": "### Ventaja de tipo: cuándo atacar\n\nEn Pokémon, **los tipos** definen quién gana a quién. Tu código debe decidir si un movimiento es súper efectivo.\n\n```python\ntipo_movimiento = \"eléctrico\"\ntipo_enemigo = \"agua\"\n\nif tipo_movimiento == \"eléctrico\" and tipo_enemigo == \"agua\":\n    print(\"¡Súper efectivo! x2\")\nelif tipo_movimiento == tipo_enemigo:\n    print(\"Neutral. x1\")\nelse:\n    print(\"No muy efectivo. x0.5\")\n```\n\n#### Operadores de comparación\n\n| Operador | Significado | Ejemplo |\n|----------|-------------|---------|\n| `==` | Igual | `hp == 0` |\n| `!=` | Diferente | `tipo != \"normal\"` |\n| `>` | Mayor que | `vel > 100` |\n| `<` | Menor que | `vel < 50` |\n| `>=` | Mayor o igual | `nivel >= 50` |\n| `<=` | Menor o igual | `nivel <= 10` |",
           "example": "hp = 15\ntipo_mov = \"fuego\"\ntipo_def = \"planta\"\nen_pie = hp > 0\nprint(f\"¿En pie? {en_pie}\")                     # True\nmov_es_fuego = tipo_mov == \"fuego\"\ndef_es_planta = tipo_def == \"planta\"\nprint(f\"¿Fuego vence a planta? {mov_es_fuego and def_es_planta}\")   # True",
           "exercisePrompt": "Programá decisiones para diferentes situaciones de batalla y entrenamiento.",
           "codeFile": "./lessons/05.py",
@@ -702,7 +702,7 @@
           "type": "ice",
           "title": "1. try/except — Errores controlados",
           "shortTitle": "Try/Except",
-          "objective": "Capturar excepciones para manejar errores sin crashing del programa.",
+          "objective": "Capturar excepciones para manejar errores sin que el programa falle.",
           "keyConcept": "try bloquea código riesgoso, except captura el error, finally siempre se ejecuta.",
           "theory": "### Prevención en batalla\n\nNo todo sale como esperás en batalla. Un `try/except` previene crashes:\n\n```python\npokemons_en_campo = [\"Pikachu\", \"Charizard\"]\nposicion = 2\ntry:\n    pokemon = pokemons_en_campo[posicion]\n    print(f\"Saca a {pokemon}\")\nexcept IndexError:\n    print(\"¡Índice fuera de rango!\")\nfinally:\n    print(\"Fin del intento de cambio.\")\n```",
           "example": "def cambiar_pokemon(equipo, posicion):\n    try:\n        pokemon = equipo[posicion]\n        return f\"Enviando a {pokemon}...\"\n    except IndexError:\n        return \"❌ Posición inválida. Solo hay posiciones del 0 al 5.\"\n    except TypeError:\n        return \"❌ Debes pasar un número entero.\"\n    finally:\n        print(\"Intento procesado.\")\nprint(cambiar_pokemon([\"Pika\", \"Char\", \"Blast\"], 0))\nprint(cambiar_pokemon([\"Pika\", \"Char\", \"Blast\"], 5))\nprint(cambiar_pokemon([\"Pika\", \"Char\", \"Blast\"], \"dos\"))",

@@ -50,7 +50,7 @@ lessons = [
             {"id": "t1", "name": "Variables declaradas", "description": "Nombre, edad y activo existen", "expect": "None"},
             {"id": "t2", "name": "Constante MAX_NIVEL", "description": "Debe ser 100 en mayúsculas", "expect": "100"},
             {"id": "t3", "name": "Cantidad de equipo", "description": "Normalmente 6 Pokémons", "expect": "6"},
-            {"id": "t4", "name": "F-string mensaje", "description": "Contiene anios", "expect": "anios"}
+            {"id": "t4", "name": "F-string mensaje", "description": "Contiene años", "expect": "años"}
         ]
     },
     {
@@ -98,7 +98,7 @@ lessons = [
         "shortTitle": "Condicionales",
         "objective": "Tomar decisiones en código con if/elif/else comparando tipos y estados.",
         "keyConcept": "Booleanos son True/False. Condicionales permiten ejecutar código distinto según el estado.",
-        "theory": "### Advantage tipo: cuándo atacar\n\nEn Pokémon, **los tipos** definen quién gana a quién. Tu código debe decidir si un movimiento es súper efectivo.\n\n```python\ntipo_movimiento = \"eléctrico\"\ntipo_enemigo = \"agua\"\n\nif tipo_movimiento == \"eléctrico\" and tipo_enemigo == \"agua\":\n    print(\"¡Súper efectivo! x2\")\nelif tipo_movimiento == tipo_enemigo:\n    print(\"Neutral. x1\")\nelse:\n    print(\"No muy efectivo. x0.5\")\n```\n\n#### Operadores de comparación\n\n| Operador | Significado | Ejemplo |\n|----------|-------------|---------|\n| `==` | Igual | `hp == 0` |\n| `!=` | Diferente | `tipo != \"normal\"` |\n| `>` | Mayor que | `vel > 100` |\n| `<` | Menor que | `vel < 50` |\n| `>=` | Mayor o igual | `nivel >= 50` |\n| `<=` | Menor o igual | `nivel <= 10` |",
+        "theory": "### Ventaja de tipo: cuándo atacar\n\nEn Pokémon, **los tipos** definen quién gana a quién. Tu código debe decidir si un movimiento es súper efectivo.\n\n```python\ntipo_movimiento = \"eléctrico\"\ntipo_enemigo = \"agua\"\n\nif tipo_movimiento == \"eléctrico\" and tipo_enemigo == \"agua\":\n    print(\"¡Súper efectivo! x2\")\nelif tipo_movimiento == tipo_enemigo:\n    print(\"Neutral. x1\")\nelse:\n    print(\"No muy efectivo. x0.5\")\n```\n\n#### Operadores de comparación\n\n| Operador | Significado | Ejemplo |\n|----------|-------------|---------|\n| `==` | Igual | `hp == 0` |\n| `!=` | Diferente | `tipo != \"normal\"` |\n| `>` | Mayor que | `vel > 100` |\n| `<` | Menor que | `vel < 50` |\n| `>=` | Mayor o igual | `nivel >= 50` |\n| `<=` | Menor o igual | `nivel <= 10` |",
         "example": "hp = 15\ntipo_mov = \"fuego\"\ntipo_def = \"planta\"\ndefinitivo = hp > 0\nprint(f\"¿En pie? {definitivo}\")  # True\nsuper_efectivo = {\n    \"fuego\": [\"planta\", \"hielo\", \"acero\"],\n    \"agua\": [\"fuego\", \"roca\"]\n}\nsi_efect = any(t in super_efectivo.get(tipo_mov, []) for t in [tipo_def])\nprint(f\"Efectivo: {si_efect}\")",
         "exercisePrompt": "Programá decisiones para diferentes situaciones de batalla y entrenamiento.",
         "codeFile": "./lessons/05.py",
@@ -295,7 +295,7 @@ lessons.extend([
         "id": 15, "module": "05", "level": "intermediate", "type": "ice",
         "title": "1. try/except — Errores controlados",
         "shortTitle": "Try/Except",
-        "objective": "Capturar excepciones para manejar errores sin crashing del programa.",
+        "objective": "Capturar excepciones para manejar errores sin que el programa falle.",
         "keyConcept": "try bloquea código riesgoso, except captura el error, finally siempre se ejecuta.",
         "theory": "### Prevención en batalla\n\nNo todo sale como esperás en batalla. Un `try/except` previene crashes:\n\n```python\npokemons_en_campo = [\"Pikachu\", \"Charizard\"]\nposicion = 2\ntry:\n    pokemon = pokemons_en_campo[posicion]\n    print(f\"Saca a {pokemon}\")\nexcept IndexError:\n    print(\"¡Índice fuera de rango!\")\nfinally:\n    print(\"Fin del intento de cambio.\")\n```",
         "example": "def cambiar_pokemon(equipo, posicion):\n    try:\n        pokemon = equipo[posicion]\n        return f\"Enviando a {pokemon}...\"\n    except IndexError:\n        return \"❌ Posición inválida. Solo hay posiciones del 0 al 5.\"\n    except TypeError:\n        return \"❌ Debes pasar un número entero.\"\n    finally:\n        print(\"Intento procesado.\")\nprint(cambiar_pokemon([\"Pika\", \"Char\", \"Blast\"], 0))\nprint(cambiar_pokemon([\"Pika\", \"Char\", \"Blast\"], 5))\nprint(cambiar_pokemon([\"Pika\", \"Char\", \"Blast\"], \"dos\"))",
@@ -392,7 +392,7 @@ lessons.extend([
         "keyConcept": "class Hijo(Padre) hereda todo. super() llama al padre. Override sobrescribe.",
         "theory": "### Evolución: de clase base a especializados\n\nLa **herencia** permite crear clases basadas en otras:\n\n```python\nclass Pokemon:\n    def __init__(self, nombre, tipo):\n        self.nombre = nombre\n        self.tipo = tipo\n    def hablar(self):\n        return f\"{self.nombre} dice...\"\n\nclass Electrico(Pokemon):\n    def __init__(self, nombre, voltaje):\n        super().__init__(nombre, \"electrico\")\n        self.voltaje = voltaje\n    def atacar(self):\n        return f\"¡{self.nombre} lanzó Rayo ({self.voltaje}V)!\"\n\npika = Electrico(\"Pikachu\", 50000)\nprint(pika.atacar())  # ¡Pikachu lanzó Rayo (50000V)!\nprint(pika.hablar())  # Pikachu dice... (heredado)\n```\n\nPodés **override** métodos heredados para cambiar el comportamiento.",
         "example": "class Pokemon:\n    def __init__(self, nombre, tipo, nivel=1, hp_base=50):\n        self.nombre = nombre\n        self.tipo = tipo\n        self.nivel = nivel\n        self.hp_max = hp_base + nivel * 10\n        self.hp = self.hp_max\n    def ganar_xp(self, xp):\n        for _ in range(xp // 100):\n            self.subir_nivel()\n    def subir_nivel(self):\n        self.nivel += 1\n        self.hp_max += 10\n        self.hp = self.hp_max\n        print(f\"{self.nombre} subió a nivel {self.nivel}!\")\n    def puede_evolucionar(self):\n        return False\n\nclass Electrico(Pokemon):\n    def __init__(self, nombre, voltaje=100000):\n        super().__init__(nombre, \"electrico\")\n        self.voltaje = voltaje\n    def puede_evolucionar(self):\n        return self.nivel >= 16\n\npika = Electrico(\"Pikachu\", 50000)\nfor _ in range(20):\n    pika.ganar_xp(100)\nprint(pika.name); print(pika.puede_evolucionar())",
-        "exercisePrompt": "Creá hierarquías de especies con herencia, overrides y super().",
+        "exercisePrompt": "Creá jerarquías de especies con herencia, overrides y super().",
         "codeFile": "./lessons/19_herencia.py",
         "tests": [
             {"id": "t1", "name": "Electric inherits Pokemon", "description": "instance is Pokemon", "expect": "isinstance"},
@@ -447,8 +447,8 @@ lessons.extend([
         "id": 23, "module": "09", "level": "intermediate", "type": "dragon",
         "title": "1. Fundamentos de Recursión",
         "shortTitle": "Recursión",
-        "objective": "Entender recursión con casos base y recursive paso.",
-        "keyConcept": "Función que se llama a sí misma. Casos base previenen infinite recursion.",
+        "objective": "Entender recursión con casos base y paso recursivo.",
+        "keyConcept": "Función que se llama a sí misma. Los casos base evitan la recursión infinita.",
         "theory": "### La regla de oro de la recursión\n\nTodo problema recursivo necesita:\n1. **Caso base**: cuándo parar\n2. **Caso recursivo**: cómo avanzar hacia el caso base\n\n```python\ndef evolution_chain(pokemon, current_level=1):\n    forms = {\"bulbasaur\": [\"ivysaur\", \"venusaur\"], \"charmander\": [\"charmeleon\", \"charizard\"]}\n    if current_level > 2 or pokemon not in forms:\n        return [pokemon]\n    next_form = forms[pokemon][current_level - 1]\n    return [pokemon] + evolution_chain(next_form, current_level + 1)\n\ncadena = evolution_chain(\"bulbasaur\")\n# ['bulbasaur', 'ivysaur', 'venusaur']\n```",
         "example": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)\ndef fib(n):\n    if n <= 1:\n        return n\n    return fib(n-1) + fib(n-2)\nprint(fact(5))       # 120\nprint(fib(10))      # 55",
         "exercisePrompt": "Resolvé problemas recursivos: factorial, fibonacci, sumas, cadenas de evolución.",

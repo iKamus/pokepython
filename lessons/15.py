@@ -1,6 +1,6 @@
 """Bloque 15 · try/except — Errores controlados
 
-Prevén crashes y manejá errores elegantes como un experto.
+Prevén fallos y manejá los errores con elegancia, como un experto.
 """
 
 # RETO 1 — División segura con try/except:
