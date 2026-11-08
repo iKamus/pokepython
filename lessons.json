@@ -63,7 +63,7 @@
               "id": "t1",
               "name": "Variables declaradas",
               "description": "Nombre, edad y activo existen",
-              "expect": "None"
+              "expect": "nombre_completo = \"Ash\""
             },
             {
               "id": "t2",
@@ -387,7 +387,7 @@
               "id": "t1",
               "name": "Lista inicial",
               "description": "6 starters",
-              "expect": "starters"
+              "expect": "[\"Pikachu\", \"Charmander\""
             },
             {
               "id": "t2",
@@ -611,7 +611,7 @@
               "id": "t5",
               "name": "Comprensión anidada",
               "description": "Dos bucles anidados",
-              "expect": "for"
+              "expect": "for c in colores for e in estados"
             },
             {
               "id": "t6",
@@ -775,7 +775,7 @@
               "id": "t1",
               "name": "Clase definida",
               "description": "__init__ inicializa bien",
-              "expect": "class Pokemon"
+              "expect": "if mov not in self.movimientos:"
             },
             {
               "id": "t2",
@@ -822,19 +822,19 @@
               "id": "t2",
               "name": "__lt__ compara",
               "description": "Menor por potencia",
-              "expect": "__lt__"
+              "expect": "self.potencia < otro.potencia"
             },
             {
               "id": "t3",
               "name": "__eq__ igualdad",
               "description": "Igualdad por nombre",
-              "expect": "__eq__"
+              "expect": "isinstance(otro, Movimiento)"
             },
             {
               "id": "t4",
               "name": "Uso baja los PP",
               "description": "Los PP bajan al usar",
-              "expect": "self.pp"
+              "expect": "self.pp -= 1"
             }
           ],
           "module": "06"

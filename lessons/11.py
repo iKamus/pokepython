@@ -4,38 +4,25 @@ Organizá información compleja con diccionarios y sets.
 """
 
 # RETO 1 — Crear diccionario de Charizard:
-charizard = {
-    "nombre": "Charizard",
-    "tipo": "fuego",
-    "nivel": 36,
-    "hp_max": 390,
-}
+charizard = None  # TODO: creá el diccionario de Charizard
 
 # RETO 2 — Acceder y modificar atributos:
-print(f"{charizard['nombre']} es tipo {charizard['tipo']}")
-charizard["habilidad"] = "Mar Llamas"
+print("")  # TODO: imprimí nombre y tipo
+# TODO: agregá la clave "habilidad"
 
 # RETO 3 — Agregar nueva clave (lista de habilidades):
-charizard["movimientos"] = ["Llamarada", "Rayo Solar", "Arañazo"]
+print("")  # TODO: agregá movimientos y habilidades
 
 # RETO 4 — Iterar con items():
-print("\nDetalles de Charizard:")
-for clave, valor in charizard.items():
-    print(f"  {clave}: {valor}")
+print("")  # TODO: iterá con items() e imprimí cada par
 
 # RETO 5 — get() con valor por defecto:
-movimiento_especial = charizard.get("ataque_especial", "Placaje")
-print(f"\nAtaque especial: {movimiento_especial}")  # Placaje (no existe, usa el valor por defecto)
+movimiento_especial = None  # TODO: usá .get() con valor por defecto
+print("")  # TODO: imprimí el movimiento especial
 
 # RETO 6 — Pokédex completa con varios Pokémon:
-pokedex = {
-    25: {"nombre": "Pikachu", "tipo": "electrico"},
-    6: {"nombre": "Charizard", "tipo": "fuego"},
-    9: {"nombre": "Blastoise", "tipo": "agua"},
-    1: {"nombre": "Venusaur", "tipo": "planta"},
-}
+pokedex = None  # TODO: creá la pokédex con varios Pokémon
 
 # RETO 7 — Set de tipos únicos:
-tipos_usados = set(pokedex[num]["tipo"] for num in pokedex)
-print(f"\nTipos encontrados: {tipos_usados}")
-print(f"Cantidad de tipos distintos: {len(tipos_usados)}")
+tipos_usados = None  # TODO: creá el set de tipos únicos
+print("")  # TODO: imprimí tipos y cantidad

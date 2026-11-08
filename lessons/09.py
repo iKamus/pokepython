@@ -4,30 +4,28 @@ Usá tuplas para datos que no cambian y slicing para extraer porciones.
 """
 
 # RETO 1 — Tupla de stats base de Pikachu (HP, Atk, Def, SpA, SpD, Spe):
-stats = (35, 55, 40, 50, 65, 90)
+stats = None  # TODO: creá la tupla de stats (35, 55, 40, 50, 65, 90)
 
 # RETO 2 — Acceder a estadística por índice:
-print(f"HP: {stats[0]}, Speed: {stats[-1]}")  # HP: 35, Speed: 90
+print("")  # TODO: imprimí HP y Speed con stats[0] y stats[-1]
 
 # RETO 3 — Slicing: primeros 3 stats
-primeros_3 = stats[:3]
-print(f"Primeros 3 stats: {primeros_3}")  # (35, 55, 40)
+primeros_3 = None  # TODO: stats[:3]
+print("")  # TODO: mostrá primeros_3
 
 # RETO 4 — Último stat con índice negativo
-velocidad = stats[-1]
-print(f"Speed: {velocidad}")  # 90
+velocidad = None  # TODO: stats[-1]
+print("")  # TODO: mostrá la velocidad
 
 # RETO 5 — Invertir todos los stats
-invertidos = stats[::-1]
-print(f"Invertidos: {invertidos}")  # (90, 65, 50, 40, 55, 35)
+invertidos = None  # TODO: stats[::-1]
+print("")  # TODO: mostrá los invertidos
 
 # RETO 6 — Desempaquetar en variables separadas
-hp, atk, def_val, sp_atk, sp_def, spe = stats
-print(f"\nDesempaquetado:")
-print(f"  HP={hp}, ATK={atk}, DEF={def_val}")
-print(f"  SpA={sp_atk}, SpD={sp_def}, Spe={spe}")
+hp = atk = def_val = sp_atk = sp_def = spe = None  # TODO: desempaquetá stats
+print("")  # TODO: mostrá los valores desempaquetados
 
 # RETO 7 — Slice con paso (solo pares):
 numeros = list(range(20))
-pares = numeros[::2]
-print(f"\nPares de 0 a 19: {pares}")  # [0, 2, 4, ..., 18]
+pares = None  # TODO: numeros[::2]
+print("")  # TODO: mostrá los pares
