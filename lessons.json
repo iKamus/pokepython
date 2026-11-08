@@ -104,43 +104,43 @@
               "id": "t1",
               "name": ".upper()",
               "description": "Resultado: PIKACHU",
-              "expect": "PIKACHU"
+              "expect": ".upper()"
             },
             {
               "id": "t2",
               "name": ".lower()",
               "description": "Resultado: pikachu",
-              "expect": "pikachu"
+              "expect": ".lower()"
             },
             {
               "id": "t3",
               "name": ".title()",
               "description": "Resultado: Pikachu",
-              "expect": "Pikachu"
+              "expect": ".title()"
             },
             {
               "id": "t4",
               "name": "len()",
               "description": "Longitud de hidrobomba",
-              "expect": "10"
+              "expect": "len(movimiento)"
             },
             {
               "id": "t5",
               "name": "Reemplazo con .replace()",
               "description": "Guion bajo → espacio",
-              "expect": "pi kachu"
+              "expect": ".replace(\"_\", \" \")"
             },
             {
               "id": "t6",
               "name": "Operador in",
               "description": "Contiene chu",
-              "expect": "chu"
+              "expect": "\"chu\" in pokemon"
             },
             {
               "id": "t7",
               "name": ".strip()",
               "description": "Sin espacios sobrantes",
-              "expect": "Raichu"
+              "expect": ".strip()"
             }
           ],
           "module": "01"

@@ -14,6 +14,10 @@ import sys
 import unicodedata
 from pathlib import Path
 
+import pytest
+
+import py_matcher
+
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_KEYS = {f"{n:02d}" for n in range(1, 13)} | {"proyecto"}
 EXPECTED_IDS = list(range(1, 30))
@@ -143,3 +147,24 @@ def test_todos_los_ejemplos_corren(tmp_path):
         )
         ultima = (corrida.stderr.strip().splitlines() or [""])[-1]
         assert corrida.returncode == 0, f"lección {lesson['id']}: {ultima}"
+
+
+@pytest.mark.xfail(
+    strict=False,
+    reason="T26: 16 lecciones más siguen con el starter resuelto o con expects que ya "
+           "aparecen en el starter. Este test pasa a XPASS cuando se corrijan (S10).",
+)
+def test_ningun_starter_aprueba_un_test():
+    """Un ejercicio sin resolver no puede aprobar ningún test (S10).
+
+    Medido con el matcher real. Hoy falla en 16 lecciones; la lista queda visible
+    en el mensaje del fallo en vez de descubrirse de a una.
+    """
+    ls = {l["id"]: l for l in py_matcher.lessons_by_id()}
+    culpables = []
+    for lid, leccion in sorted(ls.items()):
+        starter = py_matcher._read(ROOT / leccion["codeFile"])
+        pasan = [t["id"] for t in leccion["tests"] if py_matcher.matcher_passes(t["expect"], starter)]
+        if pasan:
+            culpables.append(f"{lid}:{pasan}")
+    assert not culpables, f"starters que aprueban sin resolver: {culpables}"
