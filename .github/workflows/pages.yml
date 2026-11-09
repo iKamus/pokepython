@@ -1,0 +1,58 @@
+# Publica el curso en GitHub Pages como sitio estático (sin build step).
+#
+# Esto reemplaza al pipeline interno `pages-build-deployment` del modo legacy: ese
+# copiaba el árbol completo de la rama en cada push y, con los 19 MB de runtime
+# vendorizado en `vendor/pyodide/`, se quedó sin tiempo (timeout de 10 min, Pages
+# en `errored`). Acá se publica un artefacto con **solo** lo que el sitio sirve.
+#
+# La lista de `SITE_PATHS` es explícita a propósito: si un asset nuevo que la app
+# pide por HTTP se olvida acá, el sitio funciona en local y da 404 en Pages.
+# `tests/test_content.py` compara esta lista contra lo que pide `app.js`.
+name: Publicar el curso en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un deploy de Pages a la vez: dos artefactos simultáneos se pisan.
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+env:
+  SITE_PATHS: index.html app.js styles.css favicon.svg lessons.json lessons/ solutions/ vendor/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/configure-pages@v6.0.0
+      # dist/ es la raíz publicada: la lista y no el repo, así no viajan tests/,
+      # _local/, _refs/ ni generate_lessons.py.
+      - name: Armar dist/ con solo lo que el sitio sirve
+        run: |
+          mkdir -p dist
+          for path in $SITE_PATHS; do
+            cp -R "$path" dist/
+          done
+          ls -la dist
+      - uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5.0.1

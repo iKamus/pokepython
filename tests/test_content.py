@@ -261,3 +261,110 @@ def test_runtime_pyodide_completo_y_versionado():
         "Pages solo publica lo comiteado: ▶ Correr daría 404. "
         "Sacá la regla de vendor/pyodide/ del .gitignore."
     )
+
+
+# ── Workflow de Pages: dist/ tiene que llevar todo lo que la app pide por HTTP ──
+WORKFLOW_PAGES = ROOT / ".github" / "workflows" / "pages.yml"
+# Clave del workflow con la lista explícita de lo que se copia a dist/.
+SITE_PATHS_KEY = "SITE_PATHS"
+# Peticiones HTTP literales de la app (una sola línea cada una en app.js).
+PATRONES_PEDIDAS = (
+    (re.compile(r"fetch\(\s*'([^']+)'"), "fetch"),
+    (re.compile(r'fetch\(\s*"([^"]+)"'), "fetch"),
+    (re.compile(r"fetch\(\s*`([^`$]+)`"), "fetch"),
+    (re.compile(r".src\s*=\s*'([^']+)'"), "script.src"),
+    (re.compile(r'.src\s*=\s*"([^"]+)"'), "script.src"),
+    (re.compile(r"indexURL\s*:\s*'([^']+)'"), "indexURL"),
+    (re.compile(r'indexURL\s*:\s*"([^"]+)"'), "indexURL"),
+    (re.compile(r"import\(\s*'([^']+)'"), "import()"),
+    (re.compile(r'import\(\s*"([^"]+)"'), "import()"),
+    (re.compile(r"import\(\s*`([^`$]+)`"), "import()"),
+)
+# Prefijo de las URLs armadas con template string, p. ej. `./lessons/${n}.py`.
+PATRON_PREFIJO = re.compile(r"`(\./[^`$]*)\$\{")
+
+
+def _normalizar_pedida(ruta):
+    """'./lessons/01.py?v=1' → 'lessons/01.py'; un '/' final marca un directorio."""
+    ruta = ruta.strip().split("#", 1)[0].split("?", 1)[0]
+    while ruta.startswith("./") or ruta.startswith("/"):
+        ruta = ruta[1:] if ruta.startswith("/") else ruta[2:]
+    return ruta
+
+
+def _rutas_pedidas_por_app(app_js):
+    """[(ruta, origen)], con origen 'app.js:<línea> <mecanismo>' para el mensaje."""
+    pedidas, vistos = [], set()
+    for lineno, linea in enumerate(app_js.splitlines(), 1):
+        halladas = []
+        for patron, mecanismo in PATRONES_PEDIDAS:
+            halladas += [(m.group(1), mecanismo) for m in patron.finditer(linea)]
+        halladas += [(m.group(1), "prefijo de template string") for m in PATRON_PREFIJO.finditer(linea)]
+        for cruda, mecanismo in halladas:
+            ruta = _normalizar_pedida(cruda)
+            if not ruta or ruta in vistos:
+                continue
+            vistos.add(ruta)
+            pedidas.append((ruta, f"app.js:{lineno} {mecanismo}"))
+    return pedidas
+
+
+def _entradas_de_site_paths(workflow):
+    """Lista explícita del workflow; None si falta la clave."""
+    m = re.search(rf"^[ \t]*{SITE_PATHS_KEY}:[ \t]*(\S.*?)[ \t]*$", workflow, re.MULTILINE)
+    return None if m is None else m.group(1).split()
+
+
+def _cubre(entradas, objetivo):
+    """Un archivo copiado cubre su ruta exacta; un directorio, todo lo que cuelga."""
+    obj = objetivo.rstrip("/")
+    for entrada in entradas:
+        copiada = entrada.strip().rstrip("/")
+        if not copiada:
+            continue
+        if obj == copiada:
+            return True
+        es_directorio = entrada.endswith("/") or (ROOT / entrada).is_dir()
+        if es_directorio and obj.startswith(copiada + "/"):
+            return True
+    return False
+
+
+def test_workflow_pages_copia_todo_lo_que_la_app_pide():
+    """Anti-drift de L14: un asset que la app pide y dist/ no lleva da 404 en Pages.
+
+    La fuente de verdad de «qué pide la app» es app.js: se extraen los fetch(), el
+    script.src de Pyodide, el indexURL de loadPyodide, el import() de CodeMirror y
+    los prefijos de URL de starters (*.py). Se comparan contra la lista explícita
+    SITE_PATHS del workflow; un directorio copiado cubre sus archivos.
+    """
+    rel = WORKFLOW_PAGES.relative_to(ROOT).as_posix()
+    assert WORKFLOW_PAGES.is_file(), (
+        f"falta {rel}. Pages está en build_type: legacy (pipeline interno que copia el "
+        "árbol completo y se quedó sin tiempo con los 19 MB de vendor/pyodide/). "
+        f"Sin este workflow no hay despliegue por artefacto ni {SITE_PATHS_KEY} que pueda "
+        "cubrir lo que la app pide por HTTP."
+    )
+
+    entradas = _entradas_de_site_paths(WORKFLOW_PAGES.read_text(encoding="utf-8"))
+    assert entradas, (
+        f"{rel} no declara {SITE_PATHS_KEY} con la lista de rutas que se copian a dist/; "
+        "sin esa lista el test no puede verificar que el sitio publicado esté completo."
+    )
+
+    pedidas = _rutas_pedidas_por_app((ROOT / "app.js").read_text(encoding="utf-8"))
+    assert pedidas, "no se extrajo ninguna petición HTTP de app.js (¿cambió de forma?) — el test no está midiendo nada"
+
+    faltantes = []
+    for ruta, origen in pedidas:
+        if _cubre(entradas, ruta):
+            continue
+        sugerida = ruta if ruta.endswith("/") else (ruta.rsplit("/", 1)[0] + "/" if "/" in ruta else ruta)
+        faltantes.append(f"  - {ruta}  (pedida en {origen}) → agregá '{sugerida}' a {SITE_PATHS_KEY}")
+
+    assert not faltantes, (
+        "app.js pide por HTTP rutas que el workflow no copia a dist/: Pages devolvería 404 "
+        f"aunque en local funcione. Copiadas: {' '.join(entradas)}\n"
+        + "\n".join(faltantes)
+        + f"\nExtendé {SITE_PATHS_KEY} en {rel} con la entrada que cubra cada ruta."
+    )
