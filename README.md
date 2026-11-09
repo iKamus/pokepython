@@ -17,18 +17,29 @@ python serve.py 9000 --open  # otro puerto y abre el navegador
 python -m http.server 8000  # → ojo: sin headers de caché, puede servir JS viejo
 ```
 
-> **Runtime local.** Python en el navegador (Pyodide) y el editor (CodeMirror) están
-> vendorizados: la app **no depende de ningún CDN** y funciona sin internet. La primera vez,
-> si falta el runtime, se baja una sola vez con `python vendor/fetch_pyodide.py` (19 MB);
-> `vendor/pyodide/` queda fuera de git para no inflar el repo.
+> **Runtime versionado.** Python en el navegador (Pyodide 0.24.1) y el editor
+> (CodeMirror 6) están vendorizados en el repo: la app **no depende de ningún CDN** y
+> funciona offline desde el primer clone, sin bajar nada. `vendor/pyodide/` son 5
+> archivos (19 MB) que se versionan junto con el resto del sitio, porque GitHub Pages
+> solo sirve lo comiteado. `python vendor/fetch_pyodide.py` sigue existiendo como
+> herramienta de reparación: es el único paso que necesita internet y solo hay que
+> ejecutarlo si alguien borra el runtime.
 
 ### Tests
 
 ```bash
 python -m venv .venv && .venv/Scripts/pip install -r requirements-dev.txt   # una vez
-.venv/Scripts/python -m pytest              # invariantes de datos + soluciones (~3 s)
-.venv/Scripts/python -m pytest -m browser   # landing, tema, editor y Pyodide (~25 s)
+.venv/Scripts/python -m pytest                     # datos + soluciones, sin navegador (~5 s)
+.venv/Scripts/python -m pytest -m browser          # landing, tema, editor y Pyodide (~25 s)
+.venv/Scripts/python -m pytest -m "browser and slow"   # solo el barrido de 29 lecciones
 ```
+
+`pytest.ini` ya trae `addopts = -m "not browser"`, así que `pytest` a secas es la suite
+rápida y `-m browser` la de navegador (el `-m` de la línea de comandos pisa al de
+`addopts`). La suite de navegador usa `--browser-channel=msedge`, así que necesita
+Microsoft Edge instalado (viene con Windows; en Linux/macOS hay que tenerlo y, si no está,
+cambiá el canal o instalá los navegadores de Playwright con `playwright install`). En
+Linux/macOS la ruta del intérprete es `.venv/bin/python` en lugar de `.venv/Scripts/python`.
 
 ## 📋 Estructura del curso
 
@@ -142,16 +153,41 @@ tests en «?»: la tabla se evalúa igual y la consola sigue respondiendo en la 
 - **lessons.json** — Datos del curso como recurso estático
 - **Tema claro / oscuro** — Conmutables desde el header; sin elección guardada respeta la preferencia del sistema
 
+## 🌐 Publicación
+
+El sitio se publica como **estático en GitHub Pages** desde un repo público, sirviendo la
+raíz de la rama publicada tal cual: no hay build, ni paso de compilación, ni archivos que
+se generen al desplegar.
+
+Pages lo monta bajo un subpath (`https://<owner>.github.io/<repo>/`) y **no hay ningún base
+path que configurar**: la app usa rutas relativas (`./vendor/...`, `./lessons.json`) y hash
+routing (`#/lesson/N`), así que funciona igual en `/` que en `/<repo>/`. Todo lo que la app
+pide en tiempo de ejecución está versionado en el repo (Pyodide incluido), así que ▶ Correr
+funciona desde el primer clone y en el sitio publicado.
+
+El límite duro de GitHub es de **100 MB por archivo**, y recomienda mantener el repo por
+debajo de 1 GB. El archivo más pesado del proyecto es `vendor/pyodide/pyodide.asm.wasm` con
+8,6 MB, así que **no se usa Git LFS** ni hace falta.
+
 ## 📚 Referencia
 
-Basado en el [Curso de Python de freeCodeCamp](https://www.freecodecamp.org/learn/scientific-computing-with-python/).
+Basado en el [currículo de Python de freeCodeCamp](https://www.freecodecamp.org/learn/python-v9/).
 
 El enfoque original usaba archivos `.py` auto-verificables ejecutados desde terminal. Esta versión web permite practicar directamente en el navegador sin instalar nada.
 
 ## 🔜 Próximos pasos
 
-1. Agregar un editor de código con autocompletado para los ejercicios
-2. Agregar más ejercicios por lección
-3. Implementar validación avanzada (no solo string matching)
-4. Sistema de puntos y logros
-5. Más proyectos integradores por módulo
+1. Sistema de puntos y logros
+2. Más proyectos integradores por módulo
+
+## ⚖️ Licencia y atribución
+
+El curso sigue la secuencia y los temas del [currículo de Python de
+freeCodeCamp](https://www.freecodecamp.org/learn/python-v9/). El **texto derivado de ese
+currículo** —teoría, ejemplos y consignas de `lessons/`, `solutions/` y `lessons.json`— se
+distribuye bajo [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es):
+se puede compartir y adaptar con atribución, sin uso comercial y bajo la misma licencia.
+
+El **código de la aplicación** —`app.js`, `styles.css`, `index.html`, `serve.py`, `tests/` y
+`vendor/`— queda bajo **MIT**, ver [`LICENSE`](LICENSE). Esa licencia no cubre el contenido
+del currículo, que sigue bajo CC BY-NC-SA 4.0.

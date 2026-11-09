@@ -9,6 +9,7 @@ import ast
 import json
 import py_compile
 import re
+import shutil
 import subprocess
 import sys
 import unicodedata
@@ -21,6 +22,15 @@ import py_matcher
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_KEYS = {f"{n:02d}" for n in range(1, 13)} | {"proyecto"}
 EXPECTED_IDS = list(range(1, 30))
+# Runtime de Pyodide que la app carga desde ./vendor/pyodide/ (S3).
+PYODIDE_FILES = (
+    "pyodide.js",
+    "pyodide.asm.js",
+    "pyodide.asm.wasm",
+    "python_stdlib.zip",
+    "pyodide-lock.json",
+)
+MIN_RUNTIME_BYTES = 1024
 
 
 def _load(name):
@@ -206,3 +216,48 @@ def test_no_quedan_errores_ortograficos_ni_controles():
                         )
                         break
     assert not violations, "violaciones encontradas:\n" + "\n".join(violations)
+
+
+def test_runtime_pyodide_completo_y_versionado():
+    """Un ▶ Correr publicado no puede depender de archivos que git no lleva (S3).
+
+    GitHub Pages sirve solo lo comiteado: si el runtime falta o está ignorado, la app
+    responde 404 al cargar Pyodide. Dos chequeos independientes:
+
+    1. los 5 archivos existen en `vendor/pyodide/` y pesan más de 1 KB;
+    2. git no ignora `vendor/pyodide/` (si git no está disponible, se skipea SOLO esto).
+    """
+    faltantes = []
+    for name in PYODIDE_FILES:
+        path = ROOT / "vendor" / "pyodide" / name
+        if not path.is_file():
+            faltantes.append(f"{name}: no existe")
+        else:
+            tamano = path.stat().st_size
+            if tamano <= MIN_RUNTIME_BYTES:
+                faltantes.append(f"{name}: {tamano} bytes (mínimo {MIN_RUNTIME_BYTES})")
+    assert not faltantes, (
+        "el runtime de Pyodide está incompleto en vendor/pyodide/; "
+        "bajalo con: python vendor/fetch_pyodide.py\n" + "\n".join(faltantes)
+    )
+
+    if shutil.which("git") is None:
+        pytest.skip("git no está disponible: no se puede comprobar si vendor/pyodide/ está ignorado")
+    repo = subprocess.run(
+        ["git", "rev-parse", "--is-inside-work-tree"],
+        cwd=ROOT, capture_output=True, text=True,
+    )
+    if repo.returncode != 0:
+        pytest.skip(f"{ROOT} no es un repo git: no se puede comprobar si vendor/pyodide/ está ignorado")
+
+    ignorado = subprocess.run(
+        ["git", "check-ignore", "-v", "vendor/pyodide/pyodide.js"],
+        cwd=ROOT, capture_output=True, text=True,
+    )
+    # 0 = ignorado, 1 = no ignorado, 128 = error de git.
+    assert ignorado.returncode == 1, (
+        "vendor/pyodide/pyodide.js está ignorado por git "
+        f"({ignorado.stdout.strip() or ignorado.stderr.strip()}; exit {ignorado.returncode}). "
+        "Pages solo publica lo comiteado: ▶ Correr daría 404. "
+        "Sacá la regla de vendor/pyodide/ del .gitignore."
+    )
